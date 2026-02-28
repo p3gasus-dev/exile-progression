@@ -1,0 +1,12 @@
+{
+  "name": "exile-progression",
+  "version": "0.2.0",
+  "workspaces": [
+    "seeding",
+    "web"
+  ],
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "prettier": "^2.8.8"
+  }
+}
