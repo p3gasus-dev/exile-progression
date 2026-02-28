@@ -1,0 +1,47 @@
+EXILE PROGRESSION (fork of Exile Leveling)
+	
+	[ DASHBOARD | ROUTE | CAMPAIGN | ATLAS | BUILD | SETTINGS ]
+	
+	LAYOUT:
+	DASHBOARD: ROUTE PROGRESS, UNIQUE ITEMS, MISC.
+	ROUTE: ACT1-10, VOIDSTONE1-4 , CHALLENGE1-40
+	CAMPAIGN: ACT1-10 SETTINGS, CAMPAIGN SPECIFIC SETTINGS
+	ATLAS: ATLAS SETTINGS
+	BUILD: BUILD IMPORT, BUILD SETTINGS
+	SETTINGS: EDIT ROUTE, 3RD-PARTY EXPORT, PROJECT ON GITHUB
+
+	DESC.:
+	3RD-PARTY EXPORT: Export route for use outside of Exile Progression.
+	ACT1-10: Same as original repo. Now has our additions added.
+	ATLAS: Options related to the ATLAS
+	ATLAS SETTINGS: Settings related to ATLAS POINTS, VOIDSTONE1-4, ETC.
+	BUILD: Settings related to UNIQUES, SPECIAL MODS, ANOINTS, PANTHEON, ETC.
+	BUILD IMPORT: Imports build info.
+	CAMPAIGN SETTINGS: Settings related to ACT1-10.
+	CHALLENGE1-40: Fastest/easiest way to completing each challenge. Auto tracks challenges completed during ACT1-10 and VOIDSTONE1-4.
+	DASHBOARD: Shows overall progression of BUILD.
+	EDIT ROUTE: Option to Edit/Export route.
+	MISC.: Shows specifcs such as ANOINTS, SPECIAL MODS, ETC.
+	PROJECT ON GITHUB: Link to GITHUB Repo.
+	ROUTE: Tracking progress of player from early game to endgame.
+	ROUTE PROGRESS: Shows progress of current ACT, VOIDSTONE, or CHALLENGE.
+	SETTINGS: Settings related to Exile Progression functions.
+	UNIQUE ITEMS: Track IMPORT BUILD->UNIQUE ITEMS and where/how they can be acquired.
+	VOIDSTONE1-4: Fastest/easiest route to completing voidstones 1, 2 ,3 ,4.
+
+	TODO:
+	- ADD SETTINGS DESC.
+	- FIX TEXT FORMATTING & HIGHLIGHTS
+	- Change uniques to include multiple sources
+	- "No tracked endgame source" -> Global Drop
+	- RECOMMENDED DPS/EHP,  RES/IMMUNE, ETC. ON ACT1-10, ASCEND, 1-4 VOIDSTONE, ETC
+	- MARK ROUTES W/ CHALLENGE PROGRESSION WHERE APPLICABLE C# & X/Y
+	- ATLAS PASSIVE STRATEGY -> FULL COMPLETION (Fastest Way to Fully Complete)
+	- AUTO IMPORT PANTHEONS, ANOINTS, SPECIAL MODS
+	- FIX PROJECT LINK IN SETTINGS
+	- ADD VOIDSTONE1-4, CHALLENGES1-40 to EDIT ROUTE
+	- DASHBOARD ROUTE PROGRESS
+	-- Show Current ACT/VOID/CHALLENGE & Steps instead on left
+	-- Builed related stuff on right half
+	- UPDATE FOR MIRAGE LEAGUE
+	- ADD GLOBAL LEAGUE SELECTOR to OVERRIDE LEAGUE SPECIFIC SETTINGS
