@@ -1,0 +1,91 @@
+.container {
+  padding: var(--size-3);
+  max-width: 600px;
+}
+
+.sectionHeader {
+  color: var(--on-secondary);
+  font-size: 1rem;
+  font-weight: var(--font-heavy);
+  margin: 0 0 var(--size-2) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hint {
+  color: var(--on-primary);
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin: 0 0 var(--size-3) var(--size-2);
+}
+
+.divider {
+  margin: var(--size-4) 0;
+  border-color: var(--accent-secondary);
+}
+
+.form {
+  padding: var(--size-2);
+}
+
+.label {
+  width: 100%;
+  text-align: right;
+  color: var(--on-secondary);
+  font-weight: var(--font-heavy);
+}
+
+.value {
+  width: 100%;
+  text-align: left;
+}
+
+.select {
+  color: var(--on-primary);
+  background-color: var(--primary);
+  border: var(--border-width) solid var(--accent-primary);
+  border-radius: var(--border-radius);
+  padding: var(--size-1) var(--size-2);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+/* ── Voidstone order list ───────────────────────────────────────────────────── */
+
+.voidstoneList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+  margin: 0 0 var(--size-3) var(--size-2);
+}
+
+.voidstoneRow {
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+  padding: var(--size-2);
+  border-radius: var(--border-radius);
+  background-color: rgba(255, 255, 255, 0.03);
+  border: var(--border-width) solid var(--accent-secondary);
+}
+
+.voidstoneNum {
+  width: 1.5rem;
+  text-align: center;
+  font-weight: var(--font-heavy);
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.voidstoneBoss {
+  flex: 1;
+  font-weight: var(--font-heavy);
+  color: var(--on-secondary);
+}
+
+.voidstoneReward {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  text-align: right;
+  flex-shrink: 0;
+}

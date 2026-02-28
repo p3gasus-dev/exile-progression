@@ -1,0 +1,17 @@
+.container {
+  padding: var(--size-3);
+}
+
+.sectionHeader {
+  color: var(--on-secondary);
+  font-size: 1rem;
+  font-weight: var(--font-heavy);
+  margin: 0 0 var(--size-2) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.divider {
+  margin: var(--size-4) 0;
+  border-color: var(--accent-secondary);
+}

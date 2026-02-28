@@ -1,0 +1,13 @@
+#section Maven Witnessing
+{generic|Activate Maven witnessing on your Map Device (press the Maven icon when opening a map)}
+{generic|Defeat map bosses while Maven is witnessing — she collects each boss you kill}
+{generic|After 3 witnessed bosses you receive Maven's Invitation: The Atlas}
+{generic|Enter the Maven's Crucible via the invitation — defeat all bosses simultaneously for Crescent Splinters}
+{generic|Repeat Maven invitations until you have 10 Crescent Splinters}
+{generic|10 Crescent Splinters automatically combine into Maven's Writ}
+
+#section The Maven
+{generic|Use an Orb of Alchemy on Maven's Writ to make it Rare (improves loot)}
+{generic|Place Maven's Writ in your Map Device and enter The Maven's Realm}
+{kill|The Maven}
+{generic|Take the Ceremonial Voidstone and socket it into your Atlas Map Device}

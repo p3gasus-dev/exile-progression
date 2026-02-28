@@ -1,0 +1,31 @@
+#section Shaper Guardians
+{generic|Run T14+ maps to find the 4 Shaper Guardian maps (drop from T14+ maps)}
+{arena|Maze of the Minotaur}
+{kill|The Shaper Guardian (Minotaur)}
+{arena|Forge of the Phoenix}
+{kill|The Shaper Guardian (Phoenix)}
+{arena|Lair of the Hydra}
+{kill|The Shaper Guardian (Hydra)}
+{arena|Pit of the Chimera}
+{kill|The Shaper Guardian (Chimera)}
+
+#section The Shaper
+{generic|Combine all 4 Shaper Guardian fragments at your Map Device to enter The Shaper's Realm}
+{kill|The Shaper}
+
+#section Elder Guardians
+{generic|Elder Guardians spawn as extra bosses in T14-T16 maps (random map selection)}
+{kill|The Elder Guardian (Purifier)}
+{kill|The Elder Guardian (Constrictor)}
+{kill|The Elder Guardian (Enslaver)}
+{kill|The Elder Guardian (Eradicator)}
+
+#section The Elder
+{generic|Combine all 4 Elder Guardian fragments at your Map Device to enter The Elder's Realm}
+{kill|The Elder}
+
+#section Uber Elder
+{generic|Combine 2 Shaper fragments + 2 Elder fragments to access the Uber Elder}
+{generic|Enter The Shaper's Realm (Uber) — you face The Elder and The Shaper simultaneously}
+{kill|The Uber Elder}
+{generic|Take the Decayed Voidstone and socket it into your Atlas Map Device — all maps are now Tier 16}

@@ -1,11 +1,14 @@
 import { Data } from "../../../../common/data";
 import { RouteData } from "../../../../common/route-processing/types";
 import { GameData } from "../../../../common/types";
-import { decodeBase64Url, randomId } from "../../utility";
+import { decodeBase64Url } from "../../utility";
+import { UniqueItem } from "../../state/unique-items";
 import pako from "pako";
 
+// ─── PoB gem ID quirks ────────────────────────────────────────────────────────
+// https://github.com/PathOfBuildingCommunity/PathOfBuilding/blob/0d3bdf009c8bc9579eb8cffb5548f03c45e57373/src/Export/Scripts/skills.lua#L504
+
 const GEM_ID_REMAP: Record<string, string> = {
-  // POB is weird https://github.com/PathOfBuildingCommunity/PathOfBuilding/blob/0d3bdf009c8bc9579eb8cffb5548f03c45e57373/src/Export/Scripts/skills.lua#L504
   "Metadata/Items/Gems/Smite": "Metadata/Items/Gems/SkillGemSmite",
   "Metadata/Items/Gems/ConsecratedPath":
     "Metadata/Items/Gems/SkillGemConsecratedPath",
@@ -39,23 +42,26 @@ function MapGemId(gemId: string) {
   return gemId;
 }
 
+// ─── Decoding ─────────────────────────────────────────────────────────────────
+
 function decodePathOfBuildingCode(code: string) {
   const buffer = pako.inflate(decodeBase64Url(code));
-
   const decoder = new TextDecoder();
   const xmlString = decoder.decode(buffer);
-
   const parser = new DOMParser();
-  const xml = parser.parseFromString(xmlString, "application/xml");
-
-  return xml;
+  return parser.parseFromString(xmlString, "application/xml");
 }
+
+// ─── Text cleaning ────────────────────────────────────────────────────────────
+// PoB color codes take the form ^x<hex> or ^<digit>
 
 const POB_COLOUR_REGEX = /\^(x[a-zA-Z0-9]{6}|[0-9])/g;
 
 function cleanPobText(dirty: string) {
   return dirty.replace(POB_COLOUR_REGEX, "");
 }
+
+// ─── Skill / gem processing ───────────────────────────────────────────────────
 
 function processSkills(
   requiredGems: RouteData.RequiredGem[],
@@ -64,7 +70,9 @@ function processSkills(
   parentTitle: string | undefined,
   characterClass: string
 ) {
-  const skillElements = Array.from(parentElement.getElementsByTagName("Skill"));
+  const skillElements = Array.from(
+    parentElement.getElementsByTagName("Skill")
+  );
 
   let recentEmptySkillLabel: string | undefined;
   for (const skillElement of skillElements) {
@@ -95,7 +103,7 @@ function processSkills(
           requiredGems.push(gem);
         }
 
-        if (Data.Gems[gemId].is_support) secondaryGemIds.push(gemId);
+        if (Data.Gems[gemId]?.is_support) secondaryGemIds.push(gemId);
         else primaryGemIds.push(gemId);
       }
     }
@@ -129,7 +137,6 @@ function gemIdToGemLink(
   characterClass: string
 ): RouteData.GemLink {
   const quests: RouteData.GemLink["quests"] = [];
-  // TODO needing to loop over quests is annoying, ideally want to be able use relation queries, look into IndexedDB
   for (const quest of Object.values(Data.Quests)) {
     for (const [rewardOfferId, rewardOffer] of Object.entries(
       quest.reward_offers
@@ -146,21 +153,62 @@ function gemIdToGemLink(
       }
     }
   }
-  return {
-    id: gemId,
-    quests,
-  };
+  return { id: gemId, quests };
 }
+
+// ─── Unique item parsing ──────────────────────────────────────────────────────
+//
+// PoB item text format inside each <Item> tag:
+//   Rarity: UNIQUE       ← key line
+//   <Name>               ← line after Rarity
+//   <Base Type>          ← line after Name
+//
+// Returns deduplicated items by name.
+
+function parseUniqueItems(doc: Document): UniqueItem[] {
+  const items: UniqueItem[] = [];
+  const seen = new Set<string>();
+
+  const itemElements = Array.from(doc.getElementsByTagName("Item"));
+  for (const itemEl of itemElements) {
+    const raw = itemEl.textContent ?? "";
+    const lines = raw
+      .split("\n")
+      .map((l) => l.trim())
+      .filter((l) => l.length > 0);
+
+    const rarityIdx = lines.findIndex((l) =>
+      l.toLowerCase().startsWith("rarity:")
+    );
+    if (rarityIdx === -1) continue;
+
+    const rarity = lines[rarityIdx].replace(/rarity:/i, "").trim();
+    if (rarity.toUpperCase() !== "UNIQUE") continue;
+
+    const name = lines[rarityIdx + 1] ?? "";
+    const base = lines[rarityIdx + 2] ?? "";
+
+    if (!name || seen.has(name)) continue;
+    seen.add(name);
+
+    items.push({ name, base });
+  }
+
+  return items;
+}
+
+// ─── Public API ───────────────────────────────────────────────────────────────
 
 export interface PobData {
   buildData: RouteData.BuildData;
   requiredGems: RouteData.RequiredGem[];
   buildTrees: RouteData.BuildTree[];
   gemLinks: RouteData.GemLinkGroup[];
+  uniqueItems: UniqueItem[];
 }
 
 export function processPob(pobCode: string): PobData | undefined {
-  let doc;
+  let doc: Document;
   try {
     doc = decodePathOfBuildingCode(pobCode);
   } catch (e) {
@@ -168,15 +216,17 @@ export function processPob(pobCode: string): PobData | undefined {
   }
 
   const buildElement = Array.from(doc.getElementsByTagName("Build"));
+  if (buildElement.length === 0) return undefined;
 
   const characterClass =
-    buildElement[0].attributes.getNamedItem("className")?.value!;
+    buildElement[0].attributes.getNamedItem("className")?.value ?? "";
 
   const bandit =
     buildElement[0].attributes.getNamedItem("bandit")?.value || "None";
 
   const requiredGems: RouteData.RequiredGem[] = [];
   const gemLinks: RouteData.GemLinkGroup[] = [];
+
   const skillSetElements = Array.from(doc.getElementsByTagName("SkillSet"));
   if (skillSetElements.length > 0) {
     for (const skillSetElement of skillSetElements) {
@@ -201,16 +251,20 @@ export function processPob(pobCode: string): PobData | undefined {
   const buildTrees: RouteData.BuildTree[] = [];
   const specElements = Array.from(doc.getElementsByTagName("Spec"));
   for (const specElement of specElements) {
+    const urlEl = specElement.getElementsByTagName("URL")[0];
+    if (!urlEl) continue;
     buildTrees.push({
       name: cleanPobText(specElement.getAttribute("title") || "Default"),
-      version: specElement.getAttribute("treeVersion")!,
-      url: specElement.getElementsByTagName("URL")[0].textContent?.trim()!,
+      version: specElement.getAttribute("treeVersion") ?? "",
+      url: urlEl.textContent?.trim() ?? "",
     });
   }
 
+  const uniqueItems = parseUniqueItems(doc);
+
   return {
     buildData: {
-      characterClass: characterClass,
+      characterClass,
       bandit: bandit as RouteData.BuildData["bandit"],
       leagueStart: true,
       library: true,
@@ -218,5 +272,6 @@ export function processPob(pobCode: string): PobData | undefined {
     requiredGems,
     buildTrees,
     gemLinks,
+    uniqueItems,
   };
 }

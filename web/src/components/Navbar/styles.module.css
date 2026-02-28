@@ -52,6 +52,11 @@
   padding: var(--size-3);
 }
 
+/* Active tab — bottom border indicator on desktop */
+.active:not(.expand) {
+  border-bottom: 2px solid var(--accent-primary);
+}
+
 .navIcon {
   display: block;
   box-sizing: content-box;
@@ -67,10 +72,14 @@
   top: 100%;
 }
 
-.navItems:not(.expand) > *:nth-child(n + 3) {
+/* On desktop (not expanded): show all 6 primary tabs, hide utility items.
+   Utility items (Reset Progress, GitHub) are the last 2 children — only
+   visible in the expanded hamburger menu. */
+.navItems:not(.expand) > *:nth-last-child(-n + 2) {
   display: none;
 }
 
+/* Collapsed accordion content hidden unless expanded */
 .navAccordion:not(.expand) > * {
   display: none;
 }

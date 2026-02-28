@@ -1,0 +1,44 @@
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-1);
+  margin-top: var(--size-1);
+}
+
+/* Direct drop badge — gold */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-1);
+  padding: 2px var(--size-2);
+  background-color: rgba(180, 130, 0, 0.18);
+  border: 1px solid rgba(180, 130, 0, 0.5);
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: var(--font-heavy);
+  color: gold;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.icon {
+  color: gold;
+  font-size: 0.75rem;
+}
+
+/* Div-card-only badge — muted teal to visually distinguish */
+.divCardBadge {
+  background-color: rgba(0, 160, 160, 0.12);
+  border-color: rgba(0, 200, 200, 0.4);
+  color: #7ee8e8;
+}
+
+.divCardBadge .icon {
+  color: #7ee8e8;
+}
+
+.divCardHint {
+  opacity: 0.7;
+  font-weight: normal;
+  font-size: 0.75rem;
+}

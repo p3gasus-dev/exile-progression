@@ -1,0 +1,23 @@
+.tabBar {
+  display: flex;
+  position: sticky;
+  top: var(--navbar-height);
+  z-index: 3;
+  background-color: var(--primary);
+  border-bottom: var(--border-width) solid var(--accent-primary);
+}
+
+.tabButton {
+  flex: 1;
+  padding: var(--size-2) var(--size-3);
+  font-weight: var(--font-heavy);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-align: center;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.tabActive {
+  border-bottom-color: gold;
+}
