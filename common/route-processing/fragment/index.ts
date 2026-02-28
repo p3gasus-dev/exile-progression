@@ -26,6 +26,7 @@ const EvaluateLookup: Record<
   ["quest"]: EvaluateQuest,
   ["quest_text"]: EvaluateQuestText,
   ["generic"]: EvaluateGeneric,
+  ["league"]: EvaluateLeague,
   ["reward_quest"]: EvaluateQuestReward,
   ["reward_vendor"]: EvaluateVendorReward,
   ["trial"]: EvaluateTrial,
@@ -312,40 +313,46 @@ function EvaluatePortal(
   return ERROR_INVALID_FORMAT;
 }
 
-function EvaluateQuestReward(
+function EvaluateQuest(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  {
+    if (rawFragment.length < 2) return ERROR_INVALID_FORMAT;
+
+    const questId = rawFragment[1];
+    const quest = Data.Quests[questId];
+    if (!quest) return "invalid quest id";
+
+    let rewardOfferIds;
+    if (rawFragment.length == 2) {
+      rewardOfferIds = Object.keys(quest.reward_offers);
+    } else {
+      rewardOfferIds = [];
+      for (let i = 2; i < rawFragment.length; i++) {
+        rewardOfferIds.push(rawFragment[i]);
+      }
+    }
+
+    return {
+      fragment: {
+        type: "quest",
+        questId: rawFragment[1],
+        rewardOffers: rewardOfferIds,
+      },
+    };
+  }
+}
+
+function EvaluateQuestText(
   rawFragment: RawFragment,
   { state, logger }: ParseContext
 ): string | EvaluateResult {
   if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
-
-  const currentArea = Data.Areas[state.currentAreaId];
-  if (!currentArea.is_town_area)
-    logger.warn("quest_reward used outside of town");
-
   return {
     fragment: {
-      type: "reward_quest",
-      item: rawFragment[1],
-    },
-  };
-}
-
-function EvaluateVendorReward(
-  rawFragment: RawFragment,
-  { state, logger }: ParseContext
-): string | EvaluateResult {
-  if (rawFragment.length != 2 && rawFragment.length != 3)
-    return ERROR_INVALID_FORMAT;
-
-  const currentArea = Data.Areas[state.currentAreaId];
-  if (!currentArea.is_town_area)
-    logger.warn("reward_vendor used outside of town");
-
-  return {
-    fragment: {
-      type: "reward_vendor",
-      item: rawFragment[1],
-      cost: rawFragment.length == 3 ? rawFragment[2] : undefined,
+      type: "quest_text",
+      value: rawFragment[1],
     },
   };
 }
@@ -359,6 +366,61 @@ function EvaluateGeneric(
     fragment: {
       type: "generic",
       value: rawFragment[1],
+    },
+  };
+}
+
+/**
+ * League mechanic fragment — identical parse to `generic` but stored under
+ * type "league" so the renderer can apply a distinct highlight colour.
+ * Usage in route files: {league|Legion Encounter}
+ */
+function EvaluateLeague(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
+  return {
+    fragment: {
+      type: "league",
+      value: rawFragment[1],
+    },
+  };
+}
+
+function EvaluateTrial(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 1) return ERROR_INVALID_FORMAT;
+  return {
+    fragment: {
+      type: "trial",
+    },
+  };
+}
+
+function EvaluateAscend(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
+
+  const expectedAreaId = "Labyrinth_Airlock";
+  const currentArea = Data.Areas[state.currentAreaId];
+  if (currentArea.id != expectedAreaId) {
+    const expectedArea = Data.Areas[expectedAreaId];
+    logger.warn(`must be in "${expectedArea.name}"`);
+  }
+
+  const townArea = Data.Areas[state.lastTownAreaId];
+  transitionArea(state, townArea);
+
+  return {
+    fragment: {
+      type: "ascend",
+      //@ts-expect-error
+      version: rawFragment[1],
     },
   };
 }
@@ -412,83 +474,40 @@ function EvaluateDirection(
   };
 }
 
-function EvaluateQuest(
-  rawFragment: RawFragment,
-  { state, logger }: ParseContext
-): string | EvaluateResult {
-  {
-    if (rawFragment.length < 2) return ERROR_INVALID_FORMAT;
-
-    const questId = rawFragment[1];
-    const quest = Data.Quests[questId];
-    if (!quest) return "invalid quest id";
-
-    let rewardOfferIds;
-    if (rawFragment.length == 2) {
-      rewardOfferIds = Object.keys(quest.reward_offers);
-    } else {
-      rewardOfferIds = [];
-      for (let i = 2; i < rawFragment.length; i++) {
-        rewardOfferIds.push(rawFragment[i]);
-      }
-    }
-
-    return {
-      fragment: {
-        type: "quest",
-        questId: rawFragment[1],
-        rewardOffers: rewardOfferIds,
-      },
-    };
-  }
-}
-
-function EvaluateQuestText(
-  rawFragment: RawFragment,
-  { state, logger }: ParseContext
-): string | EvaluateResult {
-  if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
-  return {
-    fragment: {
-      type: "quest_text",
-      value: rawFragment[1],
-    },
-  };
-}
-
-function EvaluateTrial(
-  rawFragment: RawFragment,
-  { state, logger }: ParseContext
-): string | EvaluateResult {
-  if (rawFragment.length != 1) return ERROR_INVALID_FORMAT;
-  return {
-    fragment: {
-      type: "trial",
-    },
-  };
-}
-
-function EvaluateAscend(
+function EvaluateQuestReward(
   rawFragment: RawFragment,
   { state, logger }: ParseContext
 ): string | EvaluateResult {
   if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
 
-  const expectedAreaId = "Labyrinth_Airlock";
   const currentArea = Data.Areas[state.currentAreaId];
-  if (currentArea.id != expectedAreaId) {
-    const expectedArea = Data.Areas[expectedAreaId];
-    logger.warn(`must be in "${expectedArea.name}"`);
-  }
-
-  const townArea = Data.Areas[state.lastTownAreaId];
-  transitionArea(state, townArea);
+  if (!currentArea.is_town_area)
+    logger.warn("quest_reward used outside of town");
 
   return {
     fragment: {
-      type: "ascend",
-      //@ts-expect-error
-      version: rawFragment[1],
+      type: "reward_quest",
+      item: rawFragment[1],
+    },
+  };
+}
+
+function EvaluateVendorReward(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 2 && rawFragment.length != 3)
+    return ERROR_INVALID_FORMAT;
+
+  const currentArea = Data.Areas[state.currentAreaId];
+  if (!currentArea.is_town_area)
+    logger.warn("reward_vendor used outside of town");
+
+  return {
+    fragment: {
+      type: "reward_vendor",
+      item: rawFragment[1],
+      cost: rawFragment.length == 3 ? rawFragment[2] : undefined,
     },
   };
 }

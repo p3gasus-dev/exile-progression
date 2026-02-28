@@ -136,7 +136,7 @@
   font-weight: var(--font-heavy);
 }
 
-.sourceUnknown {
+.sourceGlobal {
   opacity: 0.4;
   font-style: italic;
 }

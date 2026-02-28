@@ -1,174 +1,244 @@
 /**
- * Maps lowercase unique item names to their drop source in endgame/voidstone content.
+ * Maps lowercase unique item names to their drop source(s) in endgame content.
  *
- * DIVINATION CARD RULE:
- *   Divination card recipes are NEVER shown as an acquisition method unless
- *   `divCardOnly: true` — meaning there is no reliable direct drop source.
+ * ── DIVINATION CARD RULE ─────────────────────────────────────────────────────
+ * Div card recipes are NEVER shown as an acquisition method unless
+ * `divCardOnly: true` — meaning no reliable direct drop source exists.
+ * If a direct boss/area drop exists, always prefer that over a div card.
  *
- *   If a direct boss/area drop exists, always prefer that over a div card.
- *   divCard is stored for reference only; it is not surfaced in the UI unless
- *   divCardOnly is true.
+ * ── GLOBAL DROP RULE ─────────────────────────────────────────────────────────
+ * Items not in this map, or explicitly marked `globalDrop: true`, are shown as
+ * "Global Drop" in the UI — meaning they have no restricted drop location and
+ * can drop from any monster in any zone.
+ *
+ * ── MULTIPLE SOURCES ─────────────────────────────────────────────────────────
+ * `bosses` accepts an array for items that drop from several endgame bosses.
+ * `areas` accepts an array for items tied to specific zones/encounters.
+ * All entries in both arrays are shown in the UI.
  */
 
 export interface UniqueDropSource {
-  /** The boss name matching the `kill` fragment in voidstone route files. */
-  boss?: string;
-  /** The map/area name where the item drops (used for annotation context). */
-  area?: string;
+  /**
+   * One or more boss names matching `kill` fragments in route files.
+   * Used for voidstone boss route annotation and Dashboard display.
+   */
+  bosses?: string[];
+  /**
+   * One or more area/encounter names where this item drops outside of a
+   * specific boss kill (e.g. "Domain of Timeless Conflict").
+   * Shown in Dashboard but does NOT annotate route steps.
+   */
+  areas?: string[];
   /** Short acquisition note shown in the badge tooltip. */
   notes?: string;
   /**
    * The divination card name that yields this item.
-   * Stored for reference but NEVER shown unless divCardOnly is true.
+   * Stored for reference; NEVER shown in UI unless divCardOnly is true.
    */
   divCard?: string;
   /**
-   * True when a divination card trade is the ONLY practical acquisition method —
-   * i.e. no boss, area, or direct drop source exists.
+   * True when a divination card trade is the ONLY practical acquisition method.
    * When true, the div card IS shown as the source.
    */
   divCardOnly?: boolean;
+  /**
+   * True when this item is an unrestricted world drop.
+   * Renders as "Global Drop" in the UI.
+   * Items NOT in this map are also treated as global drops by default.
+   */
+  globalDrop?: boolean;
 }
 
 export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
   // ── Div-card-only items ───────────────────────────────────────────────────
-  // These items have no reliable direct drop source. The div card IS shown.
+  // No reliable direct drop source exists. The div card IS shown.
   headhunter: {
     divCard: "The Doctor",
     divCardOnly: true,
-    notes: "Obtain via 8× The Doctor divination cards (no reliable direct drop)",
+    notes: "Obtain via 8× The Doctor divination cards",
   },
   mageblood: {
     divCard: "The Apothecary",
     divCardOnly: true,
-    notes: "Obtain via 5× The Apothecary divination cards (no reliable direct drop)",
+    notes: "Obtain via 5× The Apothecary divination cards",
   },
   mirror_of_kalandra: {
     divCard: "The Reflection",
     divCardOnly: true,
-    notes: "Obtain via 9× The Reflection divination cards (no reliable direct drop)",
+    notes: "Obtain via 9× The Reflection divination cards",
   },
 
   // ── Uber Elder ────────────────────────────────────────────────────────────
-  // divCard stored for reference; NOT shown in UI (direct drop exists)
   "watcher's eye": {
-    boss: "The Uber Elder",
+    bosses: ["The Uber Elder"],
     notes: "Prismatic Jewel — unique drop from Uber Elder",
     divCard: "The Enlightened",
   },
   "bottled faith": {
-    boss: "The Uber Elder",
+    bosses: ["The Uber Elder"],
     notes: "Sulphur Flask — unique drop from Uber Elder",
   },
 
   // ── The Shaper ────────────────────────────────────────────────────────────
   starforge: {
-    boss: "The Shaper",
+    bosses: ["The Shaper"],
     notes: "Infernal Sword — unique drop from The Shaper",
     divCard: "The Shaper",
   },
   "shaper's touch": {
-    boss: "The Shaper",
+    bosses: ["The Shaper"],
     notes: "Wyrmscale Gauntlets — unique drop from The Shaper",
   },
   voidfletcher: {
-    boss: "The Shaper",
+    bosses: ["The Shaper"],
     notes: "Penetrating Arrow Quiver — unique drop from The Shaper",
   },
 
   // ── The Maven ─────────────────────────────────────────────────────────────
   "the devoted": {
-    boss: "The Maven",
+    bosses: ["The Maven"],
     notes: "Karui Chopper — unique drop from The Maven",
   },
   "the hidden blade": {
-    boss: "The Maven",
+    bosses: ["The Maven"],
     notes: "Whittling Knife — unique drop from The Maven",
   },
   "forbidden shako": {
-    boss: "The Maven",
+    bosses: ["The Maven"],
     notes: "Iron Hat — unique drop from The Maven (contains awakened gems)",
   },
+  // Forbidden Flame/Flesh drop from all three pinnacle bosses —
+  // the boss killed determines which ascendancy node is rolled on the jewel.
   "forbidden flame": {
-    boss: "The Maven",
+    bosses: ["The Maven", "The Searing Exarch", "The Eater of Worlds"],
     notes:
       "Crimson Jewel — drops from Maven, Searing Exarch, or Eater of Worlds. " +
-      "Boss determines the ascendancy node rolled.",
+      "The boss killed determines the ascendancy node rolled.",
   },
   "forbidden flesh": {
-    boss: "The Maven",
+    bosses: ["The Maven", "The Searing Exarch", "The Eater of Worlds"],
     notes:
-      "Viridian Jewel — drops from Maven, Searing Exarch, or Eater of Worlds.",
+      "Viridian Jewel — drops from Maven, Searing Exarch, or Eater of Worlds. " +
+      "The boss killed determines the ascendancy node rolled.",
   },
 
   // ── The Searing Exarch ────────────────────────────────────────────────────
   "eber's unification": {
-    boss: "The Searing Exarch",
+    bosses: ["The Searing Exarch"],
     notes: "Hubris Circlet — unique helmet from Searing Exarch",
   },
 
   // ── The Eater of Worlds ───────────────────────────────────────────────────
   "dissolution of the flesh": {
-    boss: "The Eater of Worlds",
+    bosses: ["The Eater of Worlds"],
     notes: "Viridian Jewel — unique drop from Eater of Worlds",
   },
 
   // ── Shaper Guardians ──────────────────────────────────────────────────────
   "dying sun": {
-    boss: "The Shaper Guardian (Hydra)",
-    area: "Lair of the Hydra",
+    bosses: ["The Shaper Guardian (Hydra)"],
+    areas: ["Lair of the Hydra"],
     notes: "Ruby Flask — drops from the Hydra guardian map",
     divCard: "The Flask",
   },
   "taste of hate": {
-    boss: "The Shaper Guardian (Phoenix)",
-    area: "Forge of the Phoenix",
+    bosses: ["The Shaper Guardian (Phoenix)"],
+    areas: ["Forge of the Phoenix"],
     notes: "Sapphire Flask — drops from the Phoenix guardian map",
   },
   surrender: {
-    boss: "The Shaper Guardian (Minotaur)",
-    area: "Maze of the Minotaur",
+    bosses: ["The Shaper Guardian (Minotaur)"],
+    areas: ["Maze of the Minotaur"],
     notes: "Ezomyte Tower Shield — drops from the Minotaur guardian map",
   },
   impresence: {
-    boss: "The Shaper Guardian (Chimera)",
-    area: "Pit of the Chimera",
-    notes: "Onyx Amulet — drops from the Chimera guardian map (any element version)",
+    bosses: ["The Shaper Guardian (Chimera)"],
+    areas: ["Pit of the Chimera"],
+    notes:
+      "Onyx Amulet — drops from the Chimera guardian map (any element version)",
+  },
+
+  // ── Timeless Jewels ───────────────────────────────────────────────────────
+  // Primary source: the matching legion in Domain of Timeless Conflict (5-way).
+  // Secondary source: extremely rare world drop from the named monster below.
+  // Cannot be chanced. Verified against poewiki.net/wiki/[jewel name].
+  "lethal pride": {
+    bosses: ["Queen Hyrri Ngamaku"],
+    areas: ["Domain of Timeless Conflict"],
+    notes:
+      "Timeless Jewel (Karui) — primarily from Karui legion in 5-way encounters. " +
+      "Extremely rarely from Queen Hyrri Ngamaku. Cannot be chanced.",
+  },
+  "brutal restraint": {
+    bosses: ["Nassar, Lion of the Seas"],
+    areas: ["Domain of Timeless Conflict"],
+    notes:
+      "Timeless Jewel (Maraketh) — primarily from Maraketh legion in 5-way encounters. " +
+      "Extremely rarely from Nassar, Lion of the Seas. Cannot be chanced.",
+  },
+  "militant faith": {
+    bosses: ["High Templar Dominus"],
+    areas: ["Domain of Timeless Conflict"],
+    notes:
+      "Timeless Jewel (Templar) — primarily from Templar legion in 5-way encounters. " +
+      "Extremely rarely from High Templar Dominus. Cannot be chanced.",
+  },
+  "glorious vanity": {
+    bosses: ["Xibaqua"],
+    areas: ["Domain of Timeless Conflict"],
+    notes:
+      "Timeless Jewel (Vaal) — primarily from Vaal legion in 5-way encounters. " +
+      "Extremely rarely from Xibaqua. Cannot be chanced.",
+  },
+  "elegant hubris": {
+    bosses: ["Victario, the People's Hero"],
+    areas: ["Domain of Timeless Conflict"],
+    notes:
+      "Timeless Jewel (Eternal Empire) — primarily from Eternal legion in 5-way encounters. " +
+      "Extremely rarely from Victario, the People's Hero. Cannot be chanced.",
   },
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 /**
- * Returns the effective acquisition display info for a unique item,
- * applying the divination card rule:
- *   - If divCardOnly is true  → return the div card as the source.
- *   - If a boss/area exists   → return boss/area (div card is suppressed).
- *   - Otherwise               → return null (item not in our source list).
+ * Returns the effective acquisition display info for a unique item.
+ *
+ * Rules:
+ *   - divCardOnly → return the div card source.
+ *   - bosses or areas exist → return them (div card suppressed).
+ *   - globalDrop or not in map → return { globalDrop: true }.
  */
 export function getAcquisitionSource(
   itemName: string
 ): UniqueDropSource | null {
-  const source = UNIQUE_DROP_SOURCES[itemName.toLowerCase()];
-  if (!source) return null;
+  const key = itemName.toLowerCase();
+  const source = UNIQUE_DROP_SOURCES[key];
 
-  // Div-card-only: no direct source exists, show the card
+  if (!source) {
+    // Item not in our map → treat as a global drop
+    return { globalDrop: true };
+  }
+
   if (source.divCardOnly) return source;
 
-  // Direct source exists — return it, never the div card
-  if (source.boss || source.area) {
-    // Return a copy without divCard so callers never accidentally surface it
+  if ((source.bosses && source.bosses.length > 0) ||
+      (source.areas && source.areas.length > 0)) {
+    // Strip divCard so callers never accidentally surface it
     const { divCard: _suppressed, ...displaySource } = source;
     return displaySource;
   }
 
-  return null;
+  if (source.globalDrop) return source;
+
+  // In map but has no useful display data → treat as global drop
+  return { globalDrop: true };
 }
 
 /**
- * Given a kill fragment boss name and the list of unique item names from
- * the imported build, returns the names of items that drop from that boss.
- * Div-card-only items are never matched against boss kill steps.
+ * Given a kill-fragment boss name and the list of build unique item names,
+ * returns the names of items that drop from that specific boss.
+ * Div-card-only and global-drop items are excluded.
  */
 export function getDropsForBoss(
   bossName: string,
@@ -177,16 +247,14 @@ export function getDropsForBoss(
   const lowerBoss = bossName.toLowerCase();
   return buildUniqueNames.filter((name) => {
     const source = UNIQUE_DROP_SOURCES[name.toLowerCase()];
-    // Exclude items that are div-card-only — they have no boss kill step
-    if (!source || source.divCardOnly) return false;
-    return source.boss?.toLowerCase() === lowerBoss;
+    if (!source || source.divCardOnly || source.globalDrop) return false;
+    return source.bosses?.some((b) => b.toLowerCase() === lowerBoss) ?? false;
   });
 }
 
 /**
  * Returns all build-relevant unique items that are div-card-only.
- * These are shown in a separate section (e.g. Dashboard / Build tab)
- * rather than annotated on a route step.
+ * These are shown in a separate callout section rather than route annotations.
  */
 export function getDivCardOnlyItems(buildUniqueNames: string[]): string[] {
   return buildUniqueNames.filter((name) => {

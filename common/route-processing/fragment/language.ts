@@ -11,6 +11,7 @@ export namespace Language {
     | "quest"
     | "quest_text"
     | "generic"
+    | "league"
     | "reward_quest"
     | "reward_vendor"
     | "trial"
@@ -77,71 +78,46 @@ export namespace Language {
           parameters: [],
         },
         {
-          description: "Use a waypoint",
+          description: "Use a waypoint to travel to a destination area",
           parameters: [
             {
               name: "area_id",
-              description: "Area Id used internally by Path Of Exile",
+              description: "Destination area Id",
             },
           ],
         },
       ],
       ["waypoint_get"]: [
         {
-          description: "Unlocks the waypoint for the current zone",
+          description: "Activate the waypoint in the current area",
           parameters: [],
         },
       ],
       ["portal"]: [
         {
-          description: "Sets portal to the current area",
+          description: "Set or use a Town Portal",
           parameters: [
             {
-              name: "set",
-              description: "keyword",
-            },
-          ],
-        },
-        {
-          description:
-            "Use the portal in the current area, places a portal if required",
-          parameters: [
-            {
-              name: "use",
-              description: "keyword",
+              name: "action",
+              description: "set or use",
             },
           ],
         },
       ],
       ["quest"]: [
         {
-          description:
-            "Hand in a quest and receive all reward offers, generates gem steps",
+          description: "Complete a quest, optionally specifying reward offer ids",
           parameters: [
             {
               name: "quest_id",
               description: "Quest Id used internally by Path Of Exile",
-            },
-          ],
-        },
-        {
-          description:
-            "Hand in a quest and receive specified reward offer, generates gem steps",
-          parameters: [
-            {
-              name: "quest_id",
-              description: "Quest Id used internally by Path Of Exile",
-            },
-            {
-              name: "reward_offer_id",
-              description: "Reward Offer Id used internally by Path Of Exile",
             },
           ],
         },
       ],
       ["quest_text"]: [
         {
-          description: "Quest text",
+          description: "Highlighted quest instruction text",
           parameters: [{ name: "text", description: "Text to display" }],
         },
       ],
@@ -149,6 +125,15 @@ export namespace Language {
         {
           description: "Generic text",
           parameters: [{ name: "text", description: "Text to display" }],
+        },
+      ],
+      ["league"]: [
+        {
+          description:
+            "A league mechanic interaction — renders with a distinct highlight colour",
+          parameters: [
+            { name: "text", description: "League mechanic name or instruction" },
+          ],
         },
       ],
       ["reward_quest"]: [

@@ -22,3 +22,33 @@
   margin: var(--size-4) 0;
   border-color: var(--accent-secondary);
 }
+
+/* ── Repo links ─────────────────────────────────────────────────────────────── */
+
+.repoLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2);
+  align-items: center;
+}
+
+.repoLinkSecondary {
+  opacity: 0.7;
+}
+
+.repoLinkSecondary:hover {
+  opacity: 1;
+}
+
+.upstreamBadge {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  margin-left: var(--size-1);
+  padding: 1px 4px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  vertical-align: middle;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}

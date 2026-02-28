@@ -75,13 +75,11 @@ export default function SettingsContainer() {
       <p className={classNames(styles.hint)}>
         Found a bug or want to contribute? Open an issue or pull request.
       </p>
-      <div className={classNames(formStyles.groupLeft)}>
+      <div className={classNames(formStyles.groupLeft, styles.repoLinks)}>
         <button
           className={classNames(formStyles.formButton)}
           onClick={() => {
-            trackEvent({
-			  name: "github",
-			});
+            trackEvent("github_exile_progression");
             window.open(
               "https://github.com/heartofphos/exile-progression",
               "_blank"
@@ -89,7 +87,21 @@ export default function SettingsContainer() {
           }}
         >
           <FaGithub className="inlineIcon" />
-          github.com/heartofphos/exile-progression
+          exile-progression
+        </button>
+
+        <button
+          className={classNames(formStyles.formButton, styles.repoLinkSecondary)}
+          onClick={() => {
+            trackEvent("github_exile_leveling");
+            window.open(
+              "https://github.com/heartofphos/exile-leveling",
+              "_blank"
+            );
+          }}
+        >
+          <FaGithub className="inlineIcon" />
+          exile-leveling <span className={classNames(styles.upstreamBadge)}>upstream</span>
         </button>
       </div>
     </div>
