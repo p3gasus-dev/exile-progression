@@ -146,7 +146,9 @@ export function Navbar({}: NavbarProps) {
               expand={navExpand}
               icon={<FaGithub className="inlineIcon" />}
               onClick={() => {
-                trackEvent("github");
+                trackEvent({
+				  name: "github",
+				 });
                 window.open(
                   "https://github.com/heartofphos/exile-progression",
                   "_blank"

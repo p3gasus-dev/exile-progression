@@ -79,7 +79,9 @@ export default function SettingsContainer() {
         <button
           className={classNames(formStyles.formButton)}
           onClick={() => {
-            trackEvent("github");
+            trackEvent({
+			  name: "github",
+			});
             window.open(
               "https://github.com/heartofphos/exile-progression",
               "_blank"
