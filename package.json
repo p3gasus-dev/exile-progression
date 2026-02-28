@@ -1,5 +1,5 @@
 {
-  "name": "exile-leveling",
+  "name": "exile-progression",
   "workspaces": [
     "seeding",
     "web"
