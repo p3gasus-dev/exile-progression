@@ -43,7 +43,7 @@ TODO:
 	MARK ROUTES W/ CHALLENGE PROGRESSION WHERE APPLICABLE C# & X/Y
 	ATLAS PASSIVE STRATEGY -> FULL COMPLETION (Fastest Way to Fully Complete)
 	DASHBOARD ROUTE PROGRESS
-		Show Current ACT/VOID/CHALLENGE & Steps instead on left
-		Builed related stuff on right half
+		Show Section (i.e. Act 1 & steps)
 	LEAGUE SELECTOR
 		+UPDATE FOR MIRAGE LEAGUE
+	Move Class & Bandits to Build ?
