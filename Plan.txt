@@ -30,16 +30,15 @@ DESC:
 	VOIDSTONE1-4: Fastest/easiest route to completing voidstones 1, 2 ,3 ,4.
 
 TODO:
-	FIX PROJECT LINK IN SETTINGS
 	FIX UNIQUES
 		Drop locations
 		Multiple sources support
 		"No tracked endgame source" -> Global Drop
 	AUTO IMPORT PANTHEONS, ANOINTS, SPECIAL MODS
-	ADD DESC. to SETTINGS
+	Make sure all settings have descriptions and sections headers
 	ADD VOIDSTONE1-4, CHALLENGES1-40 to EDIT ROUTE
-	FIX TEXT FORMATTING & HIGHLIGHTS
-	RECOMMENDED DPS/EHP,  RES/IMMUNE, ETC. ON ACT1-10, ASCEND, 1-4 VOIDSTONE, ETC
+	FIX/update TEXT FORMATTING & HIGHLIGHTS
+	RECOMMENDED DPS/EHP,  RES/IMMUNE, ETC. ON ACT1-10, ASCEND, 1-4 VOIDSTONE
 	MARK ROUTES W/ CHALLENGE PROGRESSION WHERE APPLICABLE C# & X/Y
 	ATLAS PASSIVE STRATEGY -> FULL COMPLETION (Fastest Way to Fully Complete)
 	DASHBOARD ROUTE PROGRESS
@@ -47,3 +46,4 @@ TODO:
 	LEAGUE SELECTOR
 		+UPDATE FOR MIRAGE LEAGUE
 	Move Class & Bandits to Build ?
+	Allow changing voidstone order
