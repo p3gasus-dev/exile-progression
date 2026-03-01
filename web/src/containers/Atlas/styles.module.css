@@ -89,3 +89,32 @@
   text-align: right;
   flex-shrink: 0;
 }
+
+.voidstoneArrows {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.voidstoneArrowBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--on-secondary);
+  opacity: 0.45;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.voidstoneArrowBtn:hover:not(:disabled) {
+  opacity: 1;
+}
+
+.voidstoneArrowBtn:disabled {
+  opacity: 0.12;
+  cursor: default;
+}

@@ -1,6 +1,7 @@
 import { RouteEditor } from "../../components/RouteEditor";
 import { pobCodeAtom } from "../../state/pob-code";
 import { routeFilesSelector } from "../../state/route-files";
+import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
 import { routeSelector } from "../../state/route";
 import { trackEvent } from "../../utility/telemetry";
 import { formStyles } from "../../styles";
@@ -16,9 +17,10 @@ function SectionHeader({ title }: { title: string }) {
 
 export default function SettingsContainer() {
   const [routeFiles, setRouteFiles] = useRecoilState(routeFilesSelector);
-  // Proper reset: sets the backing atom to null, causing the selector to
-  // re-run loadDefaultRouteFiles() on next read instead of using localStorage.
   const resetRouteFiles = useResetRecoilState(routeFilesSelector);
+
+  const [voidstoneRouteFiles, setVoidstoneRouteFiles] = useRecoilState(voidstoneRouteFilesSelector);
+  const resetVoidstoneRouteFiles = useResetRecoilState(voidstoneRouteFilesSelector);
 
   // 3rd-party export: serialise the full route + pob code to clipboard
   const exportToClipboard = useRecoilCallback(
@@ -49,6 +51,20 @@ export default function SettingsContainer() {
         routeFiles={routeFiles}
         onSubmit={(updated) => setRouteFiles(updated)}
         onReset={resetRouteFiles}
+      />
+
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Edit Voidstone Route ─────────────────────────────────────────── */}
+      <SectionHeader title="Edit Voidstone Route" />
+      <p className={classNames(styles.hint)}>
+        Modify the Voidstone 1–4 route source files. Changes persist across sessions.
+        Ctrl+S / ⌘S saves while the editor is focused.
+      </p>
+      <RouteEditor
+        routeFiles={voidstoneRouteFiles}
+        onSubmit={(updated) => setVoidstoneRouteFiles(updated)}
+        onReset={resetVoidstoneRouteFiles}
       />
 
       <hr className={classNames(styles.divider)} />

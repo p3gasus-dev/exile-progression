@@ -88,6 +88,54 @@
   transition: width 0.3s ease;
 }
 
+/* Current section indicator — shown below the ACT 1-10 progress bar */
+.currentSection {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  font-size: 0.8rem;
+  color: var(--on-primary);
+  opacity: 0.75;
+  padding-left: 2px;
+  margin-top: -2px;
+}
+
+.currentSectionName {
+  font-weight: var(--font-heavy);
+  color: var(--accent-primary);
+  flex: 1;
+}
+
+.currentSectionCount {
+  flex-shrink: 0;
+  opacity: 0.5;
+  font-size: 0.75rem;
+}
+
+/* Scrollable list of remaining steps for the current section */
+.pendingStepList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border-left: 2px solid rgba(100, 180, 255, 0.2);
+  padding-left: var(--size-2);
+}
+
+.pendingStep {
+  font-size: 0.8rem;
+  color: var(--on-primary);
+  opacity: 0.8;
+  padding: 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* ── Unique Items ───────────────────────────────────────────────────────────── */
 
 .itemList {

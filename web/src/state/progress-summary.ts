@@ -7,10 +7,11 @@
 
 import { routeSelector } from "./route";
 import { voidstoneRouteSelector } from "./voidstone-route";
-import { routeProgressKeys } from "./route-progress";
+import { routeProgressKeys, routeProgressSelectorFamily } from "./route-progress";
 import { voidstoneProgressSelectorFamily } from "./voidstone-progress";
 import { challengeProgressKeys } from "./challenge-progress";
 import { CHALLENGES } from "../data/challenge-list";
+import { Fragments } from "../../../common/route-processing/fragment/types";
 import { selector } from "recoil";
 
 // ── ACT route progress ────────────────────────────────────────────────────────
@@ -30,6 +31,42 @@ export const routeProgressSummarySelector = selector({
 
     const completed = [...routeProgressKeys()].length;
     return { total, completed };
+  },
+});
+
+// ── ACT route current section ─────────────────────────────────────────────────
+//
+// Returns the first section with uncompleted fragment_steps, its counts, and
+// the parts[] of each remaining step so the Dashboard can render them.
+
+export const routeCurrentSectionSelector = selector({
+  key: "routeCurrentSectionSelector",
+  get: async ({ get }) => {
+    const route = await get(routeSelector);
+
+    for (let si = 0; si < route.length; si++) {
+      const section = route[si];
+      let sectionTotal = 0;
+      let sectionCompleted = 0;
+      const pendingParts: Fragments.AnyFragment[][] = [];
+
+      for (let ti = 0; ti < section.steps.length; ti++) {
+        const step = section.steps[ti];
+        if (step.type !== "fragment_step") continue;
+        sectionTotal++;
+        if (get(routeProgressSelectorFamily(`${si},${ti}`))) {
+          sectionCompleted++;
+        } else {
+          pendingParts.push(step.parts);
+        }
+      }
+
+      if (sectionCompleted < sectionTotal) {
+        return { sectionName: section.name, completed: sectionCompleted, total: sectionTotal, pendingParts };
+      }
+    }
+
+    return null; // all sections complete
   },
 });
 

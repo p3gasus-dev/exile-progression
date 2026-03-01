@@ -1,4 +1,4 @@
-import { BuildInfoForm } from "../../components/BuildInfoForm";
+import { SplitRow } from "../../components/SplitRow";
 import { ConfigForm } from "../../components/ConfigForm";
 import { buildDataSelector } from "../../state/build-data";
 import { configSelector } from "../../state/config";
@@ -19,13 +19,41 @@ export default function CampaignContainer() {
       {/* ── ACT 1-10 Settings ──────────────────────────────────────────── */}
       <SectionHeader title="ACT 1–10 Settings" />
       <p className={classNames(styles.hint)}>
-        These settings affect which steps appear in the Route and how gems are
-        recommended. Import a build to set Class and Bandits automatically.
+        Campaign routing options. Class and Bandits are set from your imported
+        build in the Build tab.
       </p>
-      <BuildInfoForm
-        buildData={buildData}
-        onSubmit={(updated) => setBuildData(updated)}
-      />
+      <div className={classNames(styles.form)}>
+        <SplitRow
+          left={<div className={classNames(styles.label)}>League Start</div>}
+          right={
+            <div className={classNames(styles.value)}>
+              <input
+                type="checkbox"
+                checked={buildData.leagueStart}
+                onChange={(e) =>
+                  setBuildData({ ...buildData, leagueStart: e.target.checked })
+                }
+                aria-label="League Start"
+              />
+            </div>
+          }
+        />
+        <SplitRow
+          left={<div className={classNames(styles.label)}>Library</div>}
+          right={
+            <div className={classNames(styles.value)}>
+              <input
+                type="checkbox"
+                checked={buildData.library}
+                onChange={(e) =>
+                  setBuildData({ ...buildData, library: e.target.checked })
+                }
+                aria-label="Library"
+              />
+            </div>
+          }
+        />
+      </div>
 
       <hr className={classNames(styles.divider)} />
 

@@ -3,3 +3,81 @@
   height: 6rem;
   resize: none;
 }
+
+/* ── Presets toggle button ──────────────────────────────────────────────────── */
+
+.presetsToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-top: var(--size-1);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--on-secondary);
+  font-size: 0.8rem;
+  font-weight: var(--font-heavy);
+  opacity: 0.75;
+  padding: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.presetsToggle:hover {
+  opacity: 1;
+}
+
+/* ── Preset list ────────────────────────────────────────────────────────────── */
+
+.presetList {
+  list-style: none;
+  padding: 0;
+  margin: var(--size-1) 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: var(--border-width) solid var(--accent-secondary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.presetRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--size-2);
+  padding: var(--size-1) var(--size-2);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.presetRow:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.presetPattern {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--accent-primary);
+  white-space: nowrap;
+}
+
+.presetDesc {
+  font-size: 0.8rem;
+  color: var(--on-primary);
+  opacity: 0.65;
+}
+
+.presetAdd {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--accent-primary);
+  opacity: 0.6;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.presetAdd:hover {
+  opacity: 1;
+}

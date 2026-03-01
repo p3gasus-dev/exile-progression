@@ -2,6 +2,7 @@ import { BuildImportForm } from "../../components/BuildImportForm";
 import { BuildSettingsForm } from "../../components/BuildSettingsForm";
 import { GemEditForm } from "../../components/GemEditForm";
 import { SearchStringsEditor } from "../../components/SearchStringsEditor";
+import { SplitRow } from "../../components/SplitRow";
 import { buildDataSelector } from "../../state/build-data";
 import { buildSettingsSelector } from "../../state/build-settings";
 import { requiredGemsSelector } from "../../state/gem";
@@ -19,7 +20,7 @@ function SectionHeader({ title }: { title: string }) {
 }
 
 export default function BuildContainer() {
-  const [, setBuildData] = useRecoilState(buildDataSelector);
+  const [buildData, setBuildData] = useRecoilState(buildDataSelector);
   const resetBuildData = useResetRecoilState(buildDataSelector);
 
   const [requiredGems, setRequiredGems] = useRecoilState(requiredGemsSelector);
@@ -44,6 +45,11 @@ export default function BuildContainer() {
 
       {/* ── BUILD IMPORT ────────────────────────────────────────────────── */}
       <SectionHeader title="Build Import" />
+      <p className={classNames(styles.hint)}>
+        Paste a Path of Building code or URL (pastebin, poe.ninja, pobb.in) to
+        populate gems, uniques, skill tree, and character data. Use Search
+        Strings to set item filter regex for stashing during the league.
+      </p>
       <div className={classNames(formStyles.form)}>
         <SearchStringsEditor />
         <BuildImportForm
@@ -69,6 +75,12 @@ export default function BuildContainer() {
       {requiredGems.length > 0 && (
         <>
           <hr className={classNames(styles.divider)} />
+          {/* ── GEM PRIORITY ──────────────────────────────────────────────── */}
+          <SectionHeader title="Gem Priority" />
+          <p className={classNames(styles.hint)}>
+            Reorder or remove gems sourced from your PoB. Checked gems are
+            marked as acquired and hidden from the Route.
+          </p>
           <GemEditForm
             requiredGems={requiredGems}
             onUpdate={(updated) => setRequiredGems(updated)}
@@ -80,6 +92,10 @@ export default function BuildContainer() {
 
       {/* ── BUILD SETTINGS ──────────────────────────────────────────────── */}
       <SectionHeader title="Build Settings" />
+      <p className={classNames(styles.hint)}>
+        Set your Pantheon gods, amulet anoints, and special mod targets. These
+        are displayed on the Dashboard and can annotate route steps.
+      </p>
       <BuildSettingsForm
         settings={buildSettings}
         onUpdate={(updated) => setBuildSettings(updated)}
