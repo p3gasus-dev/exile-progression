@@ -79,7 +79,7 @@ export default function SettingsContainer() {
         <button
           className={classNames(formStyles.formButton)}
           onClick={() => {
-            trackEvent("github_exile_progression");
+            trackEvent({ name: "github_exile_progression" });
             window.open(
               "https://github.com/p3gasus-dev/exile-progression",
               "_blank"
@@ -93,7 +93,7 @@ export default function SettingsContainer() {
         <button
           className={classNames(formStyles.formButton, styles.repoLinkSecondary)}
           onClick={() => {
-            trackEvent("github_exile_leveling");
+            trackEvent({ name: "github_exile_leveling" });
             window.open(
               "https://github.com/heartofphos/exile-leveling",
               "_blank"

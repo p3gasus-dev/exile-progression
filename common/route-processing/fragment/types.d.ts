@@ -16,6 +16,7 @@ export namespace Fragments {
     | QuestFragment
     | QuestTextFragment
     | GenericFragment
+    | LeagueMechanicFragment
     | RewardQuestFragment
     | RewardVendorFragment
     | TrialFragment
@@ -65,6 +66,11 @@ export namespace Fragments {
 
   export interface GenericFragment {
     type: "generic";
+    value: string;
+  }
+
+  export interface LeagueMechanicFragment {
+    type: "league";
     value: string;
   }
 
