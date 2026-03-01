@@ -128,3 +128,9 @@ Replace or extend `web/src/data/challenge-list.ts`. The `autoDetectKey` field wi
 Add entries to `web/src/data/unique-drop-sources.ts`. Follow the divination card rule:
 - If a direct boss drop exists → set `boss` (and optionally `divCard` for reference only, no `divCardOnly`)
 - If div card is the only way → set `divCard` + `divCardOnly: true`
+
+---
+
+## AI Disclaimer
+
+This project was created with the assistance of AI.
