@@ -3,6 +3,7 @@ import { getAreas } from "./seeding/areas";
 import { getCharacters } from "./seeding/characters";
 import { getGems as seedGems } from "./seeding/gems";
 import { getQuests } from "./seeding/quests";
+import { getUniqueDropRestrictions } from "./seeding/unique-drops";
 import fs from "fs";
 
 const dataPath = process.argv[2];
@@ -30,6 +31,11 @@ const COMMAND_PROCESSORS: Record<string, () => Promise<any>> = {
     saveJSON("areas", areas);
     const characters = await getCharacters();
     saveJSON("characters", characters);
+  },
+  ["unique-drops"]: async () => {
+    const drops = await getUniqueDropRestrictions();
+    saveJSON("unique-drops", drops);
+    console.log(`Saved ${drops.length} unique item drop restrictions.`);
   },
   ["tree"]: async () => {
     const templates = await buildTemplates();

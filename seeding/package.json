@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "seed": "tsx src/index.ts ../common/data",
+    "seed:unique-drops": "tsx src/index.ts ../common/data unique-drops",
     "generate-route-ids": "tsx src/index.ts ../common/data/json generate-route-ids"
   },
   "author": "",

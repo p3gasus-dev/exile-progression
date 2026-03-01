@@ -298,9 +298,13 @@ function Misc() {
 export default function DashboardContainer() {
   return (
     <div className={classNames(styles.dashboard)}>
-      <RouteProgress />
-      <UniqueItems />
-      <Misc />
+      <div className={classNames(styles.leftCol)}>
+        <RouteProgress />
+      </div>
+      <div className={classNames(styles.rightCol)}>
+        <UniqueItems />
+        <Misc />
+      </div>
     </div>
   );
 }

@@ -150,7 +150,7 @@ export function Navbar({}: NavbarProps) {
 				  name: "github",
 				 });
                 window.open(
-                  "https://github.com/heartofphos/exile-progression",
+                  "https://github.com/p3gasus-dev/exile-progression",
                   "_blank"
                 );
                 setNavExpand(false);
