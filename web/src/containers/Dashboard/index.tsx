@@ -116,26 +116,50 @@ function UniqueItems() {
                 <span className={classNames(styles.itemBase)}>{item.base}</span>
               </div>
               <div className={classNames(styles.itemSource)}>
-                {source ? (
-                  source.divCardOnly ? (
-                    <span
-                      className={classNames(styles.sourceDiv)}
-                      title={source.notes}
-                    >
-                      {source.divCard}
-                    </span>
-                  ) : (
-                    <span
-                      className={classNames(styles.sourceBoss)}
-                      title={source.notes}
-                    >
-                      {source.boss ?? source.area}
-                    </span>
-                  )
-                ) : (
-                  <span className={classNames(styles.sourceUnknown)}>
-                    No tracked endgame source
+                {source?.divCardOnly ? (
+                  <span
+                    className={classNames(styles.sourceDiv)}
+                    title={source.notes}
+                  >
+                    {source.divCard}
                   </span>
+                ) : source?.globalDrop || (!source?.bosses?.length && !source?.areas?.length) ? (
+                  <span className={classNames(styles.sourceGlobal)}>
+                    Global Drop
+                  </span>
+                ) : (
+                  <div
+                    className={classNames(styles.sourceMulti)}
+                    title={source?.notes}
+                  >
+                    {source?.bosses?.map((boss) => (
+                      <span
+                        key={boss}
+                        className={classNames(
+                          styles.sourceChip,
+                          source.sourceType === "pinnacle" && styles.sourcePinnacle,
+                          source.sourceType === "guardian" && styles.sourceGuardian,
+                          source.sourceType === "league"   && styles.sourceLeague,
+                          !source.sourceType               && styles.sourceBoss,
+                        )}
+                      >
+                        {boss}
+                      </span>
+                    ))}
+                    {source?.areas?.map((area) => (
+                      <span
+                        key={area}
+                        className={classNames(
+                          styles.sourceChip,
+                          source.sourceType === "league"   && styles.sourceLeague,
+                          source.sourceType === "guardian" && styles.sourceGuardian,
+                          !source.sourceType               && styles.sourceBoss,
+                        )}
+                      >
+                        {area}
+                      </span>
+                    ))}
+                  </div>
                 )}
               </div>
             </li>

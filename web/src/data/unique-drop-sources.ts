@@ -15,6 +15,12 @@
  * `bosses` accepts an array for items that drop from several endgame bosses.
  * `areas` accepts an array for items tied to specific zones/encounters.
  * All entries in both arrays are shown in the UI.
+ *
+ * ── SOURCE TYPE ──────────────────────────────────────────────────────────────
+ * `sourceType` drives colour-coding in the UI:
+ *   "pinnacle" — Maven, Searing Exarch, Eater of Worlds, Shaper, Uber Elder
+ *   "guardian" — Shaper Guardian map bosses
+ *   "league"   — League-mechanic encounters (Legion 5-way, etc.)
  */
 
 export interface UniqueDropSource {
@@ -47,6 +53,13 @@ export interface UniqueDropSource {
    * Items NOT in this map are also treated as global drops by default.
    */
   globalDrop?: boolean;
+  /**
+   * Visual category used for colour-coding the source label in the UI.
+   *   "pinnacle" — Uber Elder, Shaper, Maven, Searing Exarch, Eater of Worlds
+   *   "guardian" — Shaper Guardian map bosses
+   *   "league"   — League-mechanic encounters (Legion, etc.)
+   */
+  sourceType?: "pinnacle" | "guardian" | "league";
 }
 
 export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
@@ -73,10 +86,12 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     bosses: ["The Uber Elder"],
     notes: "Prismatic Jewel — unique drop from Uber Elder",
     divCard: "The Enlightened",
+    sourceType: "pinnacle",
   },
   "bottled faith": {
     bosses: ["The Uber Elder"],
     notes: "Sulphur Flask — unique drop from Uber Elder",
+    sourceType: "pinnacle",
   },
 
   // ── The Shaper ────────────────────────────────────────────────────────────
@@ -84,28 +99,34 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     bosses: ["The Shaper"],
     notes: "Infernal Sword — unique drop from The Shaper",
     divCard: "The Shaper",
+    sourceType: "pinnacle",
   },
   "shaper's touch": {
     bosses: ["The Shaper"],
     notes: "Wyrmscale Gauntlets — unique drop from The Shaper",
+    sourceType: "pinnacle",
   },
   voidfletcher: {
     bosses: ["The Shaper"],
     notes: "Penetrating Arrow Quiver — unique drop from The Shaper",
+    sourceType: "pinnacle",
   },
 
   // ── The Maven ─────────────────────────────────────────────────────────────
   "the devoted": {
     bosses: ["The Maven"],
     notes: "Karui Chopper — unique drop from The Maven",
+    sourceType: "pinnacle",
   },
   "the hidden blade": {
     bosses: ["The Maven"],
     notes: "Whittling Knife — unique drop from The Maven",
+    sourceType: "pinnacle",
   },
   "forbidden shako": {
     bosses: ["The Maven"],
     notes: "Iron Hat — unique drop from The Maven (contains awakened gems)",
+    sourceType: "pinnacle",
   },
   // Forbidden Flame/Flesh drop from all three pinnacle bosses —
   // the boss killed determines which ascendancy node is rolled on the jewel.
@@ -114,24 +135,28 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes:
       "Crimson Jewel — drops from Maven, Searing Exarch, or Eater of Worlds. " +
       "The boss killed determines the ascendancy node rolled.",
+    sourceType: "pinnacle",
   },
   "forbidden flesh": {
     bosses: ["The Maven", "The Searing Exarch", "The Eater of Worlds"],
     notes:
       "Viridian Jewel — drops from Maven, Searing Exarch, or Eater of Worlds. " +
       "The boss killed determines the ascendancy node rolled.",
+    sourceType: "pinnacle",
   },
 
   // ── The Searing Exarch ────────────────────────────────────────────────────
   "eber's unification": {
     bosses: ["The Searing Exarch"],
     notes: "Hubris Circlet — unique helmet from Searing Exarch",
+    sourceType: "pinnacle",
   },
 
   // ── The Eater of Worlds ───────────────────────────────────────────────────
   "dissolution of the flesh": {
     bosses: ["The Eater of Worlds"],
     notes: "Viridian Jewel — unique drop from Eater of Worlds",
+    sourceType: "pinnacle",
   },
 
   // ── Shaper Guardians ──────────────────────────────────────────────────────
@@ -140,22 +165,26 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     areas: ["Lair of the Hydra"],
     notes: "Ruby Flask — drops from the Hydra guardian map",
     divCard: "The Flask",
+    sourceType: "guardian",
   },
   "taste of hate": {
     bosses: ["The Shaper Guardian (Phoenix)"],
     areas: ["Forge of the Phoenix"],
     notes: "Sapphire Flask — drops from the Phoenix guardian map",
+    sourceType: "guardian",
   },
   surrender: {
     bosses: ["The Shaper Guardian (Minotaur)"],
     areas: ["Maze of the Minotaur"],
     notes: "Ezomyte Tower Shield — drops from the Minotaur guardian map",
+    sourceType: "guardian",
   },
   impresence: {
     bosses: ["The Shaper Guardian (Chimera)"],
     areas: ["Pit of the Chimera"],
     notes:
       "Onyx Amulet — drops from the Chimera guardian map (any element version)",
+    sourceType: "guardian",
   },
 
   // ── Timeless Jewels ───────────────────────────────────────────────────────
@@ -168,6 +197,7 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes:
       "Timeless Jewel (Karui) — primarily from Karui legion in 5-way encounters. " +
       "Extremely rarely from Queen Hyrri Ngamaku. Cannot be chanced.",
+    sourceType: "league",
   },
   "brutal restraint": {
     bosses: ["Nassar, Lion of the Seas"],
@@ -175,6 +205,7 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes:
       "Timeless Jewel (Maraketh) — primarily from Maraketh legion in 5-way encounters. " +
       "Extremely rarely from Nassar, Lion of the Seas. Cannot be chanced.",
+    sourceType: "league",
   },
   "militant faith": {
     bosses: ["High Templar Dominus"],
@@ -182,6 +213,7 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes:
       "Timeless Jewel (Templar) — primarily from Templar legion in 5-way encounters. " +
       "Extremely rarely from High Templar Dominus. Cannot be chanced.",
+    sourceType: "league",
   },
   "glorious vanity": {
     bosses: ["Xibaqua"],
@@ -189,6 +221,7 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes:
       "Timeless Jewel (Vaal) — primarily from Vaal legion in 5-way encounters. " +
       "Extremely rarely from Xibaqua. Cannot be chanced.",
+    sourceType: "league",
   },
   "elegant hubris": {
     bosses: ["Victario, the People's Hero"],
@@ -196,6 +229,7 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes:
       "Timeless Jewel (Eternal Empire) — primarily from Eternal legion in 5-way encounters. " +
       "Extremely rarely from Victario, the People's Hero. Cannot be chanced.",
+    sourceType: "league",
   },
 };
 

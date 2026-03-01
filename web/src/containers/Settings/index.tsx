@@ -81,7 +81,7 @@ export default function SettingsContainer() {
           onClick={() => {
             trackEvent("github_exile_progression");
             window.open(
-              "https://github.com/heartofphos/exile-progression",
+              "https://github.com/p3gasus-dev/exile-progression",
               "_blank"
             );
           }}

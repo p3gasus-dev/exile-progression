@@ -126,11 +126,6 @@
   flex-shrink: 0;
 }
 
-.sourceBoss {
-  color: var(--accent-primary);
-  font-weight: var(--font-heavy);
-}
-
 .sourceDiv {
   color: #7ee8e8;
   font-weight: var(--font-heavy);
@@ -139,6 +134,51 @@
 .sourceGlobal {
   opacity: 0.4;
   font-style: italic;
+}
+
+/* Multiple-source container — stacks chips vertically, right-aligned */
+.sourceMulti {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+/* Base chip shared by all source types */
+.sourceChip {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: var(--font-heavy);
+  white-space: nowrap;
+}
+
+/* Pinnacle bosses — warm gold/orange */
+.sourcePinnacle {
+  color: #ffb347;
+  background-color: rgba(255, 179, 71, 0.12);
+  border: 1px solid rgba(255, 179, 71, 0.35);
+}
+
+/* Shaper Guardian map bosses — blue, matching accent */
+.sourceGuardian {
+  color: var(--accent-primary);
+  background-color: rgba(100, 180, 255, 0.10);
+  border: 1px solid rgba(100, 180, 255, 0.30);
+}
+
+/* League-mechanic encounters — teal/purple */
+.sourceLeague {
+  color: #c084fc;
+  background-color: rgba(192, 132, 252, 0.10);
+  border: 1px solid rgba(192, 132, 252, 0.30);
+}
+
+/* Generic boss (no sourceType set) */
+.sourceBoss {
+  color: var(--accent-primary);
+  font-weight: var(--font-heavy);
 }
 
 .divCardCallout {
