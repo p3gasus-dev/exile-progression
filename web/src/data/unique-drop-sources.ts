@@ -101,11 +101,6 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     divCard: "The Shaper",
     sourceType: "pinnacle",
   },
-  "shaper's touch": {
-    bosses: ["The Shaper"],
-    notes: "Wyrmscale Gauntlets — unique drop from The Shaper",
-    sourceType: "pinnacle",
-  },
   voidfletcher: {
     bosses: ["The Shaper"],
     notes: "Penetrating Arrow Quiver — unique drop from The Shaper",
@@ -123,11 +118,6 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes: "Whittling Knife — unique drop from The Maven",
     sourceType: "pinnacle",
   },
-  "forbidden shako": {
-    bosses: ["The Maven"],
-    notes: "Iron Hat — unique drop from The Maven (contains awakened gems)",
-    sourceType: "pinnacle",
-  },
   // Forbidden Flame/Flesh drop from all three pinnacle bosses —
   // the boss killed determines which ascendancy node is rolled on the jewel.
   "forbidden flame": {
@@ -142,13 +132,6 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes:
       "Viridian Jewel — drops from Maven, Searing Exarch, or Eater of Worlds. " +
       "The boss killed determines the ascendancy node rolled.",
-    sourceType: "pinnacle",
-  },
-
-  // ── The Searing Exarch ────────────────────────────────────────────────────
-  "eber's unification": {
-    bosses: ["The Searing Exarch"],
-    notes: "Hubris Circlet — unique helmet from Searing Exarch",
     sourceType: "pinnacle",
   },
 
@@ -185,6 +168,34 @@ export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {
     notes:
       "Onyx Amulet — drops from the Chimera guardian map (any element version)",
     sourceType: "guardian",
+  },
+
+  // ── Atziri, Queen of the Vaal ─────────────────────────────────────────────
+  // Drops from Atziri in Apex of Sacrifice (and Uber Atziri in Alluring Abyss).
+  "atziri's disfavour": {
+    bosses: ["Atziri, Queen of the Vaal"],
+    areas: ["Apex of Sacrifice"],
+    notes: "Great Axe — unique drop from Atziri, Queen of the Vaal",
+    sourceType: "pinnacle",
+  },
+  "atziri's mirror": {
+    bosses: ["Atziri, Queen of the Vaal"],
+    areas: ["Apex of Sacrifice"],
+    notes: "Tarnished Spirit Shield — unique drop from Atziri, Queen of the Vaal",
+    sourceType: "pinnacle",
+  },
+  "atziri's promise": {
+    bosses: ["Atziri, Queen of the Vaal"],
+    areas: ["Apex of Sacrifice"],
+    notes: "Amethyst Flask — unique drop from Atziri, Queen of the Vaal",
+    sourceType: "pinnacle",
+  },
+
+  // ── Delve ─────────────────────────────────────────────────────────────────
+  "aul's uprising": {
+    bosses: ["Aul, the Crystal King"],
+    notes: "Cobalt Jewel — unique drop from Aul, the Crystal King in Delve",
+    sourceType: "league",
   },
 
   // ── Timeless Jewels ───────────────────────────────────────────────────────
