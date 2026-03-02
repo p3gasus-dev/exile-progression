@@ -334,3 +334,39 @@ export const CHALLENGE_CATEGORIES: Record<ChallengeCategory, string> = {
   crafting: "Crafting & Currency",
   misc: "Misc",
 };
+
+// ── Route challenge markers ───────────────────────────────────────────────────
+//
+// Maps kill-fragment boss names and ascend versions to the challenge(s) they
+// complete. Used by ActRoute and VoidstoneRoute to render C# badges.
+//
+// "Kitava, the Insatiable" appears twice (Act 5 = C5, Act 10 = C6).
+// Callers must handle it by tracking occurrence order.
+
+export interface RouteChallengeRef {
+  id: string;
+  number: number;
+}
+
+/** Boss name (as it appears in `kill` route fragments) → challenge(s) completed. */
+export const BOSS_CHALLENGE_MAP: Record<string, RouteChallengeRef[]> = {
+  "Merveil, the Siren":     [{ id: "complete-act-1",       number: 1  }],
+  "Vaal Oversoul":           [{ id: "complete-act-2",       number: 2  }],
+  "Dominus, High Templar":   [{ id: "complete-act-3",       number: 3  }],
+  "Malachai, The Nightmare": [{ id: "complete-act-4",       number: 4  }],
+  // Two occurrences: first = C5 (Act 5), second = C6 (Acts 6–10)
+  "Kitava, the Insatiable":  [{ id: "complete-act-5",       number: 5  },
+                              { id: "complete-acts-6-10",   number: 6  }],
+  "The Eater of Worlds":     [{ id: "kill-eater-of-worlds", number: 21 }],
+  "The Searing Exarch":      [{ id: "kill-searing-exarch",  number: 22 }],
+  "The Maven":               [{ id: "kill-maven",           number: 23 }],
+  "The Uber Elder":          [{ id: "kill-uber-elder",      number: 24 }],
+};
+
+/** Ascend version → challenge completed. */
+export const ASCEND_CHALLENGE_MAP: Record<string, RouteChallengeRef> = {
+  normal:     { id: "complete-normal-lab",     number: 7  },
+  cruel:      { id: "complete-cruel-lab",      number: 8  },
+  merciless:  { id: "complete-merciless-lab",  number: 9  },
+  eternal:    { id: "complete-eternal-lab",    number: 10 },
+};

@@ -30,26 +30,31 @@ DESC:
 	VOIDSTONE1-4: Fastest/easiest route to completing voidstones 1, 2 ,3 ,4.
 
 TODO:
-	UNIQUES
-		Fix Drop locations
-		Add Tier # and reorder
+	UNIQUES/BOSSES
+		REBUILD unique drop system
+			Drop Acuisition, Additional Drop Restrictions, Monster drops
 	AUTO IMPORT PANTHEONS, ANOINTS, SPECIAL MODS
-	FIX/update TEXT FORMATTING & HIGHLIGHTS
-	RECOMMENDED DPS/EHP,  RES/IMMUNE, ETC. ON ACT1-10, ASCEND, 1-4 VOIDSTONE
-	MARK ROUTES W/ CHALLENGE PROGRESSION WHERE APPLICABLE C# & X/Y
-	ATLAS PASSIVE STRATEGY -> FULL COMPLETION (Fastest Way to Fully Complete)
-	LEAGUE SELECTOR
-		+UPDATE FOR MIRAGE LEAGUE
-	Update challenges in route
-		make settingss toggle to include challenges in route
 
 IN PROGRESS:
-	Move Class & Bandits to Build
+	Collect useful common regex
+	Route pathing
+	Unique Item drop locations
+	mirage league changes
+	dps/ehp/res/immune for acts/bosses
 
 TEST:
-	DASHBOARD ROUTE PROGRESS
-		Show full Section (i.e. Act 1 + subsection steps) instead
-	ADD VOIDSTONE1-4, CHALLENGES1-40 to EDIT ROUTE
 	Make sure all settings have descriptions and sections headers
 	add list of common regex with copy icon and desc.
 	Allow changing voidstone order
+	Moved Class & Bandits to Build
+	Added League Selector
+	Update challenges in route
+		make settingss toggle to include challenges in route
+	Fix Dashboard route
+		seperate acts and voidstone into drop down progress bars
+	Update common regex with popular campaign and early maps regex
+	ADD EDIT CHALLENGES to Settings
+	ATLAS PASSIVE STRATEGY -> FULL COMPLETION (Fastest Way to Fully Complete)
+	FIX/update TEXT FORMATTING & HIGHLIGHTS
+	MARK ROUTES W/ CHALLENGE PROGRESSION WHERE APPLICABLE C# & X/Y
+	Add Unique item Tier # and reorder

@@ -22,3 +22,20 @@
   margin: var(--size-4) 0;
   border-color: var(--accent-secondary);
 }
+
+.infoForm {
+  padding: var(--size-2);
+}
+
+.infoLabel {
+  width: 100%;
+  text-align: right;
+  color: var(--on-secondary);
+  font-weight: var(--font-heavy);
+}
+
+.infoValue {
+  width: 100%;
+  text-align: left;
+  color: var(--accent-primary);
+}

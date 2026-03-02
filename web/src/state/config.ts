@@ -6,6 +6,7 @@ import { atom, selector } from "recoil";
 export interface Config {
   gemsOnly: boolean;
   showSubsteps: boolean;
+  showChallenges: boolean;
 }
 
 const CONFIG_VERSION = 0;
@@ -24,7 +25,11 @@ export const configSelector = selector<Config>({
       value = {
         gemsOnly: false,
         showSubsteps: true,
+        showChallenges: true,
       };
+    // Backfill for configs saved before showChallenges existed
+    if (value.showChallenges === undefined)
+      value = { ...value, showChallenges: true };
 
     return value;
   },

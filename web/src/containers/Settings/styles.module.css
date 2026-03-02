@@ -23,6 +23,36 @@
   border-color: var(--accent-secondary);
 }
 
+/* ── Challenges ─────────────────────────────────────────────────────────────── */
+
+.challengeRow {
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+  flex-wrap: wrap;
+}
+
+.challengeCount {
+  font-size: 0.9rem;
+  color: var(--accent-primary);
+  font-weight: var(--font-heavy);
+}
+
+.challengeTotal {
+  color: var(--on-primary);
+  opacity: 0.5;
+  font-weight: normal;
+}
+
+.resetButton {
+  color: var(--on-secondary);
+  opacity: 0.7;
+}
+
+.resetButton:hover {
+  opacity: 1;
+}
+
 /* ── Repo links ─────────────────────────────────────────────────────────────── */
 
 .repoLinks {

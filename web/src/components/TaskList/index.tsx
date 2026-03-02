@@ -3,12 +3,15 @@ import styles from "./styles.module.css";
 import classNames from "classnames";
 import { RecoilState, useRecoilState } from "recoil";
 
+export type StepHighlight = "boss" | "pinnacle" | "ascend";
+
 interface TaskItemProps {
   children?: React.ReactNode;
   isCompletedState?: RecoilState<boolean>;
+  highlight?: StepHighlight;
 }
 
-function TaskListItem({ children, isCompletedState }: TaskItemProps) {
+function TaskListItem({ children, isCompletedState, highlight }: TaskItemProps) {
   const [isCompleted, setIsCompleted] = isCompletedState
     ? useRecoilState(isCompletedState)
     : [undefined, undefined];
@@ -22,6 +25,9 @@ function TaskListItem({ children, isCompletedState }: TaskItemProps) {
         styles.listItem,
         {
           [styles.completed]: isCompleted,
+          [styles.highlightBoss]: highlight === "boss",
+          [styles.highlightPinnacle]: highlight === "pinnacle",
+          [styles.highlightAscend]: highlight === "ascend",
         }
       )}
       onClick={() => {

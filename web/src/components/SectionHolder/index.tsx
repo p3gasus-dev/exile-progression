@@ -1,4 +1,5 @@
 import { sectionCollapseSelectorFamily } from "../../state/section-collapse";
+import { StatTarget } from "../../data/stat-targets";
 import { TaskList, TaskListProps } from "../TaskList";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -9,9 +10,10 @@ import { useRecoilState } from "recoil";
 interface SectionHolderProps {
   name: string;
   items: TaskListProps["items"];
+  statHints?: StatTarget[];
 }
 
-export function SectionHolder({ name, items }: SectionHolderProps) {
+export function SectionHolder({ name, items, statHints }: SectionHolderProps) {
   const sectionId = `section-${name.replace(/\s+/g, "_")}`;
   const [collapsed, setCollapsed] = useRecoilState(
     sectionCollapseSelectorFamily(sectionId)
@@ -45,9 +47,23 @@ export function SectionHolder({ name, items }: SectionHolderProps) {
           }}
         >
           {icon}
-          <div>{`--== ${name} ==--`}</div>
+          <div>{name}</div>
           {icon}
         </button>
+        {statHints && statHints.length > 0 && (
+          <div className={classNames(styles.statHintRow)}>
+            {statHints.map((h) => (
+              <span
+                key={h.label}
+                className={classNames(styles.statHint, h.warn && styles.statHintWarn)}
+                title={h.note}
+              >
+                <span className={classNames(styles.statHintLabel)}>{h.label}</span>
+                <span className={classNames(styles.statHintValue)}>{h.value}</span>
+              </span>
+            ))}
+          </div>
+        )}
         <hr />
       </div>
       {collapsed || (

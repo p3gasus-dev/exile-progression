@@ -9,14 +9,60 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: var(--border-width) solid var(--accent-secondary);
 }
 
 .header {
   width: 100%;
   color: var(--on-secondary);
-  font-size: var(--size-5);
-  padding: var(--size-2);
+  font-size: 1rem;
+  padding: var(--size-3) var(--size-2);
   font-weight: var(--font-heavy);
   text-align: center;
   cursor: pointer;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.header:hover {
+  opacity: 1;
+}
+
+/* ── Stat hint chips shown below the section title ── */
+
+.statHintRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-1);
+  padding: 0 var(--size-2) var(--size-1);
+}
+
+.statHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--on-primary);
+  opacity: 0.75;
+}
+
+.statHintWarn {
+  color: #e8c840;
+  border-color: rgba(232, 200, 64, 0.35);
+  background-color: rgba(232, 200, 64, 0.06);
+  opacity: 1;
+}
+
+.statHintLabel {
+  opacity: 0.65;
+  font-weight: normal;
+}
+
+.statHintValue {
+  font-weight: var(--font-heavy);
 }

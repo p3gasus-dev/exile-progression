@@ -1,9 +1,15 @@
 import { atlasConfigSelector, AtlasConfig } from "../../state/atlas-config";
+import {
+  ATLAS_GUIDE,
+  atlasCompletionProgressSelectorFamily,
+  useClearAtlasCompletion,
+} from "../../state/atlas-completion";
 import { SplitRow } from "../../components/SplitRow";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdDeleteForever } from "react-icons/md";
 import { useRecoilState } from "recoil";
+import { formStyles } from "../../styles";
 
 function SectionHeader({ title }: { title: string }) {
   return <h2 className={classNames(styles.sectionHeader)}>{title}</h2>;
@@ -28,8 +34,29 @@ const VOIDSTONES = [
   { boss: "The Uber Elder",      reward: "Decayed Voidstone" },
 ];
 
+// ─── Guide step ───────────────────────────────────────────────────────────────
+
+function GuideStep({ id, label, detail }: { id: string; label: string; detail?: string }) {
+  const [done, setDone] = useRecoilState(atlasCompletionProgressSelectorFamily(id));
+  return (
+    <li
+      className={classNames(styles.guideStep, { [styles.guideStepDone]: done })}
+      onClick={() => setDone(!done)}
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setDone(!done); }}
+    >
+      <span className={classNames(styles.guideCheck)}>{done ? "✓" : ""}</span>
+      <span className={classNames(styles.guideStepContent)}>
+        <span className={classNames(styles.guideStepLabel)}>{label}</span>
+        {detail && <span className={classNames(styles.guideStepDetail)}>{detail}</span>}
+      </span>
+    </li>
+  );
+}
+
 export default function AtlasContainer() {
   const [config, setConfig] = useRecoilState(atlasConfigSelector);
+  const clearAtlasCompletion = useClearAtlasCompletion();
 
   function update(partial: Partial<AtlasConfig>) {
     setConfig({ ...config, ...partial });
@@ -153,6 +180,40 @@ export default function AtlasContainer() {
           }
         />
       </div>
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Full Completion Guide ────────────────────────────────────────── */}
+      <div className={classNames(styles.guideHeader)}>
+        <SectionHeader title="Full Completion Guide" />
+        <button
+          className={classNames(formStyles.formButton, styles.guideResetBtn)}
+          onClick={clearAtlasCompletion}
+          title="Reset guide progress"
+          type="button"
+        >
+          <MdDeleteForever size={14} />
+        </button>
+      </div>
+      <Hint>
+        Phase-by-phase checklist for the fastest way to fully complete the Atlas.
+        Click any step to mark it done. Progress is saved across sessions.
+      </Hint>
+
+      <div className={classNames(styles.guideList)}>
+        {ATLAS_GUIDE.map((phase) => (
+          <details key={phase.phase} className={classNames(styles.guidePhase)} open>
+            <summary className={classNames(styles.guidePhaseName)}>
+              {phase.phase}
+            </summary>
+            <ol className={classNames(styles.guideStepList)}>
+              {phase.steps.map((step) => (
+                <GuideStep key={step.id} id={step.id} label={step.label} detail={step.detail} />
+              ))}
+            </ol>
+          </details>
+        ))}
+      </div>
+
     </div>
   );
 }

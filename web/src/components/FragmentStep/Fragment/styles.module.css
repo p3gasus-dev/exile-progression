@@ -1,48 +1,67 @@
+/* ── Inline block wrapper (icon + text side-by-side) ────────────────────────── */
+
+.noWrap {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: var(--size-1);
+}
+
+/* ── Fragment type colours ───────────────────────────────────────────────────── */
+/*
+ * Palette is intentionally PoE-inspired:
+ *   enemy     – warm orange  (boss danger feel)
+ *   area      – warm tan     (PoE area-name colour)
+ *   quest     – warm gold    (PoE quest-item colour)
+ *   questText – soft green   (PoE NPC dialogue colour)
+ *   waypoint  – cornflower   (consistent with portal)
+ *   portal    – cornflower
+ *   trial     – sage green   (labyrinth association)
+ *   areaLevel – muted gray   (secondary / metadata)
+ *   default   – near-white   (design system on-secondary)
+ */
+
 .default {
   color: var(--on-secondary);
   font-weight: var(--font-heavy);
 }
 
 .enemy {
-  color: darkorange;
+  color: #e87d2b;
   font-weight: var(--font-heavy);
 }
 
 .area {
-  color: #ffcf91;
+  color: #c8a870;
   font-weight: var(--font-heavy);
 }
 
 .areaLevel {
-  color: rgb(128, 128, 128);
+  color: #6a6a7a;
+  font-size: 0.85em;
 }
 
 .quest {
-  color: gold;
+  color: #e8c840;
   font-weight: var(--font-heavy);
 }
 
 .questText {
-  color: lime;
+  color: #66c466;
   font-weight: var(--font-heavy);
 }
 
 .waypoint {
-  color: #8ab3ff;
-  font-weight: var(--font-heavy);
-}
-
-.trial {
-  color: darkseagreen;
+  color: #6fa8f5;
   font-weight: var(--font-heavy);
 }
 
 .portal {
-  color: #8ab3ff;
+  color: #6fa8f5;
   font-weight: var(--font-heavy);
 }
 
-.noWrap {
-  display: inline-block;
-  white-space: pre;
+.trial {
+  color: #7fb88a;
+  font-weight: var(--font-heavy);
 }

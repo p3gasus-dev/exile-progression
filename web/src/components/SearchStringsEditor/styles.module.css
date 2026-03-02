@@ -41,6 +41,17 @@
   overflow: hidden;
 }
 
+.presetGroup {
+  padding: var(--size-1) var(--size-2);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--on-secondary);
+  font-size: 0.7rem;
+  font-weight: var(--font-heavy);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
 .presetRow {
   display: grid;
   grid-template-columns: auto 1fr auto;

@@ -72,6 +72,35 @@ export default function BuildContainer() {
         />
       </div>
 
+      {buildData.characterClass !== "None" && (
+        <>
+          <hr className={classNames(styles.divider)} />
+          {/* ── CHARACTER ─────────────────────────────────────────────────── */}
+          <SectionHeader title="Character" />
+          <p className={classNames(styles.hint)}>
+            Class and bandit choice imported from your Path of Building code.
+          </p>
+          <div className={classNames(styles.infoForm)}>
+            <SplitRow
+              left={<div className={classNames(styles.infoLabel)}>Class</div>}
+              right={
+                <div className={classNames(styles.infoValue)}>
+                  {buildData.characterClass}
+                </div>
+              }
+            />
+            <SplitRow
+              left={<div className={classNames(styles.infoLabel)}>Bandits</div>}
+              right={
+                <div className={classNames(styles.infoValue)}>
+                  {buildData.bandit === "None" ? "Kill All" : buildData.bandit}
+                </div>
+              }
+            />
+          </div>
+        </>
+      )}
+
       {requiredGems.length > 0 && (
         <>
           <hr className={classNames(styles.divider)} />

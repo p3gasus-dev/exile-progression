@@ -39,3 +39,13 @@
   width: 100%;
   text-align: left;
 }
+
+.select {
+  color: var(--on-primary);
+  background-color: var(--primary);
+  border: var(--border-width) solid var(--accent-primary);
+  border-radius: var(--border-radius);
+  padding: var(--size-1) var(--size-2);
+  font-size: 0.9rem;
+  outline: none;
+}

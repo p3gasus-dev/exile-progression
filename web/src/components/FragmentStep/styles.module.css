@@ -1,3 +1,12 @@
 .subStepToggle {
   cursor: pointer;
+  color: var(--accent-primary);
+  opacity: 0.6;
+  vertical-align: middle;
+  padding: 0 var(--size-1);
+  line-height: 1;
+}
+
+.subStepToggle:hover {
+  opacity: 1;
 }

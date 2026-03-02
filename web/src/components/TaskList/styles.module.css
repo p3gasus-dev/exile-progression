@@ -13,6 +13,7 @@
 .bullet {
   font-weight: var(--font-heavy);
   margin-right: var(--size-2);
+  color: var(--accent-primary);
 }
 
 .listItem.completed .task {
@@ -24,4 +25,36 @@
   flex-direction: column;
   gap: var(--size-2);
   flex: 1;
+}
+
+/* ── Step highlights ────────────────────────────────────────────────────────── */
+/*
+ * Left border accent + subtle background tint to draw attention to
+ * important steps without overwhelming the route text.
+ *
+ * boss      – act-route boss kill     (orange, matches .enemy colour)
+ * pinnacle  – voidstone pinnacle kill (gold, indicates a major milestone)
+ * ascend    – labyrinth ascendancy    (sage green, matches .trial colour)
+ */
+
+.highlightBoss {
+  border-left: 3px solid #e87d2b;
+  background-color: rgba(232, 125, 43, 0.05);
+}
+
+.highlightPinnacle {
+  border-left: 3px solid #e8c840;
+  background-color: rgba(232, 200, 64, 0.07);
+}
+
+.highlightAscend {
+  border-left: 3px solid #7fb88a;
+  background-color: rgba(127, 184, 138, 0.05);
+}
+
+/* Tighten the left padding to account for the border so text stays aligned */
+.highlightBoss,
+.highlightPinnacle,
+.highlightAscend {
+  padding-left: calc(var(--size-3) - 3px);
 }

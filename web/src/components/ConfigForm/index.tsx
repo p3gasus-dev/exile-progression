@@ -47,6 +47,24 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
           </div>
         }
       />
+      <SplitRow
+        left={<div className={classNames(styles.label)}>Show Challenges</div>}
+        right={
+          <div className={classNames(styles.value)}>
+            <input
+              type="checkbox"
+              checked={config.showChallenges}
+              onChange={(evt) => {
+                onSubmit({
+                  ...config,
+                  showChallenges: evt.target.checked,
+                });
+              }}
+              aria-label="Show Challenges"
+            />
+          </div>
+        }
+      />
     </div>
   );
 }

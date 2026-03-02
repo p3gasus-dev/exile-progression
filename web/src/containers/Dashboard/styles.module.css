@@ -43,7 +43,51 @@
   padding-bottom: var(--size-1);
 }
 
+/* ── Panel heading (header + league badge) ──────────────────────────────────── */
+
+.panelHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-2);
+}
+
+.leagueBadge {
+  font-size: 0.75rem;
+  font-weight: var(--font-heavy);
+  color: var(--accent-primary);
+  opacity: 0.8;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* ── Route Progress ─────────────────────────────────────────────────────────── */
+
+/* Collapsible progress group (<details>/<summary>) */
+.progressGroup {
+  display: contents; /* participates in parent flex gap without extra wrapper */
+}
+
+.progressGroup > .progressGroupSummary {
+  cursor: pointer;
+  list-style: none;
+  display: block;
+}
+
+/* Remove default webkit disclosure triangle */
+.progressGroup > .progressGroupSummary::-webkit-details-marker {
+  display: none;
+}
+
+/* Indent sub-section bars */
+.subProgressList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+  padding: var(--size-1) 0 var(--size-1) var(--size-3);
+  border-left: 2px solid var(--accent-secondary);
+  margin-left: var(--size-1);
+}
 
 .progressList {
   display: flex;
@@ -400,6 +444,101 @@
 .anointOilNames {
   font-size: 0.75rem;
   opacity: 0.6;
+}
+
+/* ── Stat Targets ───────────────────────────────────────────────────────────── */
+
+.statPhaseList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.statPhase {
+  border: var(--border-width) solid var(--accent-secondary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.statPhaseName {
+  cursor: pointer;
+  list-style: none;
+  padding: var(--size-1) var(--size-2);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--on-secondary);
+  font-size: 0.78rem;
+  font-weight: var(--font-heavy);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  user-select: none;
+}
+
+.statPhaseName::-webkit-details-marker {
+  display: none;
+}
+
+.statPhaseName::before {
+  content: "▸ ";
+  opacity: 0.45;
+  font-size: 0.65rem;
+}
+
+details[open] > .statPhaseName::before {
+  content: "▾ ";
+}
+
+.statPhaseNote {
+  font-size: 0.75rem;
+  color: var(--on-primary);
+  opacity: 0.6;
+  font-style: italic;
+  padding: var(--size-1) var(--size-2) 0;
+  margin: 0;
+}
+
+.statList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: var(--size-1) 0;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--size-2);
+  padding: 3px var(--size-2);
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: var(--on-primary);
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+.statValue {
+  font-size: 0.8rem;
+  font-weight: var(--font-heavy);
+  color: var(--on-secondary);
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.statWarn {
+  color: #e8c840;
+}
+
+.statNote {
+  font-size: 0.7rem;
+  font-weight: normal;
+  color: var(--on-primary);
+  opacity: 0.5;
+  font-style: italic;
 }
 
 /* Special Mods */

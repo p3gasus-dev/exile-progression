@@ -3,12 +3,15 @@ import { pobCodeAtom } from "../../state/pob-code";
 import { routeFilesSelector } from "../../state/route-files";
 import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
 import { routeSelector } from "../../state/route";
+import { challengeProgressSummarySelector } from "../../state/progress-summary";
+import { useClearChallengeProgress } from "../../state/challenge-progress";
 import { trackEvent } from "../../utility/telemetry";
 import { formStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { FaGithub, FaRegClipboard } from "react-icons/fa";
-import { useRecoilState, useRecoilCallback, useResetRecoilState } from "recoil";
+import { MdDeleteForever } from "react-icons/md";
+import { useRecoilState, useRecoilCallback, useResetRecoilState, useRecoilValue } from "recoil";
 import { toast } from "react-toastify";
 
 function SectionHeader({ title }: { title: string }) {
@@ -21,6 +24,9 @@ export default function SettingsContainer() {
 
   const [voidstoneRouteFiles, setVoidstoneRouteFiles] = useRecoilState(voidstoneRouteFilesSelector);
   const resetVoidstoneRouteFiles = useResetRecoilState(voidstoneRouteFilesSelector);
+
+  const challengeProgress = useRecoilValue(challengeProgressSummarySelector);
+  const clearChallengeProgress = useClearChallengeProgress();
 
   // 3rd-party export: serialise the full route + pob code to clipboard
   const exportToClipboard = useRecoilCallback(
@@ -66,6 +72,32 @@ export default function SettingsContainer() {
         onSubmit={(updated) => setVoidstoneRouteFiles(updated)}
         onReset={resetVoidstoneRouteFiles}
       />
+
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Edit Challenges ──────────────────────────────────────────────── */}
+      <SectionHeader title="Challenges" />
+      <p className={classNames(styles.hint)}>
+        Track your 40 challenge progress in the <b>Route → Challenges</b> tab.
+        Use the button below to reset all challenge progress.
+      </p>
+      <div className={classNames(styles.challengeRow)}>
+        <span className={classNames(styles.challengeCount)}>
+          {challengeProgress.completed}
+          <span className={classNames(styles.challengeTotal)}>/{challengeProgress.total}</span>
+          {" "}challenges complete
+        </span>
+        <button
+          className={classNames(formStyles.formButton, styles.resetButton)}
+          onClick={() => {
+            clearChallengeProgress();
+            toast.success("Challenge progress reset");
+          }}
+        >
+          <MdDeleteForever className="inlineIcon" />
+          Reset Progress
+        </button>
+      </div>
 
       <hr className={classNames(styles.divider)} />
 

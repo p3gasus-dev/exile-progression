@@ -1,9 +1,12 @@
 import {
   routeProgressSummarySelector,
   routeCurrentSectionSelector,
+  routeSectionProgressSelector,
   voidstoneProgressSummarySelector,
+  voidstoneSectionProgressSelector,
   challengeProgressSummarySelector,
 } from "../../state/progress-summary";
+import { leagueSelector } from "../../state/league";
 import { uniqueItemsSelector } from "../../state/unique-items";
 import { buildDataSelector } from "../../state/build-data";
 import { buildSettingsSelector } from "../../state/build-settings";
@@ -13,6 +16,7 @@ import { Fragments } from "../../../../common/route-processing/fragment/types";
 import { DivCardBadge } from "../../components/UniqueItemBadge";
 import { MAJOR_GODS, MINOR_GODS } from "../../data/pantheon-data";
 import { OIL_COLOURS } from "../../data/oil-data";
+import { STAT_TARGETS } from "../../data/stat-targets";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { FaStar } from "react-icons/fa";
@@ -92,48 +96,79 @@ function fragmentsToText(parts: Fragments.AnyFragment[]): string {
 
 function RouteProgress() {
   const actSummary = useRecoilValue(routeProgressSummarySelector);
+  const actSections = useRecoilValue(routeSectionProgressSelector);
   const currentSection = useRecoilValue(routeCurrentSectionSelector);
   const voidstoneSummary = useRecoilValue(voidstoneProgressSummarySelector);
+  const voidstoneSections = useRecoilValue(voidstoneSectionProgressSelector);
   const challengeSummary = useRecoilValue(challengeProgressSummarySelector);
+  const league = useRecoilValue(leagueSelector);
 
   return (
     <section className={classNames(styles.panel)}>
-      <SectionHeader title="Route Progress" />
+      <div className={classNames(styles.panelHeading)}>
+        <SectionHeader title="Route Progress" />
+        <span className={classNames(styles.leagueBadge)}>{league}</span>
+      </div>
       <div className={classNames(styles.progressList)}>
-        <ProgressBar
-          label="ACT 1–10"
-          completed={actSummary.completed}
-          total={actSummary.total}
-        />
-        {currentSection && (
-          <>
-            <div className={classNames(styles.currentSection)}>
-              <span className={classNames(styles.currentSectionName)}>
-                {currentSection.sectionName}
-              </span>
-              <span className={classNames(styles.currentSectionCount)}>
-                {currentSection.completed}/{currentSection.total}
-              </span>
-            </div>
-            <ul className={classNames(styles.pendingStepList)}>
-              {currentSection.pendingParts.map((parts, i) => (
-                <li key={i} className={classNames(styles.pendingStep)}>
-                  {fragmentsToText(parts)}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-        <ProgressBar
-          label="Voidstones"
-          completed={voidstoneSummary.completed}
-          total={voidstoneSummary.total}
-        />
+
+        {/* ── ACT 1-10 (collapsible) ── */}
+        <details className={classNames(styles.progressGroup)}>
+          <summary className={classNames(styles.progressGroupSummary)}>
+            <ProgressBar
+              label="ACT 1–10"
+              completed={actSummary.completed}
+              total={actSummary.total}
+            />
+          </summary>
+          <div className={classNames(styles.subProgressList)}>
+            {actSections.map((s) => (
+              <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
+            ))}
+            {currentSection && (
+              <>
+                <div className={classNames(styles.currentSection)}>
+                  <span className={classNames(styles.currentSectionName)}>
+                    {currentSection.sectionName}
+                  </span>
+                  <span className={classNames(styles.currentSectionCount)}>
+                    {currentSection.completed}/{currentSection.total}
+                  </span>
+                </div>
+                <ul className={classNames(styles.pendingStepList)}>
+                  {currentSection.pendingParts.map((parts, i) => (
+                    <li key={i} className={classNames(styles.pendingStep)}>
+                      {fragmentsToText(parts)}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        </details>
+
+        {/* ── Voidstones (collapsible) ── */}
+        <details className={classNames(styles.progressGroup)}>
+          <summary className={classNames(styles.progressGroupSummary)}>
+            <ProgressBar
+              label="Voidstones"
+              completed={voidstoneSummary.completed}
+              total={voidstoneSummary.total}
+            />
+          </summary>
+          <div className={classNames(styles.subProgressList)}>
+            {voidstoneSections.map((s) => (
+              <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
+            ))}
+          </div>
+        </details>
+
+        {/* ── Challenges (flat) ── */}
         <ProgressBar
           label="Challenges"
           completed={challengeSummary.completed}
           total={challengeSummary.total}
         />
+
       </div>
     </section>
   );
@@ -351,6 +386,51 @@ function Misc() {
   );
 }
 
+// ── Stat Targets panel ────────────────────────────────────────────────────────
+
+function StatTargets() {
+  return (
+    <section className={classNames(styles.panel)}>
+      <SectionHeader title="Stat Targets" />
+      <p className={classNames(styles.emptyHint)}>
+        Recommended thresholds at each phase of the game.
+      </p>
+      <div className={classNames(styles.statPhaseList)}>
+        {STAT_TARGETS.map((phase) => (
+          <details key={phase.phase} className={classNames(styles.statPhase)}>
+            <summary className={classNames(styles.statPhaseName)}>
+              {phase.phase}
+            </summary>
+            {phase.note && (
+              <p className={classNames(styles.statPhaseNote)}>{phase.note}</p>
+            )}
+            <dl className={classNames(styles.statList)}>
+              {phase.targets.map((t) => (
+                <div key={t.label} className={classNames(styles.statRow)}>
+                  <dt className={classNames(styles.statLabel)}>{t.label}</dt>
+                  <dd
+                    className={classNames(
+                      styles.statValue,
+                      t.warn && styles.statWarn
+                    )}
+                  >
+                    {t.value}
+                    {t.note && (
+                      <span className={classNames(styles.statNote)}>
+                        {t.note}
+                      </span>
+                    )}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 
 export default function DashboardContainer() {
@@ -358,6 +438,7 @@ export default function DashboardContainer() {
     <div className={classNames(styles.dashboard)}>
       <div className={classNames(styles.leftCol)}>
         <RouteProgress />
+        <StatTargets />
       </div>
       <div className={classNames(styles.rightCol)}>
         <UniqueItems />

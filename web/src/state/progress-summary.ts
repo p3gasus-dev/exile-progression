@@ -70,6 +70,52 @@ export const routeCurrentSectionSelector = selector({
   },
 });
 
+// ── Per-act section progress ──────────────────────────────────────────────────
+
+export interface SectionProgress {
+  name: string;
+  completed: number;
+  total: number;
+}
+
+export const routeSectionProgressSelector = selector<SectionProgress[]>({
+  key: "routeSectionProgressSelector",
+  get: async ({ get }) => {
+    const route = await get(routeSelector);
+    return route.map((section, si) => {
+      let total = 0;
+      let completed = 0;
+      for (let ti = 0; ti < section.steps.length; ti++) {
+        const step = section.steps[ti];
+        if (step.type !== "fragment_step") continue;
+        total++;
+        if (get(routeProgressSelectorFamily(`${si},${ti}`))) completed++;
+      }
+      return { name: section.name, completed, total };
+    });
+  },
+});
+
+// ── Per-voidstone-section progress ────────────────────────────────────────────
+
+export const voidstoneSectionProgressSelector = selector<SectionProgress[]>({
+  key: "voidstoneSectionProgressSelector",
+  get: async ({ get }) => {
+    const route = await get(voidstoneRouteSelector);
+    return route.map((section, si) => {
+      let total = 0;
+      let completed = 0;
+      for (let ti = 0; ti < section.steps.length; ti++) {
+        const step = section.steps[ti];
+        if (step.type !== "fragment_step") continue;
+        total++;
+        if (get(voidstoneProgressSelectorFamily(`${si},${ti}`))) completed++;
+      }
+      return { name: section.name, completed, total };
+    });
+  },
+});
+
 // ── Voidstone progress ────────────────────────────────────────────────────────
 //
 // We derive completion by scanning the parsed voidstone route for `kill`

@@ -1,11 +1,14 @@
 import { FragmentStep } from "../../../components/FragmentStep";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { UniqueItemBadge } from "../../../components/UniqueItemBadge";
+import { ChallengeBadge } from "../../../components/ChallengeBadge";
 import { TaskListProps } from "../../../components/TaskList";
 import { voidstoneProgressSelectorFamily } from "../../../state/voidstone-progress";
 import { voidstoneRouteSelector } from "../../../state/voidstone-route";
 import { uniqueItemsSelector } from "../../../state/unique-items";
 import { getDropsForBoss } from "../../../data/unique-drop-sources";
+import { BOSS_CHALLENGE_MAP, RouteChallengeRef } from "../../../data/challenge-list";
+import { SECTION_STAT_HINTS } from "../../../data/stat-targets";
 import { Fragments } from "../../../../../common/route-processing/fragment/types";
 import { ReactNode } from "react";
 import { useRecoilValue } from "recoil";
@@ -45,14 +48,25 @@ export default function VoidstoneRoute() {
         getDropsForBoss(boss, buildUniqueNames)
       );
 
+      const isPinnacleKill = bossNames.length > 0;
+
+      // Collect challenge refs for each boss kill in this step
+      const stepChallenges: RouteChallengeRef[] = bossNames.flatMap(
+        (boss) => BOSS_CHALLENGE_MAP[boss]?.[0] ? [BOSS_CHALLENGE_MAP[boss][0]] : []
+      );
+
       taskItems.push({
         key: stepIndex,
         isCompletedState: voidstoneProgressSelectorFamily(
           `${sectionIndex},${stepIndex}`
         ),
+        highlight: isPinnacleKill ? "pinnacle" : undefined,
         children: (
           <>
             <FragmentStep step={step} />
+            {stepChallenges.length > 0 && (
+              <ChallengeBadge challenges={stepChallenges} />
+            )}
             {relevantDrops.length > 0 && (
               <UniqueItemBadge items={relevantDrops} />
             )}
@@ -66,6 +80,7 @@ export default function VoidstoneRoute() {
         key={sectionIndex}
         name={section.name}
         items={taskItems}
+        statHints={SECTION_STAT_HINTS[section.name]}
       />
     );
   }
