@@ -15,7 +15,6 @@ import { Data } from "../../../../common/data";
 import { Fragments } from "../../../../common/route-processing/fragment/types";
 import { DivCardBadge } from "../../components/UniqueItemBadge";
 import { MAJOR_GODS, MINOR_GODS } from "../../data/pantheon-data";
-import { OIL_COLOURS } from "../../data/oil-data";
 import { STAT_TARGETS } from "../../data/stat-targets";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -281,11 +280,7 @@ function Misc() {
   const majorGod = MAJOR_GODS.find((g) => g.id === settings.pantheonMajor);
   const minorGod = MINOR_GODS.find((g) => g.id === settings.pantheonMinor);
 
-  const hasContent =
-    majorGod ||
-    minorGod ||
-    settings.anoints.length > 0 ||
-    settings.specialMods.filter((m) => m.trim()).length > 0;
+  const hasContent = majorGod || minorGod;
 
   return (
     <section className={classNames(styles.panel)}>
@@ -313,7 +308,7 @@ function Misc() {
 
       {!hasContent && (
         <p className={classNames(styles.emptyHint)}>
-          Set Pantheon, Anoints, and Special Mods in the Build tab.
+          Set Pantheon in the Build tab.
         </p>
       )}
 
@@ -338,50 +333,6 @@ function Misc() {
         </div>
       )}
 
-      {/* ── Anoints ───────────────────────────────────────── */}
-      {settings.anoints.length > 0 && (
-        <div className={classNames(styles.subSection)}>
-          <h3 className={classNames(styles.subSectionTitle)}>Anoints</h3>
-          <ul className={classNames(styles.anointList)}>
-            {settings.anoints.map((anoint, i) => (
-              <li key={i} className={classNames(styles.anointRow)}>
-                <span className={classNames(styles.anointNotable)}>
-                  {anoint.notable || "—"}
-                </span>
-                <span className={classNames(styles.anointOils)}>
-                  {[anoint.oil1, anoint.oil2, anoint.oil3].map((oil, j) => (
-                    <span
-                      key={j}
-                      className={classNames(styles.oilPip)}
-                      style={{ backgroundColor: OIL_COLOURS[oil] }}
-                      title={oil}
-                    />
-                  ))}
-                  <span className={classNames(styles.anointOilNames)}>
-                    {anoint.oil1} + {anoint.oil2} + {anoint.oil3}
-                  </span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* ── Special Mods ──────────────────────────────────── */}
-      {settings.specialMods.filter((m) => m.trim()).length > 0 && (
-        <div className={classNames(styles.subSection)}>
-          <h3 className={classNames(styles.subSectionTitle)}>Special Mods</h3>
-          <ul className={classNames(styles.specialModList)}>
-            {settings.specialMods
-              .filter((m) => m.trim())
-              .map((mod, i) => (
-                <li key={i} className={classNames(styles.specialMod)}>
-                  {mod}
-                </li>
-              ))}
-          </ul>
-        </div>
-      )}
     </section>
   );
 }

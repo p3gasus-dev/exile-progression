@@ -9,16 +9,16 @@
 
 /* ── Fragment type colours ───────────────────────────────────────────────────── */
 /*
- * Palette is intentionally PoE-inspired:
- *   enemy     – warm orange  (boss danger feel)
- *   area      – warm tan     (PoE area-name colour)
- *   quest     – warm gold    (PoE quest-item colour)
- *   questText – soft green   (PoE NPC dialogue colour)
- *   waypoint  – cornflower   (consistent with portal)
- *   portal    – cornflower
- *   trial     – sage green   (labyrinth association)
- *   areaLevel – muted gray   (secondary / metadata)
- *   default   – near-white   (design system on-secondary)
+ * Palette mirrors Path of Exile's in-game text colours:
+ *   enemy     – unique-item orange  (#c36c2b  ≈ #AF6025 unique monster name)
+ *   area      – cool zone grey-blue (#9ec0d0  ≈ zone loading-screen / HUD text)
+ *   quest     – warm quest gold     (#e8c840  ≈ quest-reward / rare-item yellow)
+ *   questText – bright quest green  (#5dca5d  ≈ quest-item bright green #00FF00)
+ *   waypoint  – magic blue          (#4888e8  ≈ magic-item / waypoint icon tint)
+ *   portal    – portal purple       (#9b4fc8  ≈ portal-stone / Town Portal orb)
+ *   trial     – lab gold-amber      (#c8a030  ≈ labyrinth / Izaro golden theme)
+ *   areaLevel – muted gray          (secondary / metadata)
+ *   default   – near-white          (design system on-secondary)
  */
 
 .default {
@@ -26,42 +26,50 @@
   font-weight: var(--font-heavy);
 }
 
+/* Unique monster / boss — orange-brown, close to PoE unique item text #AF6025 */
 .enemy {
-  color: #e87d2b;
+  color: #c36c2b;
   font-weight: var(--font-heavy);
 }
 
+/* Zone / area name — cool grey-blue, matches PoE zone loading-screen text */
 .area {
-  color: #c8a870;
+  color: #9ec0d0;
   font-weight: var(--font-heavy);
 }
 
+/* Area level indicator — dim metadata */
 .areaLevel {
   color: #6a6a7a;
   font-size: 0.85em;
 }
 
+/* Quest name — gold, matches PoE quest-reward item colour */
 .quest {
   color: #e8c840;
   font-weight: var(--font-heavy);
 }
 
+/* Quest instruction / flavour text — bright green, matches PoE quest-item green */
 .questText {
-  color: #66c466;
+  color: #5dca5d;
   font-weight: var(--font-heavy);
 }
 
+/* Waypoint — magic-item blue */
 .waypoint {
-  color: #6fa8f5;
+  color: #4888e8;
   font-weight: var(--font-heavy);
 }
 
+/* Portal — purple, matches PoE portal-stone / Town Portal orb colour */
 .portal {
-  color: #6fa8f5;
+  color: #9b4fc8;
   font-weight: var(--font-heavy);
 }
 
+/* Trial of Ascendancy / Ascend — gold-amber, matches PoE labyrinth golden theme */
 .trial {
-  color: #7fb88a;
+  color: #c8a030;
   font-weight: var(--font-heavy);
 }

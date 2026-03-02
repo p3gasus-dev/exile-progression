@@ -1,0 +1,36 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--on-primary);
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.warn {
+  color: #e8c840;
+  border-color: rgba(232, 200, 64, 0.35);
+  background-color: rgba(232, 200, 64, 0.06);
+  opacity: 1;
+}
+
+.label {
+  opacity: 0.65;
+  font-weight: normal;
+}
+
+.value {
+  font-weight: var(--font-heavy);
+}

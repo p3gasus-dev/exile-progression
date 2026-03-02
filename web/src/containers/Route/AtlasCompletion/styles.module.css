@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--size-3) var(--size-2) var(--size-2);
+}
+
+.title {
+  font-size: 0.8rem;
+  font-weight: var(--font-heavy);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.5;
+}
+
+.resetBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--size-1);
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.resetBtn:hover {
+  opacity: 1;
+}
+
+.detail {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.55;
+  margin-top: 2px;
+}

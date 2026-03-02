@@ -8,10 +8,12 @@ import { voidstoneRouteSelector } from "../../../state/voidstone-route";
 import { uniqueItemsSelector } from "../../../state/unique-items";
 import { getDropsForBoss } from "../../../data/unique-drop-sources";
 import { BOSS_CHALLENGE_MAP, RouteChallengeRef } from "../../../data/challenge-list";
-import { SECTION_STAT_HINTS } from "../../../data/stat-targets";
+import { SECTION_STAT_HINTS, BOSS_STEP_HINTS } from "../../../data/stat-targets";
+import { StatHintChips } from "../../../components/StatHintChips";
 import { Fragments } from "../../../../../common/route-processing/fragment/types";
+import { challengeProgressSelectorFamily } from "../../../state/challenge-progress";
 import { ReactNode } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilCallback, useRecoilValue } from "recoil";
 
 /**
  * Extracts all boss names referenced by `kill` fragments in a step.
@@ -31,6 +33,17 @@ export default function VoidstoneRoute() {
   const route = useRecoilValue(voidstoneRouteSelector);
   const uniqueItems = useRecoilValue(uniqueItemsSelector);
   const buildUniqueNames = uniqueItems.map((i) => i.name);
+
+  // Auto-complete challenges when a pinnacle kill step is checked off
+  const completeChallenges = useRecoilCallback(
+    ({ set }) =>
+      (ids: string[]) => {
+        for (const id of ids) {
+          set(challengeProgressSelectorFamily(id), true);
+        }
+      },
+    []
+  );
 
   const items: ReactNode[] = [];
 
@@ -55,12 +68,25 @@ export default function VoidstoneRoute() {
         (boss) => BOSS_CHALLENGE_MAP[boss]?.[0] ? [BOSS_CHALLENGE_MAP[boss][0]] : []
       );
 
+      // Collect stat hints for each boss kill in this step
+      const stepBossHints = bossNames.flatMap(
+        (boss) => BOSS_STEP_HINTS[boss] ?? []
+      );
+
+      const challengeIds = stepChallenges.map((c) => c.id);
+
       taskItems.push({
         key: stepIndex,
         isCompletedState: voidstoneProgressSelectorFamily(
           `${sectionIndex},${stepIndex}`
         ),
         highlight: isPinnacleKill ? "pinnacle" : undefined,
+        rightContent: stepBossHints.length > 0
+          ? <StatHintChips hints={stepBossHints} />
+          : undefined,
+        onToggle: challengeIds.length > 0
+          ? (complete) => { if (complete) completeChallenges(challengeIds); }
+          : undefined,
         children: (
           <>
             <FragmentStep step={step} />

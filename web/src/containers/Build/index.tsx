@@ -60,6 +60,12 @@ export default function BuildContainer() {
             setGemLinks(pobData.gemLinks);
             setPobCode(pobCode);
             setUniqueItems(pobData.uniqueItems);
+            // Auto-import pantheon from PoB
+            setBuildSettings({
+              ...buildSettings,
+              ...(pobData.pantheonMajor && { pantheonMajor: pobData.pantheonMajor }),
+              ...(pobData.pantheonMinor && { pantheonMinor: pobData.pantheonMinor }),
+            });
           }}
           onReset={() => {
             resetBuildData();

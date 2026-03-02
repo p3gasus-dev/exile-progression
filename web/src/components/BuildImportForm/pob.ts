@@ -197,6 +197,25 @@ function parseUniqueItems(doc: Document): UniqueItem[] {
   return items;
 }
 
+// ─── Pantheon parsing ─────────────────────────────────────────────────────────
+// PoB stores pantheon as attributes on the <Build> element:
+//   pantheonMajorGod="SoulOfSolaris"  pantheonMinorGod="SoulOfGruthkul"
+
+const POB_PANTHEON_MAP: Record<string, string> = {
+  SoulOfLunaris: "lunaris",
+  SoulOfSolaris: "solaris",
+  SoulOfArakaali: "arakaali",
+  SoulOfBrineKing: "brine_king",
+  SoulOfAbberath: "abberath",
+  SoulOfGarukhan: "garukhan",
+  SoulOfGruthkul: "gruthkul",
+  SoulOfRalakesh: "ralakesh",
+  SoulOfRyslatha: "ryslatha",
+  SoulOfShakari: "shakari",
+  SoulOfTukohama: "tukohama",
+  SoulOfYugul: "yugul",
+};
+
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 export interface PobData {
@@ -205,6 +224,10 @@ export interface PobData {
   buildTrees: RouteData.BuildTree[];
   gemLinks: RouteData.GemLinkGroup[];
   uniqueItems: UniqueItem[];
+  /** Mapped pantheon major god id (e.g. "solaris"), or "" if not set in PoB. */
+  pantheonMajor: string;
+  /** Mapped pantheon minor god id (e.g. "gruthkul"), or "" if not set in PoB. */
+  pantheonMinor: string;
 }
 
 export function processPob(pobCode: string): PobData | undefined {
@@ -223,6 +246,11 @@ export function processPob(pobCode: string): PobData | undefined {
 
   const bandit =
     buildElement[0].attributes.getNamedItem("bandit")?.value || "None";
+
+  const pantheonMajorRaw =
+    buildElement[0].attributes.getNamedItem("pantheonMajorGod")?.value ?? "";
+  const pantheonMinorRaw =
+    buildElement[0].attributes.getNamedItem("pantheonMinorGod")?.value ?? "";
 
   const requiredGems: RouteData.RequiredGem[] = [];
   const gemLinks: RouteData.GemLinkGroup[] = [];
@@ -273,5 +301,7 @@ export function processPob(pobCode: string): PobData | undefined {
     buildTrees,
     gemLinks,
     uniqueItems,
+    pantheonMajor: POB_PANTHEON_MAP[pantheonMajorRaw] ?? "",
+    pantheonMinor: POB_PANTHEON_MAP[pantheonMinorRaw] ?? "",
   };
 }

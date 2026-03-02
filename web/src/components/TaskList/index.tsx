@@ -9,9 +9,11 @@ interface TaskItemProps {
   children?: React.ReactNode;
   isCompletedState?: RecoilState<boolean>;
   highlight?: StepHighlight;
+  rightContent?: React.ReactNode;
+  onToggle?: (complete: boolean) => void;
 }
 
-function TaskListItem({ children, isCompletedState, highlight }: TaskItemProps) {
+function TaskListItem({ children, isCompletedState, highlight, rightContent, onToggle }: TaskItemProps) {
   const [isCompleted, setIsCompleted] = isCompletedState
     ? useRecoilState(isCompletedState)
     : [undefined, undefined];
@@ -31,10 +33,17 @@ function TaskListItem({ children, isCompletedState, highlight }: TaskItemProps) 
         }
       )}
       onClick={() => {
-        if (setIsCompleted) setIsCompleted(!isCompleted);
+        if (setIsCompleted) {
+          const next = !isCompleted;
+          setIsCompleted(next);
+          if (onToggle) onToggle(next);
+        }
       }}
     >
       {children}
+      {rightContent && (
+        <div className={classNames(styles.rightSlot)}>{rightContent}</div>
+      )}
     </li>
   );
 }

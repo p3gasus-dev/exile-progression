@@ -1,5 +1,6 @@
 import { sectionCollapseSelectorFamily } from "../../state/section-collapse";
 import { StatTarget } from "../../data/stat-targets";
+import { StatHintChips } from "../StatHintChips";
 import { TaskList, TaskListProps } from "../TaskList";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -47,23 +48,11 @@ export function SectionHolder({ name, items, statHints }: SectionHolderProps) {
           }}
         >
           {icon}
-          <div>{name}</div>
-          {icon}
+          <div className={classNames(styles.sectionName)}>{name}</div>
+          {statHints && statHints.length > 0 && (
+            <StatHintChips hints={statHints} />
+          )}
         </button>
-        {statHints && statHints.length > 0 && (
-          <div className={classNames(styles.statHintRow)}>
-            {statHints.map((h) => (
-              <span
-                key={h.label}
-                className={classNames(styles.statHint, h.warn && styles.statHintWarn)}
-                title={h.note}
-              >
-                <span className={classNames(styles.statHintLabel)}>{h.label}</span>
-                <span className={classNames(styles.statHintValue)}>{h.value}</span>
-              </span>
-            ))}
-          </div>
-        )}
         <hr />
       </div>
       {collapsed || (

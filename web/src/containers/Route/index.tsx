@@ -10,28 +10,32 @@ import {
   ASCEND_CHALLENGE_MAP,
   RouteChallengeRef,
 } from "../../data/challenge-list";
-import { SECTION_STAT_HINTS } from "../../data/stat-targets";
+import { SECTION_STAT_HINTS, BOSS_STEP_HINTS, StatTarget } from "../../data/stat-targets";
+import { StatHintChips } from "../../components/StatHintChips";
 import { gemProgressSelectorFamily } from "../../state/gem-progress";
 import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
+import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
 import { configSelector } from "../../state/config";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { ReactNode, Suspense, lazy, useState } from "react";
 import { Loading } from "../../components/Loading";
-import { useRecoilValue } from "recoil";
+import { useRecoilCallback, useRecoilValue } from "recoil";
 
 const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 const ChallengeTracker = lazy(() => import("./ChallengeTracker"));
+const AtlasCompletion = lazy(() => import("./AtlasCompletion"));
 
-type RouteTab = "acts" | "voidstones" | "challenges";
+type RouteTab = "acts" | "voidstones" | "atlas" | "challenges";
 
-const ALL_TABS: RouteTab[] = ["acts", "voidstones", "challenges"];
+const ALL_TABS: RouteTab[] = ["acts", "voidstones", "atlas", "challenges"];
 
 const TAB_LABELS: Record<RouteTab, string> = {
   acts: "ACT 1–10",
   voidstones: "VOIDSTONE 1–4",
+  atlas: "ATLAS",
   challenges: "CHALLENGES",
 };
 
@@ -52,6 +56,17 @@ function ActRoute() {
   const route = useRecoilValue(routeSelector);
   const items: ReactNode[] = [];
 
+  // Auto-complete challenges when a boss/ascend step is checked off
+  const completeChallenges = useRecoilCallback(
+    ({ set }) =>
+      (ids: string[]) => {
+        for (const id of ids) {
+          set(challengeProgressSelectorFamily(id), true);
+        }
+      },
+    []
+  );
+
   // Track repeated boss kills (Kitava appears in Act 5 and Act 10)
   const bossOccurrences = new Map<string, number>();
 
@@ -63,8 +78,9 @@ function ActRoute() {
       const step = section.steps[stepIndex];
 
       if (step.type === "fragment_step") {
-        // Collect challenge refs for this step
+        // Collect challenge refs and boss stat hints for this step
         const stepChallenges: RouteChallengeRef[] = [];
+        const stepBossHints: StatTarget[] = [];
 
         for (const p of step.parts) {
           if (typeof p === "string") continue;
@@ -77,6 +93,8 @@ function ActRoute() {
               const ref = refs[Math.min(count, refs.length - 1)];
               stepChallenges.push(ref);
             }
+            const hints = BOSS_STEP_HINTS[p.value];
+            if (hints) stepBossHints.push(...hints);
           }
           if (p.type === "ascend") {
             const ref = ASCEND_CHALLENGE_MAP[p.version];
@@ -84,12 +102,20 @@ function ActRoute() {
           }
         }
 
+        const challengeIds = stepChallenges.map((c) => c.id);
+
         taskItems.push({
           key: stepIndex,
           isCompletedState: routeProgressSelectorFamily(
             [sectionIndex, stepIndex].toString()
           ),
           highlight: getActStepHighlight(step.parts),
+          rightContent: stepBossHints.length > 0
+            ? <StatHintChips hints={stepBossHints} />
+            : undefined,
+          onToggle: challengeIds.length > 0
+            ? (complete) => { if (complete) completeChallenges(challengeIds); }
+            : undefined,
           children: (
             <>
               <FragmentStep key={stepIndex} step={step} />
@@ -171,6 +197,7 @@ export default function RouteContainer() {
   const tabs = ALL_TABS.filter(
     (t) => t !== "challenges" || config.showChallenges
   );
+  // "atlas" tab is always visible (atlas completion is useful for all players)
   const visibleTab = tabs.includes(activeTab) ? activeTab : "acts";
 
   return (
@@ -179,6 +206,7 @@ export default function RouteContainer() {
       <Suspense fallback={<Loading />}>
         {visibleTab === "acts" && <ActRoute />}
         {visibleTab === "voidstones" && <VoidstoneRoute />}
+        {visibleTab === "atlas" && <AtlasCompletion />}
         {visibleTab === "challenges" && <ChallengeTracker />}
       </Suspense>
     </>

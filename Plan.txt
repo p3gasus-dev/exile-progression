@@ -30,19 +30,38 @@ DESC:
 	VOIDSTONE1-4: Fastest/easiest route to completing voidstones 1, 2 ,3 ,4.
 
 TODO:
-	UNIQUES/BOSSES
-		REBUILD unique drop system
-			Drop Acuisition, Additional Drop Restrictions, Monster drops
-	AUTO IMPORT PANTHEONS, ANOINTS, SPECIAL MODS
-
+	
 IN PROGRESS:
-	Collect useful common regex
+	Useful regex for campaign
 	Route pathing
-	Unique Item drop locations
-	mirage league changes
-	dps/ehp/res/immune for acts/bosses
+	UNIQUES/BOSSES
+		REBUILD unique item system
+			Each unique item has Drop Acuisition
+			Additional Drop Restrictions
+			Monster drops
+		FIX boss info
+			HP
+			DMG
+				Phys 
+				Cold
+				Fire
+				Lightning
+				Chaos
+	mirage league change
 
-TEST:
+QC:
+	Change common regex ot popular & only show regex that are useful for campaign/leveling
+	AUTO IMPORT PANTHEONS
+	Fix Voidstone text formatting to Act1-10
+	Text highlights to better reflect corresponding colors in game
+	MERGE/MOVE atlas completion into voidstone &/OR new section
+	Auto mark challenges completed during ACTS & VOIDSTONE as autocompleted
+	Rework recommeded DPS/RES/IMMUNE
+		use BossHP/60s for dps
+		move into subsection and/or section on the right side
+			[v		THE MAVEN					 (# dps)(Cold)(freeze)]
+			[v		THE ELDER				  (# dps)(Phys,Cold,Chaos)]
+			[v		ATZIRI		(# dps)(Lightning,fire)(bleed,reflect)]
 	Make sure all settings have descriptions and sections headers
 	add list of common regex with copy icon and desc.
 	Allow changing voidstone order
