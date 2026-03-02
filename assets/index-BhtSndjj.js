@@ -1,0 +1,1 @@
+import{j as s,c as t}from"./index-sIfte3Wo.js";const c="_holder_hmmth_1",m="_left_hmmth_8",a="_right_hmmth_13",e={holder:c,left:m,right:a};function d({left:h,right:l,className:r,children:i,...o}){return s.jsxs("div",{className:t(e.holder,r),...o,children:[s.jsx("div",{className:t(e.left),children:h}),i,s.jsx("div",{className:t(e.right),children:l})]})}export{d as S};

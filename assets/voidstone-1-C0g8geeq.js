@@ -1,0 +1,19 @@
+const e=`#section Early Atlas
+{generic|Complete Acts 1-10 and talk to Kirac in Oriath}
+{generic|Run white maps (T1-T5) and complete Kirac's opening quest chain}
+{generic|The Envoy will appear in a map — speak with it to unlock Eldritch Influence}
+{generic|Talk to Kirac to receive the Eater of Worlds and Searing Exarch icons on your Map Device}
+
+#section Eater of Worlds Progression
+{generic|Activate Eater of Worlds influence on your Map Device when opening maps}
+{generic|Run T1-T4 influenced maps — complete the biome objective in each}
+{generic|Run T5-T8 influenced maps — complete the biome objective in each}
+{generic|Run T9-T12 influenced maps — complete the biome objective in each}
+{generic|Run T13-T15 influenced maps until a Screaming Invitation drops from a map boss}
+
+#section The Eater of Worlds
+{generic|Use an Orb of Alchemy on the Screaming Invitation to make it Rare (improves loot)}
+{generic|Place the Screaming Invitation in your Map Device and enter The Absence of Symmetry and Harmony}
+{kill|The Eater of Worlds}
+{generic|Take the Grasping Voidstone and socket it into your Atlas Map Device}
+`;export{e as default};
