@@ -5,6 +5,7 @@ import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
 import { routeSelector } from "../../state/route";
 import { challengeProgressSummarySelector } from "../../state/progress-summary";
 import { useClearChallengeProgress } from "../../state/challenge-progress";
+import ChallengeTracker from "../Route/ChallengeTracker";
 import { trackEvent } from "../../utility/telemetry";
 import { formStyles } from "../../styles";
 import styles from "./styles.module.css";
@@ -75,17 +76,16 @@ export default function SettingsContainer() {
 
       <hr className={classNames(styles.divider)} />
 
-      {/* ── Edit Challenges ──────────────────────────────────────────────── */}
+      {/* ── Challenges ───────────────────────────────────────────────────── */}
       <SectionHeader title="Challenges" />
       <p className={classNames(styles.hint)}>
-        Track your 40 challenge progress in the <b>Route → Challenges</b> tab.
-        Use the button below to reset all challenge progress.
+        Track your 40 challenge completions. Progress syncs with the Route tab.
       </p>
       <div className={classNames(styles.challengeRow)}>
         <span className={classNames(styles.challengeCount)}>
           {challengeProgress.completed}
           <span className={classNames(styles.challengeTotal)}>/{challengeProgress.total}</span>
-          {" "}challenges complete
+          {" "}complete
         </span>
         <button
           className={classNames(formStyles.formButton, styles.resetButton)}
@@ -95,9 +95,10 @@ export default function SettingsContainer() {
           }}
         >
           <MdDeleteForever className="inlineIcon" />
-          Reset Progress
+          Reset
         </button>
       </div>
+      <ChallengeTracker />
 
       <hr className={classNames(styles.divider)} />
 

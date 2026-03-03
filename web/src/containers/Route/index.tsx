@@ -9,7 +9,7 @@ import {
   ASCEND_CHALLENGE_MAP,
   RouteChallengeRef,
 } from "../../data/challenge-list";
-import { SECTION_STAT_HINTS, BOSS_STEP_HINTS, StatTarget } from "../../data/stat-targets";
+import { BOSS_STEP_HINTS, StatTarget } from "../../data/stat-targets";
 import { StatHintChips } from "../../components/StatHintChips";
 import { gemProgressSelectorFamily } from "../../state/gem-progress";
 import { routeSelector } from "../../state/route";
@@ -23,18 +23,14 @@ import { ReactNode, Suspense, lazy, useState } from "react";
 import { Loading } from "../../components/Loading";
 import { useRecoilCallback, useRecoilValue } from "recoil";
 
-const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 const ChallengeTracker = lazy(() => import("./ChallengeTracker"));
-const AtlasCompletion = lazy(() => import("./AtlasCompletion"));
 
-type RouteTab = "acts" | "voidstones" | "atlas" | "challenges";
+type RouteTab = "acts" | "challenges";
 
-const ALL_TABS: RouteTab[] = ["acts", "voidstones", "atlas", "challenges"];
+const ALL_TABS: RouteTab[] = ["acts", "challenges"];
 
 const TAB_LABELS: Record<RouteTab, string> = {
   acts: "ACT 1–10",
-  voidstones: "VOIDSTONE 1–4",
-  atlas: "ATLAS",
   challenges: "CHALLENGES",
 };
 
@@ -139,7 +135,6 @@ function ActRoute() {
         key={sectionIndex}
         name={section.name}
         items={taskItems}
-        statHints={SECTION_STAT_HINTS[section.name]}
       />
     );
   }
@@ -189,7 +184,6 @@ export default function RouteContainer() {
   const tabs = ALL_TABS.filter(
     (t) => t !== "challenges" || config.showChallenges
   );
-  // "atlas" tab is always visible (atlas completion is useful for all players)
   const visibleTab = tabs.includes(activeTab) ? activeTab : "acts";
 
   return (
@@ -197,8 +191,6 @@ export default function RouteContainer() {
       <TabBar tabs={tabs} active={visibleTab} onChange={setActiveTab} />
       <Suspense fallback={<Loading />}>
         {visibleTab === "acts" && <ActRoute />}
-        {visibleTab === "voidstones" && <VoidstoneRoute />}
-        {visibleTab === "atlas" && <AtlasCompletion />}
         {visibleTab === "challenges" && <ChallengeTracker />}
       </Suspense>
     </>

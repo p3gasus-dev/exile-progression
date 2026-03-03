@@ -29,6 +29,11 @@ export interface AtlasConfig {
    * Default: [0, 1, 2, 3] (recommended order).
    */
   voidstoneOrder: [number, number, number, number];
+
+  /**
+   * Whether to show the Atlas full-completion checklist below the voidstone route.
+   */
+  showAtlasGuide: boolean;
 }
 
 const ATLAS_CONFIG_VERSION = 0;
@@ -38,6 +43,7 @@ const DEFAULT_ATLAS_CONFIG: AtlasConfig = {
   kiracMissionsEarly: false,
   runBothEarlyBosses: false,
   voidstoneOrder: [0, 1, 2, 3],
+  showAtlasGuide: false,
 };
 
 const atlasConfigAtom = atom<AtlasConfig | null>({

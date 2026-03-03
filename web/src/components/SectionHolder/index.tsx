@@ -1,6 +1,4 @@
 import { sectionCollapseSelectorFamily } from "../../state/section-collapse";
-import { StatTarget } from "../../data/stat-targets";
-import { StatHintChips } from "../StatHintChips";
 import { TaskList, TaskListProps } from "../TaskList";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -11,10 +9,9 @@ import { useRecoilState } from "recoil";
 interface SectionHolderProps {
   name: string;
   items: TaskListProps["items"];
-  statHints?: StatTarget[];
 }
 
-export function SectionHolder({ name, items, statHints }: SectionHolderProps) {
+export function SectionHolder({ name, items }: SectionHolderProps) {
   const sectionId = `section-${name.replace(/\s+/g, "_")}`;
   const [collapsed, setCollapsed] = useRecoilState(
     sectionCollapseSelectorFamily(sectionId)
@@ -49,9 +46,6 @@ export function SectionHolder({ name, items, statHints }: SectionHolderProps) {
         >
           {icon}
           <div className={classNames(styles.sectionName)}>{name}</div>
-          {statHints && statHints.length > 0 && (
-            <StatHintChips hints={statHints} />
-          )}
         </button>
         <hr />
       </div>

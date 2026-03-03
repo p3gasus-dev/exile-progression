@@ -19,14 +19,15 @@ function getDamageTypeClass(label: string): string | undefined {
 export function StatHintChips({ hints }: StatHintChipsProps) {
   return (
     <div className={classNames(styles.row)}>
+      <span className={classNames(styles.reqsLabel)}>Need:</span>
       {hints.map((h) => (
         <span
           key={h.label}
           className={classNames(styles.chip, h.warn && styles.warn, getDamageTypeClass(h.label))}
           title={h.note}
         >
-          <span className={classNames(styles.label)}>{h.label}</span>
           {h.value && <span className={classNames(styles.value)}>{h.value}</span>}
+          <span className={classNames(styles.label)}>{h.label}</span>
         </span>
       ))}
     </div>

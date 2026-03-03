@@ -30,15 +30,17 @@ DESC:
 	VOIDSTONE1-4: Fastest/easiest route to completing voidstones 1, 2 ,3 ,4.
 
 TODO:
+	build system for updating poe info for each league
 	
 IN PROGRESS:
-	Useful regex for campaign
 	Route pathing
+	Text formatting
 	UNIQUES/BOSSES
 		REBUILD unique item system
 			Each unique item has Drop Acuisition
 			Additional Drop Restrictions
 			Monster drops
+			Tier #
 		FIX boss info
 			HP
 			DMG
@@ -47,33 +49,3 @@ IN PROGRESS:
 				Fire
 				Lightning
 				Chaos
-	mirage league change
-
-QC:
-	Change common regex ot popular & only show regex that are useful for campaign/leveling
-	AUTO IMPORT PANTHEONS
-	Fix Voidstone text formatting to Act1-10
-	Text highlights to better reflect corresponding colors in game
-	MERGE/MOVE atlas completion into voidstone &/OR new section
-	Auto mark challenges completed during ACTS & VOIDSTONE as autocompleted
-	Rework recommeded DPS/RES/IMMUNE
-		use BossHP/60s for dps
-		move into subsection and/or section on the right side
-			[v		THE MAVEN					 (# dps)(Cold)(freeze)]
-			[v		THE ELDER				  (# dps)(Phys,Cold,Chaos)]
-			[v		ATZIRI		(# dps)(Lightning,fire)(bleed,reflect)]
-	Make sure all settings have descriptions and sections headers
-	add list of common regex with copy icon and desc.
-	Allow changing voidstone order
-	Moved Class & Bandits to Build
-	Added League Selector
-	Update challenges in route
-		make settingss toggle to include challenges in route
-	Fix Dashboard route
-		seperate acts and voidstone into drop down progress bars
-	Update common regex with popular campaign and early maps regex
-	ADD EDIT CHALLENGES to Settings
-	ATLAS PASSIVE STRATEGY -> FULL COMPLETION (Fastest Way to Fully Complete)
-	FIX/update TEXT FORMATTING & HIGHLIGHTS
-	MARK ROUTES W/ CHALLENGE PROGRESSION WHERE APPLICABLE C# & X/Y
-	Add Unique item Tier # and reorder

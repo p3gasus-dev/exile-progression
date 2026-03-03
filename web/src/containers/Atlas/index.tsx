@@ -1,9 +1,14 @@
 import { atlasConfigSelector, AtlasConfig } from "../../state/atlas-config";
 import { SplitRow } from "../../components/SplitRow";
+import { Loading } from "../../components/Loading";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdDragIndicator } from "react-icons/md";
 import { useRecoilState } from "recoil";
+import { useState, Suspense, lazy } from "react";
+
+const VoidstoneRoute = lazy(() => import("../Route/VoidstoneRoute"));
+const AtlasCompletion = lazy(() => import("../Route/AtlasCompletion"));
 
 function SectionHeader({ title }: { title: string }) {
   return <h2 className={classNames(styles.sectionHeader)}>{title}</h2>;
@@ -38,130 +43,194 @@ export default function AtlasContainer() {
   const order: [number, number, number, number] =
     config.voidstoneOrder ?? [0, 1, 2, 3];
 
+  const [dragFrom, setDragFrom] = useState<number | null>(null);
+  const [dragOver, setDragOver] = useState<number | null>(null);
+
   function moveVoidstone(from: number, to: number) {
     const next = [...order] as [number, number, number, number];
     [next[from], next[to]] = [next[to], next[from]];
     update({ voidstoneOrder: next });
   }
 
+  function reorderVoidstones(from: number, to: number) {
+    if (from === to) return;
+    const next = [...order] as [number, number, number, number];
+    const [item] = next.splice(from, 1);
+    next.splice(to, 0, item);
+    update({ voidstoneOrder: next });
+  }
+
   return (
-    <div className={classNames(styles.container)}>
+    <>
+      <div className={classNames(styles.container)}>
 
-      {/* ── Voidstone Order ─────────────────────────────────────────────── */}
-      <SectionHeader title="Voidstone Order" />
-      <Hint>
-        Use the arrows to set the order you plan to complete each voidstone.
-        The recommended order is Eater → Exarch → Maven → Uber Elder.
-        This changes the order of the Voidstone route in the Route tab.
-      </Hint>
+        {/* ── Voidstone Order ───────────────────────────────────────────── */}
+        <SectionHeader title="Voidstone Order" />
+        <Hint>
+          Drag or use the arrows to set the order you plan to complete each
+          voidstone. The recommended order is Eater → Exarch → Maven → Uber
+          Elder. This changes the order of the route below.
+        </Hint>
 
-      <div className={classNames(styles.voidstoneList)}>
-        {order.map((vsIdx, pos) => {
-          const { boss, reward } = VOIDSTONES[vsIdx];
-          return (
-            <div key={vsIdx} className={classNames(styles.voidstoneRow)}>
-              <span className={classNames(styles.voidstoneNum)}>{pos + 1}</span>
-              <span className={classNames(styles.voidstoneBoss)}>{boss}</span>
-              <span className={classNames(styles.voidstoneReward)}>{reward}</span>
-              <div className={classNames(styles.voidstoneArrows)}>
-                <button
-                  className={classNames(styles.voidstoneArrowBtn)}
-                  disabled={pos === 0}
-                  onClick={() => moveVoidstone(pos, pos - 1)}
-                  title="Move up"
-                  type="button"
-                >
-                  <MdKeyboardArrowUp size={14} />
-                </button>
-                <button
-                  className={classNames(styles.voidstoneArrowBtn)}
-                  disabled={pos === order.length - 1}
-                  onClick={() => moveVoidstone(pos, pos + 1)}
-                  title="Move down"
-                  type="button"
-                >
-                  <MdKeyboardArrowDown size={14} />
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <hr className={classNames(styles.divider)} />
-
-      {/* ── Atlas Passive Strategy ───────────────────────────────────────── */}
-      <SectionHeader title="Atlas Passive Strategy" />
-      <Hint>
-        Controls which atlas passives to prioritise when allocating points.
-        Boss-rush focuses on reducing boss life and increasing rewards.
-        Map-sustain focuses on map quantity and atlas mission frequency.
-      </Hint>
-
-      <div className={classNames(styles.form)}>
-        <SplitRow
-          left={<Label>Passive Focus</Label>}
-          right={
-            <Value>
-              <select
-                className={classNames(styles.select)}
-                value={config.passiveStrategy}
-                onChange={(e) =>
-                  update({
-                    passiveStrategy: e.target.value as AtlasConfig["passiveStrategy"],
-                  })
-                }
-                aria-label="Atlas passive strategy"
+        <div className={classNames(styles.voidstoneList)}>
+          {order.map((vsIdx, pos) => {
+            const { boss, reward } = VOIDSTONES[vsIdx];
+            const isDragging = dragFrom === pos;
+            const isOver = dragOver === pos;
+            return (
+              <div
+                key={vsIdx}
+                className={classNames(
+                  styles.voidstoneRow,
+                  isDragging && styles.voidstoneRowDragging,
+                  isOver && !isDragging && styles.voidstoneRowOver,
+                )}
+                draggable
+                onDragStart={(e) => {
+                  setDragFrom(pos);
+                  e.dataTransfer.effectAllowed = "move";
+                }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.dataTransfer.dropEffect = "move";
+                  if (dragOver !== pos) setDragOver(pos);
+                }}
+                onDragLeave={() => setDragOver(null)}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  if (dragFrom !== null) reorderVoidstones(dragFrom, pos);
+                  setDragFrom(null);
+                  setDragOver(null);
+                }}
+                onDragEnd={() => {
+                  setDragFrom(null);
+                  setDragOver(null);
+                }}
               >
-                <option value="balanced">Balanced</option>
-                <option value="boss-rush">Boss Rush</option>
-                <option value="map-sustain">Map Sustain</option>
-              </select>
-            </Value>
-          }
-        />
+                <MdDragIndicator className={classNames(styles.voidstoneDragHandle)} />
+                <span className={classNames(styles.voidstoneNum)}>{pos + 1}</span>
+                <span className={classNames(styles.voidstoneBoss)}>{boss}</span>
+                <span className={classNames(styles.voidstoneReward)}>{reward}</span>
+                <div className={classNames(styles.voidstoneArrows)}>
+                  <button
+                    className={classNames(styles.voidstoneArrowBtn)}
+                    disabled={pos === 0}
+                    onClick={() => moveVoidstone(pos, pos - 1)}
+                    title="Move up"
+                    type="button"
+                  >
+                    <MdKeyboardArrowUp size={14} />
+                  </button>
+                  <button
+                    className={classNames(styles.voidstoneArrowBtn)}
+                    disabled={pos === order.length - 1}
+                    onClick={() => moveVoidstone(pos, pos + 1)}
+                    title="Move down"
+                    type="button"
+                  >
+                    <MdKeyboardArrowDown size={14} />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
-        <SplitRow
-          left={<Label>Kirac Missions Early</Label>}
-          right={
-            <Value>
-              <input
-                type="checkbox"
-                checked={config.kiracMissionsEarly}
-                onChange={(e) =>
-                  update({ kiracMissionsEarly: e.target.checked })
-                }
-                aria-label="Kirac missions early"
-              />
-            </Value>
-          }
-        />
+        <hr className={classNames(styles.divider)} />
 
-        <SplitRow
-          left={<Label>Run Both Early Bosses</Label>}
-          right={
-            <Value>
-              <input
-                type="checkbox"
-                checked={config.runBothEarlyBosses}
-                onChange={(e) =>
-                  update({ runBothEarlyBosses: e.target.checked })
-                }
-                aria-label="Run both early bosses"
-              />
-            </Value>
-          }
-        />
+        {/* ── Atlas Settings ────────────────────────────────────────────── */}
+        <SectionHeader title="Atlas Settings" />
+        <Hint>
+          Optional: toggle the atlas passive strategy and completion guide.
+          These help plan your atlas, but the voidstone route below is the core
+          path.
+        </Hint>
+
+        <div className={classNames(styles.form)}>
+          <SplitRow
+            left={<Label>Passive Focus</Label>}
+            right={
+              <Value>
+                <select
+                  className={classNames(styles.select)}
+                  value={config.passiveStrategy}
+                  onChange={(e) =>
+                    update({
+                      passiveStrategy: e.target.value as AtlasConfig["passiveStrategy"],
+                    })
+                  }
+                  aria-label="Atlas passive strategy"
+                >
+                  <option value="balanced">Balanced</option>
+                  <option value="boss-rush">Boss Rush</option>
+                  <option value="map-sustain">Map Sustain</option>
+                </select>
+              </Value>
+            }
+          />
+
+          <SplitRow
+            left={<Label>Kirac Missions Early</Label>}
+            right={
+              <Value>
+                <input
+                  type="checkbox"
+                  checked={config.kiracMissionsEarly}
+                  onChange={(e) =>
+                    update({ kiracMissionsEarly: e.target.checked })
+                  }
+                  aria-label="Kirac missions early"
+                />
+              </Value>
+            }
+          />
+
+          <SplitRow
+            left={<Label>Run Both Early Bosses</Label>}
+            right={
+              <Value>
+                <input
+                  type="checkbox"
+                  checked={config.runBothEarlyBosses}
+                  onChange={(e) =>
+                    update({ runBothEarlyBosses: e.target.checked })
+                  }
+                  aria-label="Run both early bosses"
+                />
+              </Value>
+            }
+          />
+
+          <SplitRow
+            left={<Label>Show Atlas Guide</Label>}
+            right={
+              <Value>
+                <input
+                  type="checkbox"
+                  checked={config.showAtlasGuide}
+                  onChange={(e) =>
+                    update({ showAtlasGuide: e.target.checked })
+                  }
+                  aria-label="Show atlas completion guide"
+                />
+              </Value>
+            }
+          />
+        </div>
+
       </div>
-      <hr className={classNames(styles.divider)} />
 
-      {/* ── Full Completion Guide ────────────────────────────────────────── */}
-      <SectionHeader title="Full Completion Guide" />
-      <Hint>
-        The phase-by-phase atlas completion checklist has moved to{" "}
-        <b>Route → Atlas</b>. Progress is shared between both tabs.
-      </Hint>
+      {/* ── Voidstone Route (core content) ────────────────────────────── */}
+      <Suspense fallback={<Loading />}>
+        <VoidstoneRoute />
+      </Suspense>
 
-    </div>
+      {/* ── Atlas Completion Guide (optional) ─────────────────────────── */}
+      {config.showAtlasGuide && (
+        <Suspense fallback={<Loading />}>
+          <AtlasCompletion />
+        </Suspense>
+      )}
+    </>
   );
 }

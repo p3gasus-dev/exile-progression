@@ -15,7 +15,6 @@ import { Data } from "../../../../common/data";
 import { Fragments } from "../../../../common/route-processing/fragment/types";
 import { DivCardBadge } from "../../components/UniqueItemBadge";
 import { MAJOR_GODS, MINOR_GODS } from "../../data/pantheon-data";
-import { STAT_TARGETS } from "../../data/stat-targets";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { FaStar } from "react-icons/fa";
@@ -91,83 +90,82 @@ function fragmentsToText(parts: Fragments.AnyFragment[]): string {
     .join(" ");
 }
 
-// ── Route Progress panel ──────────────────────────────────────────────────────
+// ── ACT 1–10 panel ────────────────────────────────────────────────────────────
 
-function RouteProgress() {
-  const actSummary = useRecoilValue(routeProgressSummarySelector);
-  const actSections = useRecoilValue(routeSectionProgressSelector);
+function ActProgress() {
+  const summary = useRecoilValue(routeProgressSummarySelector);
+  const sections = useRecoilValue(routeSectionProgressSelector);
   const currentSection = useRecoilValue(routeCurrentSectionSelector);
-  const voidstoneSummary = useRecoilValue(voidstoneProgressSummarySelector);
-  const voidstoneSections = useRecoilValue(voidstoneSectionProgressSelector);
-  const challengeSummary = useRecoilValue(challengeProgressSummarySelector);
   const league = useRecoilValue(leagueSelector);
 
   return (
     <section className={classNames(styles.panel)}>
       <div className={classNames(styles.panelHeading)}>
-        <SectionHeader title="Route Progress" />
+        <SectionHeader title="ACT 1–10" />
         <span className={classNames(styles.leagueBadge)}>{league}</span>
       </div>
       <div className={classNames(styles.progressList)}>
+        <ProgressBar label="Overall" completed={summary.completed} total={summary.total} />
+        <div className={classNames(styles.subProgressList)}>
+          {sections.map((s) => (
+            <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
+          ))}
+        </div>
+        {currentSection && (
+          <>
+            <div className={classNames(styles.currentSection)}>
+              <span className={classNames(styles.currentSectionName)}>
+                {currentSection.sectionName}
+              </span>
+              <span className={classNames(styles.currentSectionCount)}>
+                {currentSection.completed}/{currentSection.total}
+              </span>
+            </div>
+            <ul className={classNames(styles.pendingStepList)}>
+              {currentSection.pendingParts.map((parts, i) => (
+                <li key={i} className={classNames(styles.pendingStep)}>
+                  {fragmentsToText(parts)}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
 
-        {/* ── ACT 1-10 (collapsible) ── */}
-        <details className={classNames(styles.progressGroup)}>
-          <summary className={classNames(styles.progressGroupSummary)}>
-            <ProgressBar
-              label="ACT 1–10"
-              completed={actSummary.completed}
-              total={actSummary.total}
-            />
-          </summary>
-          <div className={classNames(styles.subProgressList)}>
-            {actSections.map((s) => (
-              <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
-            ))}
-            {currentSection && (
-              <>
-                <div className={classNames(styles.currentSection)}>
-                  <span className={classNames(styles.currentSectionName)}>
-                    {currentSection.sectionName}
-                  </span>
-                  <span className={classNames(styles.currentSectionCount)}>
-                    {currentSection.completed}/{currentSection.total}
-                  </span>
-                </div>
-                <ul className={classNames(styles.pendingStepList)}>
-                  {currentSection.pendingParts.map((parts, i) => (
-                    <li key={i} className={classNames(styles.pendingStep)}>
-                      {fragmentsToText(parts)}
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </div>
-        </details>
+// ── Voidstones panel ──────────────────────────────────────────────────────────
 
-        {/* ── Voidstones (collapsible) ── */}
-        <details className={classNames(styles.progressGroup)}>
-          <summary className={classNames(styles.progressGroupSummary)}>
-            <ProgressBar
-              label="Voidstones"
-              completed={voidstoneSummary.completed}
-              total={voidstoneSummary.total}
-            />
-          </summary>
-          <div className={classNames(styles.subProgressList)}>
-            {voidstoneSections.map((s) => (
-              <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
-            ))}
-          </div>
-        </details>
+function VoidstoneProgress() {
+  const summary = useRecoilValue(voidstoneProgressSummarySelector);
+  const sections = useRecoilValue(voidstoneSectionProgressSelector);
 
-        {/* ── Challenges (flat) ── */}
-        <ProgressBar
-          label="Challenges"
-          completed={challengeSummary.completed}
-          total={challengeSummary.total}
-        />
+  return (
+    <section className={classNames(styles.panel)}>
+      <SectionHeader title="Voidstones" />
+      <div className={classNames(styles.progressList)}>
+        <ProgressBar label="Overall" completed={summary.completed} total={summary.total} />
+        <div className={classNames(styles.subProgressList)}>
+          {sections.map((s) => (
+            <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
+// ── Challenges panel ──────────────────────────────────────────────────────────
+
+function ChallengeProgress() {
+  const summary = useRecoilValue(challengeProgressSummarySelector);
+
+  return (
+    <section className={classNames(styles.panel)}>
+      <SectionHeader title="Challenges" />
+      <div className={classNames(styles.progressList)}>
+        <ProgressBar label="Challenges" completed={summary.completed} total={summary.total} />
       </div>
     </section>
   );
@@ -280,39 +278,31 @@ function Misc() {
   const majorGod = MAJOR_GODS.find((g) => g.id === settings.pantheonMajor);
   const minorGod = MINOR_GODS.find((g) => g.id === settings.pantheonMinor);
 
-  const hasContent = majorGod || minorGod;
+  const hasBuild = buildData.characterClass !== "None";
 
   return (
     <section className={classNames(styles.panel)}>
       <SectionHeader title="Misc" />
 
-      {/* ── Build summary ─────────────────────────────────── */}
-      <dl className={classNames(styles.miscList)}>
-        <div className={classNames(styles.miscRow)}>
-          <dt>Class</dt>
-          <dd>{buildData.characterClass || "—"}</dd>
-        </div>
-        <div className={classNames(styles.miscRow)}>
-          <dt>Bandit</dt>
-          <dd>{buildData.bandit === "None" ? "Kill All" : buildData.bandit}</dd>
-        </div>
-        <div className={classNames(styles.miscRow)}>
-          <dt>League Start</dt>
-          <dd>{buildData.leagueStart ? "Yes" : "No"}</dd>
-        </div>
-        <div className={classNames(styles.miscRow)}>
-          <dt>Library Quest</dt>
-          <dd>{buildData.library ? "Yes" : "No"}</dd>
-        </div>
-      </dl>
+      {hasBuild && (
+        <dl className={classNames(styles.miscList)}>
+          <div className={classNames(styles.miscRow)}>
+            <dt>Class</dt>
+            <dd>{buildData.characterClass}</dd>
+          </div>
+          <div className={classNames(styles.miscRow)}>
+            <dt>Bandit</dt>
+            <dd>{buildData.bandit === "None" ? "Kill All" : buildData.bandit}</dd>
+          </div>
+        </dl>
+      )}
 
-      {!hasContent && (
+      {!hasBuild && !majorGod && !minorGod && (
         <p className={classNames(styles.emptyHint)}>
-          Set Pantheon in the Build tab.
+          Import a build in the Build tab to see character details and Pantheon.
         </p>
       )}
 
-      {/* ── Pantheon ──────────────────────────────────────── */}
       {(majorGod || minorGod) && (
         <div className={classNames(styles.subSection)}>
           <h3 className={classNames(styles.subSectionTitle)}>Pantheon</h3>
@@ -333,51 +323,11 @@ function Misc() {
         </div>
       )}
 
-    </section>
-  );
-}
-
-// ── Stat Targets panel ────────────────────────────────────────────────────────
-
-function StatTargets() {
-  return (
-    <section className={classNames(styles.panel)}>
-      <SectionHeader title="Stat Targets" />
-      <p className={classNames(styles.emptyHint)}>
-        Recommended thresholds at each phase of the game.
-      </p>
-      <div className={classNames(styles.statPhaseList)}>
-        {STAT_TARGETS.map((phase) => (
-          <details key={phase.phase} className={classNames(styles.statPhase)}>
-            <summary className={classNames(styles.statPhaseName)}>
-              {phase.phase}
-            </summary>
-            {phase.note && (
-              <p className={classNames(styles.statPhaseNote)}>{phase.note}</p>
-            )}
-            <dl className={classNames(styles.statList)}>
-              {phase.targets.map((t) => (
-                <div key={t.label} className={classNames(styles.statRow)}>
-                  <dt className={classNames(styles.statLabel)}>{t.label}</dt>
-                  <dd
-                    className={classNames(
-                      styles.statValue,
-                      t.warn && styles.statWarn
-                    )}
-                  >
-                    {t.value}
-                    {t.note && (
-                      <span className={classNames(styles.statNote)}>
-                        {t.note}
-                      </span>
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </details>
-        ))}
-      </div>
+      {hasBuild && !majorGod && !minorGod && (
+        <p className={classNames(styles.emptyHint)}>
+          Set Pantheon in the Build tab.
+        </p>
+      )}
     </section>
   );
 }
@@ -388,8 +338,9 @@ export default function DashboardContainer() {
   return (
     <div className={classNames(styles.dashboard)}>
       <div className={classNames(styles.leftCol)}>
-        <RouteProgress />
-        <StatTargets />
+        <ActProgress />
+        <VoidstoneProgress />
+        <ChallengeProgress />
       </div>
       <div className={classNames(styles.rightCol)}>
         <UniqueItems />

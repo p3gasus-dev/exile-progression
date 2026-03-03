@@ -7,7 +7,7 @@ import { voidstoneRouteSelector } from "../../../state/voidstone-route";
 import { uniqueItemsSelector } from "../../../state/unique-items";
 import { getDropsForBoss } from "../../../data/unique-drop-sources";
 import { BOSS_CHALLENGE_MAP, RouteChallengeRef } from "../../../data/challenge-list";
-import { SECTION_STAT_HINTS, BOSS_STEP_HINTS } from "../../../data/stat-targets";
+import { BOSS_STEP_HINTS } from "../../../data/stat-targets";
 import { StatHintChips } from "../../../components/StatHintChips";
 import { Fragments } from "../../../../../common/route-processing/fragment/types";
 import { challengeProgressSelectorFamily } from "../../../state/challenge-progress";
@@ -102,7 +102,6 @@ export default function VoidstoneRoute() {
         key={sectionIndex}
         name={section.name}
         items={taskItems}
-        statHints={SECTION_STAT_HINTS[section.name]}
       />
     );
   }

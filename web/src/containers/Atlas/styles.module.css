@@ -67,6 +67,28 @@
   border-radius: var(--border-radius);
   background-color: rgba(255, 255, 255, 0.03);
   border: var(--border-width) solid var(--accent-secondary);
+  cursor: grab;
+  user-select: none;
+}
+
+.voidstoneRow:active {
+  cursor: grabbing;
+}
+
+.voidstoneRowDragging {
+  opacity: 0.4;
+}
+
+.voidstoneRowOver {
+  border-color: var(--accent-primary);
+  background-color: rgba(100, 180, 255, 0.07);
+}
+
+.voidstoneDragHandle {
+  color: var(--on-secondary);
+  opacity: 0.3;
+  flex-shrink: 0;
+  font-size: 1.1rem;
 }
 
 .voidstoneNum {

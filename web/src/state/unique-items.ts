@@ -26,18 +26,3 @@ export const uniqueItemsSelector = selector<UniqueItem[]>({
     set(uniqueItemsAtom, value);
   },
 });
-
-/**
- * Returns only unique items that have a known drop source in endgame content.
- * Used to annotate route steps.
- */
-export const uniqueItemsWithSourceSelector = selector<UniqueItem[]>({
-  key: "uniqueItemsWithSourceSelector",
-  get: async ({ get }) => {
-    const items = get(uniqueItemsSelector);
-    const { UNIQUE_DROP_SOURCES } = await import("../data/unique-drop-sources");
-    return items.filter(
-      (item) => UNIQUE_DROP_SOURCES[item.name.toLowerCase()] !== undefined
-    );
-  },
-});

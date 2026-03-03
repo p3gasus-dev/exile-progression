@@ -1,6 +1,6 @@
 import { BuildImportForm } from "../../components/BuildImportForm";
-import { BuildSettingsForm } from "../../components/BuildSettingsForm";
 import { GemEditForm } from "../../components/GemEditForm";
+import { MAJOR_GODS, MINOR_GODS } from "../../data/pantheon-data";
 import { SearchStringsEditor } from "../../components/SearchStringsEditor";
 import { SplitRow } from "../../components/SplitRow";
 import { buildDataSelector } from "../../state/build-data";
@@ -39,6 +39,7 @@ export default function BuildContainer() {
   const resetUniqueItems = useResetRecoilState(uniqueItemsSelector);
 
   const [buildSettings, setBuildSettings] = useRecoilState(buildSettingsSelector);
+  const resetBuildSettings = useResetRecoilState(buildSettingsSelector);
 
   return (
     <div className={classNames(styles.container)}>
@@ -74,6 +75,7 @@ export default function BuildContainer() {
             resetGemLinks();
             resetPobCode();
             resetUniqueItems();
+            resetBuildSettings();
           }}
         />
       </div>
@@ -84,7 +86,7 @@ export default function BuildContainer() {
           {/* ── CHARACTER ─────────────────────────────────────────────────── */}
           <SectionHeader title="Character" />
           <p className={classNames(styles.hint)}>
-            Class and bandit choice imported from your Path of Building code.
+            Class, bandit, and Pantheon imported from your Path of Building code.
           </p>
           <div className={classNames(styles.infoForm)}>
             <SplitRow
@@ -103,6 +105,52 @@ export default function BuildContainer() {
                 </div>
               }
             />
+            <SplitRow
+              left={<div className={classNames(styles.infoLabel)}>Major God</div>}
+              right={
+                <select
+                  className={classNames(styles.select)}
+                  value={buildSettings.pantheonMajor}
+                  aria-label="Major god"
+                  onChange={(e) =>
+                    setBuildSettings({ ...buildSettings, pantheonMajor: e.target.value })
+                  }
+                >
+                  <option value="">— None —</option>
+                  {MAJOR_GODS.map((g) => (
+                    <option key={g.id} value={g.id}>{g.name}</option>
+                  ))}
+                </select>
+              }
+            />
+            {buildSettings.pantheonMajor && (
+              <p className={classNames(styles.godEffect)}>
+                {MAJOR_GODS.find((g) => g.id === buildSettings.pantheonMajor)?.effect}
+              </p>
+            )}
+            <SplitRow
+              left={<div className={classNames(styles.infoLabel)}>Minor God</div>}
+              right={
+                <select
+                  className={classNames(styles.select)}
+                  value={buildSettings.pantheonMinor}
+                  aria-label="Minor god"
+                  onChange={(e) =>
+                    setBuildSettings({ ...buildSettings, pantheonMinor: e.target.value })
+                  }
+                >
+                  <option value="">— None —</option>
+                  {MINOR_GODS.map((g) => (
+                    <option key={g.id} value={g.id}>{g.name}</option>
+                  ))}
+                </select>
+              }
+            />
+            {buildSettings.pantheonMinor && (
+              <p className={classNames(styles.godEffect)}>
+                {MINOR_GODS.find((g) => g.id === buildSettings.pantheonMinor)?.effect}
+              </p>
+            )}
           </div>
         </>
       )}
@@ -123,18 +171,6 @@ export default function BuildContainer() {
         </>
       )}
 
-      <hr className={classNames(styles.divider)} />
-
-      {/* ── BUILD SETTINGS ──────────────────────────────────────────────── */}
-      <SectionHeader title="Build Settings" />
-      <p className={classNames(styles.hint)}>
-        Set your Pantheon gods, amulet anoints, and special mod targets. These
-        are displayed on the Dashboard and can annotate route steps.
-      </p>
-      <BuildSettingsForm
-        settings={buildSettings}
-        onUpdate={(updated) => setBuildSettings(updated)}
-      />
     </div>
   );
 }
