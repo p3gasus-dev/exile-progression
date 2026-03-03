@@ -33,17 +33,20 @@ export function Sidebar() {
         onToggleExpand={setExpand}
       />
 
-      {/* ── Search strings: persistent section above Tree/Gems ── */}
-      {expand && hasSearch && (
+      {/* ── Search strings: always visible above Tree/Gems ── */}
+      {expand && (
         <div className={classNames(styles.searchSection)}>
-          <SearchStrings values={searchStrings} />
+          {hasSearch
+            ? <SearchStrings values={searchStrings!} />
+            : <p className={classNames(styles.searchPlaceholder)}>No filter strings — add them in Build</p>
+          }
         </div>
       )}
 
       {/* ── Tree / Gems tabbed content ── */}
       {expand && sections.length > 0 && (
         <>
-          {hasSearch && <hr />}
+          <hr />}
           <div className={classNames(styles.contents, styles.expand)}>
             {React.Children.toArray(
               sections.map((v, i) => (

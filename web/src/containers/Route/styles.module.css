@@ -23,6 +23,4 @@
 }
 
 .routeContent {
-  /* Reserve space so content doesn't slide under the fixed sidebar */
-  padding-right: calc(20rem + var(--size-4));
 }

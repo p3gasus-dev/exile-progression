@@ -198,8 +198,10 @@ function parseUniqueItems(doc: Document): UniqueItem[] {
 }
 
 // ─── Pantheon parsing ─────────────────────────────────────────────────────────
-// PoB stores pantheon as attributes on the <Build> element:
+// POBF stores pantheon as attributes on the <Build> element:
 //   pantheonMajorGod="SoulOfSolaris"  pantheonMinorGod="SoulOfGruthkul"
+// Some PoB versions instead store it in <Config> as:
+//   <Input name="pantheonMajorGod" string="SoulOfSolaris"/>
 
 const POB_PANTHEON_MAP: Record<string, string> = {
   SoulOfLunaris: "lunaris",
@@ -215,6 +217,16 @@ const POB_PANTHEON_MAP: Record<string, string> = {
   SoulOfTukohama: "tukohama",
   SoulOfYugul: "yugul",
 };
+
+function readPantheonFromConfig(doc: Document, name: string): string {
+  const inputs = Array.from(doc.getElementsByTagName("Input"));
+  for (const el of inputs) {
+    if (el.getAttribute("name") === name) {
+      return el.getAttribute("string") ?? el.getAttribute("value") ?? "";
+    }
+  }
+  return "";
+}
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
@@ -248,9 +260,11 @@ export function processPob(pobCode: string): PobData | undefined {
     buildElement[0].attributes.getNamedItem("bandit")?.value || "None";
 
   const pantheonMajorRaw =
-    buildElement[0].attributes.getNamedItem("pantheonMajorGod")?.value ?? "";
+    buildElement[0].attributes.getNamedItem("pantheonMajorGod")?.value ||
+    readPantheonFromConfig(doc, "pantheonMajorGod");
   const pantheonMinorRaw =
-    buildElement[0].attributes.getNamedItem("pantheonMinorGod")?.value ?? "";
+    buildElement[0].attributes.getNamedItem("pantheonMinorGod")?.value ||
+    readPantheonFromConfig(doc, "pantheonMinorGod");
 
   const requiredGems: RouteData.RequiredGem[] = [];
   const gemLinks: RouteData.GemLinkGroup[] = [];

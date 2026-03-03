@@ -31,10 +31,11 @@ DESC:
 
 TODO:
 	build system for updating poe info for each league
-		boss info
-		unique item info
-		challenges
-
+		Query poewiki
+			boss info
+			unique item drop info
+			league mechanics
+			challenges
 	
 IN PROGRESS:
 	Route pathing
