@@ -10,5 +10,5 @@ Alch {quest_text|Incandescent Invitation} to Rare
 Place {quest_text|Incandescent Invitation} in your Map Device
     #sub Hold until the fireball phase ends to skip it
 ➞ {arena|The Searing Exarch's Domain}
-{kill|The Searing Exarch}
+Kill {kill|The Searing Exarch}
 Take the {quest_text|Omniscient Voidstone} and socket it into your Atlas Map Device

@@ -22,7 +22,7 @@ export const LAB_UNLOCK_CONDITION: Record<LabTier, string> = {
   normal: "Complete Act 3 — find 3 Trials in Acts 1–3",
   cruel: "Complete Act 6 — find 3 Trials in Acts 4–6",
   merciless: "Complete Act 9 — find 3 Trials in Acts 7–9",
-  uber: "Obtain an Offering to the Goddess",
+  uber: "Reach level 68 — complete a Trial in a T6+ map to obtain Offering to the Goddess",
 };
 
 export const LAB_URL: Record<LabTier, string> = {

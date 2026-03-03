@@ -2,6 +2,8 @@
 Talk to {quest_text|Kirac} in Oriath to unlock the Atlas
 {waypoint|Labyrinth_Airlock} #Aspirants' Plaza
 {ascend|eternal}
+    #sub Requires level 68 and {quest_text|Offering to the Goddess}
+    #sub Obtain Offering by completing a Trial of Ascendancy in a {map_yellow|T6+} map
 Get {crafting|EndGame_Labyrinth_boss_3}
 Run {map_white|T1-T5} maps — complete Kirac's quest chain
 Speak with {league|The Envoy} when it appears to unlock Eldritch Influence
@@ -17,5 +19,5 @@ Farm {map_red|T13-T15} influenced maps until {quest_text|Screaming Invitation} d
 #section The Eater of Worlds
 Alch {quest_text|Screaming Invitation} to Rare
 ➞ {arena|The Absence of Symmetry and Harmony}
-{kill|The Eater of Worlds}
+Kill {kill|The Eater of Worlds}
 Take the {quest_text|Grasping Voidstone} and socket it into your Atlas Map Device

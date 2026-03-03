@@ -189,7 +189,7 @@ export default function RouteContainer() {
 
   const tabs: TabEntry[] = [
     { id: "acts", label: "ACT 1–10" },
-    { id: "atlas", label: "ATLAS" },
+    { id: "atlas", label: "VOIDSTONE 1-4" },
     ...(config.showChallenges
       ? [{ id: "challenges" as RouteTab, label: `CHALLENGES ${challengeCount}/${CHALLENGES.length}` }]
       : []),

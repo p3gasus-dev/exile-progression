@@ -1,35 +1,35 @@
 #section Shaper Guardians
 Farm {map_red|T14+} maps for the 4 {league|Shaper Guardian} maps
 ➞ {arena|Maze of the Minotaur}
-{kill|The Shaper Guardian (Minotaur)}
+Kill {kill|The Shaper Guardian (Minotaur)}
 ➞ {arena|Forge of the Phoenix}
-{kill|The Shaper Guardian (Phoenix)}
+Kill {kill|The Shaper Guardian (Phoenix)}
 ➞ {arena|Lair of the Hydra}
-{kill|The Shaper Guardian (Hydra)}
+Kill {kill|The Shaper Guardian (Hydra)}
 ➞ {arena|Pit of the Chimera}
-{kill|The Shaper Guardian (Chimera)}
+Kill {kill|The Shaper Guardian (Chimera)}
 
 #section The Shaper
 Use all 4 {quest_text|Shaper Guardian Fragments} at your Map Device
 ➞ {arena|The Shaper's Realm}
-{kill|The Shaper}
+Kill {kill|The Shaper}
 
 #section Elder Guardians
 {league|Elder Guardians} spawn in {map_red|T14-T16} maps as extra bosses
-{kill|The Elder Guardian (Purifier)}
-{kill|The Elder Guardian (Constrictor)}
-{kill|The Elder Guardian (Enslaver)}
-{kill|The Elder Guardian (Eradicator)}
+Kill {kill|The Elder Guardian (Purifier)}
+Kill {kill|The Elder Guardian (Constrictor)}
+Kill {kill|The Elder Guardian (Enslaver)}
+Kill {kill|The Elder Guardian (Eradicator)}
 
 #section The Elder
 Use all 4 {quest_text|Elder Guardian Fragments} at your Map Device
 ➞ {arena|The Elder's Realm}
-{kill|The Elder}
+Kill {kill|The Elder}
 
 #section Uber Elder
 Combine 2 {quest_text|Shaper Fragments} + 2 {quest_text|Elder Fragments} at your Map Device
     #sub Elder + Shaper fight simultaneously
 ➞ {arena|The Shaper's Realm (Uber)}
-{kill|The Uber Elder}
+Kill {kill|The Uber Elder}
 Take the {quest_text|Decayed Voidstone} and socket it into your Atlas Map Device
     #sub All maps are now Tier 16
