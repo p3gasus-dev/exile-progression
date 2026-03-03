@@ -6,7 +6,7 @@ import { atom, selector } from "recoil";
 export interface Config {
   gemsOnly: boolean;
   showSubsteps: boolean;
-  showChallenges: boolean;
+  showLeagueMechanics: boolean;
 }
 
 const CONFIG_VERSION = 0;
@@ -20,18 +20,14 @@ const configAtom = atom<Config | null>({
 export const configSelector = selector<Config>({
   key: "configSelector",
   get: ({ get }) => {
-    let value = get(configAtom);
+    const value = get(configAtom);
     if (value === null)
-      value = {
-        gemsOnly: false,
-        showSubsteps: true,
-        showChallenges: true,
-      };
-    // Backfill for configs saved before showChallenges existed
-    if (value.showChallenges === undefined)
-      value = { ...value, showChallenges: true };
-
-    return value;
+      return { gemsOnly: false, showSubsteps: true, showLeagueMechanics: false };
+    return {
+      gemsOnly: value.gemsOnly ?? false,
+      showSubsteps: value.showSubsteps ?? true,
+      showLeagueMechanics: value.showLeagueMechanics ?? false,
+    };
   },
   set: ({ set }, newValue) => {
     const value = newValue instanceof DefaultValue ? null : newValue;

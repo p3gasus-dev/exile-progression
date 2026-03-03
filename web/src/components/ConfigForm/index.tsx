@@ -48,19 +48,19 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
         }
       />
       <SplitRow
-        left={<div className={classNames(styles.label)}>Show Challenges</div>}
+        left={<div className={classNames(styles.label)}>League Mechanics</div>}
         right={
           <div className={classNames(styles.value)}>
             <input
               type="checkbox"
-              checked={config.showChallenges}
+              checked={config.showLeagueMechanics}
               onChange={(evt) => {
                 onSubmit({
                   ...config,
-                  showChallenges: evt.target.checked,
+                  showLeagueMechanics: evt.target.checked,
                 });
               }}
-              aria-label="Show Challenges"
+              aria-label="Show League Mechanics"
             />
           </div>
         }

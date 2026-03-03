@@ -1,5 +1,5 @@
 #section Shaper Guardians
-{generic|Run T14+ maps to find the 4 Shaper Guardian maps (drop from T14+ maps)}
+Run T14+ maps to find the 4 {league|Shaper Guardian} maps (drop from T14+ maps)
 ➞ {arena|Maze of the Minotaur}
 {kill|The Shaper Guardian (Minotaur)}
 ➞ {arena|Forge of the Phoenix}
@@ -15,7 +15,7 @@ Combine all 4 {quest_text|Shaper Guardian Fragments} at your Map Device
 {kill|The Shaper}
 
 #section Elder Guardians
-{generic|Elder Guardians spawn as extra bosses in T14-T16 maps (random map selection)}
+{league|Elder Guardians} spawn as extra bosses in T14-T16 maps (random map selection)
 {kill|The Elder Guardian (Purifier)}
 {kill|The Elder Guardian (Constrictor)}
 {kill|The Elder Guardian (Enslaver)}

@@ -4,6 +4,7 @@ import { routeFilesSelector } from "../../state/route-files";
 import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
 import { challengeRouteFilesSelector } from "../../state/challenge-route-files";
 import { routeSelector } from "../../state/route";
+import { leagueSelector, LEAGUES, League } from "../../state/league";
 import { trackEvent } from "../../utility/telemetry";
 import { formStyles } from "../../styles";
 import styles from "./styles.module.css";
@@ -26,6 +27,8 @@ export default function SettingsContainer() {
   const [challengeRouteFiles, setChallengeRouteFiles] = useRecoilState(challengeRouteFilesSelector);
   const resetChallengeRouteFiles = useResetRecoilState(challengeRouteFilesSelector);
 
+  const [league, setLeague] = useRecoilState(leagueSelector);
+
   // 3rd-party export: serialise the full route + pob code to clipboard
   const exportToClipboard = useRecoilCallback(
     ({ snapshot }) =>
@@ -45,6 +48,27 @@ export default function SettingsContainer() {
 
   return (
     <div className={classNames(styles.container)}>
+      {/* ── League ──────────────────────────────────────────────────────── */}
+      <SectionHeader title="League" />
+      <p className={classNames(styles.hint)}>
+        Select your current Path of Exile league. Used for display and
+        challenge tracking throughout the app.
+      </p>
+      <div className={classNames(styles.leagueRow)}>
+        <select
+          className={classNames(styles.leagueSelect)}
+          value={league}
+          onChange={(e) => setLeague(e.target.value as League)}
+          aria-label="Active league"
+        >
+          {LEAGUES.map((l) => (
+            <option key={l} value={l}>{l}</option>
+          ))}
+        </select>
+      </div>
+
+      <hr className={classNames(styles.divider)} />
+
       {/* ── Edit Route ──────────────────────────────────────────────────── */}
       <SectionHeader title="Edit Route" />
       <p className={classNames(styles.hint)}>

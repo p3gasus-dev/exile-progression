@@ -278,6 +278,8 @@ export function Fragment(
       return [QuestTextComponent(fragment.value), null];
     case "generic":
       return [GenericComponent(fragment.value), null];
+    case "league":
+      return [<span className={classNames(styles.league)}>{fragment.value}</span>, null];
     case "reward_quest":
       return [<ItemReward item={fragment.item} rewardType="quest" />, null];
     case "reward_vendor":

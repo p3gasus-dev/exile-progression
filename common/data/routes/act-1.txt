@@ -2,6 +2,9 @@
 Find and kill {kill|Hillock}
 ➞ {enter|1_1_town} #Lioneye's Watch
 Hand in {quest|a1q1} #Enemy at the Gate
+#ifdef SHOW_LEAGUE_MECHANICS
+{league|Expedition} — Dannig (Expedition Overseer) is available from The Coast onwards
+#endif
 ➞ {enter|1_1_2} #The Coast
 #ifdef LEAGUE_START
     Get {waypoint_get}

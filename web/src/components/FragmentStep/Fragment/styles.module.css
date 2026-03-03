@@ -68,3 +68,8 @@
   color: #c8a030;
   font-weight: var(--font-heavy);
 }
+
+/* League mechanic highlight / Very Hard difficulty — danger red */
+.league {
+  color: #d44444;
+}

@@ -15,13 +15,13 @@ import { gemProgressSelectorFamily } from "../../state/gem-progress";
 import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
 import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
-import { configSelector } from "../../state/config";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { ReactNode, Suspense, lazy, useState } from "react";
 import { Loading } from "../../components/Loading";
 import { useRecoilCallback, useRecoilValue } from "recoil";
+
 
 const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 const ChallengeTracker = lazy(() => import("./ChallengeTracker"));
@@ -180,17 +180,12 @@ function TabBar({ tabs, active, onChange }: TabBarProps) {
 // ─── Main Route container ─────────────────────────────────────────────────────
 
 export default function RouteContainer() {
-  const config = useRecoilValue(configSelector);
   const [activeTab, setActiveTab] = useState<RouteTab>("acts");
-
-  const tabs = ALL_TABS.filter(
-    (t) => t !== "challenges" || config.showChallenges
-  );
-  const visibleTab = tabs.includes(activeTab) ? activeTab : "acts";
+  const visibleTab = ALL_TABS.includes(activeTab) ? activeTab : "acts";
 
   return (
     <>
-      <TabBar tabs={tabs} active={visibleTab} onChange={setActiveTab} />
+      <TabBar tabs={ALL_TABS} active={visibleTab} onChange={setActiveTab} />
       <Suspense fallback={<Loading />}>
         {visibleTab === "acts" && <ActRoute />}
         {visibleTab === "atlas" && <VoidstoneRoute />}

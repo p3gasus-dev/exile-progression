@@ -1,8 +1,8 @@
 #section Searing Exarch Progression
-{generic|Activate Searing Exarch influence on your Map Device when opening maps}
-{generic|Run T1-T4 influenced maps — complete the biome objective in each}
-{generic|Run T5-T8 influenced maps — complete the biome objective in each}
-{generic|Run T9-T12 influenced maps — complete the biome objective in each}
+Activate {league|Searing Exarch} influence on your Map Device when opening maps
+Run T1-T4 influenced maps — complete the biome objective in each
+Run T5-T8 influenced maps — complete the biome objective in each
+Run T9-T12 influenced maps — complete the biome objective in each
 Run T13-T15 influenced maps until an {quest_text|Incandescent Invitation} drops from a map boss
 
 #section The Searing Exarch

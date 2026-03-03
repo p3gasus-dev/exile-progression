@@ -1,6 +1,6 @@
 #section Maven Witnessing
-{generic|Activate Maven witnessing on your Map Device (press the Maven icon when opening a map)}
-{generic|Defeat map bosses while Maven is witnessing — she collects each boss you kill}
+Activate {league|Maven} witnessing on your Map Device (press the Maven icon when opening a map)
+Defeat map bosses while {league|Maven} is witnessing — she collects each boss you kill
 After 3 witnessed bosses you receive {quest_text|Maven's Invitation: The Atlas}
 Enter the {arena|Maven's Crucible} via the invitation — defeat all bosses simultaneously for {quest_text|Crescent Splinters}
     #sub All bosses are added simultaneously — kill them quickly before Maven's memory fails

@@ -14,11 +14,15 @@ const baseRouteSelector = selector({
 
     const routeFiles = get(routeFilesSelector);
     const buildData = get(buildDataSelector);
+    const config = get(configSelector);
 
     const routeState = initializeRouteState();
 
     if (buildData == null || buildData.leagueStart)
       routeState.preprocessorDefinitions.add("LEAGUE_START");
+
+    if (config.showLeagueMechanics)
+      routeState.preprocessorDefinitions.add("SHOW_LEAGUE_MECHANICS");
 
     if (buildData == null || buildData.library)
       routeState.preprocessorDefinitions.add("LIBRARY");
