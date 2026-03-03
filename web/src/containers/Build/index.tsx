@@ -1,3 +1,4 @@
+import { RouteData } from "../../../../common/route-processing/types";
 import { BuildImportForm } from "../../components/BuildImportForm";
 import { GemEditForm } from "../../components/GemEditForm";
 import { MAJOR_GODS, MINOR_GODS } from "../../data/pantheon-data";
@@ -110,7 +111,7 @@ export default function BuildContainer() {
               value={buildData.bandit}
               aria-label="Bandit choice"
               onChange={(e) =>
-                setBuildData({ ...buildData, bandit: e.target.value })
+                setBuildData({ ...buildData, bandit: e.target.value as RouteData.BuildData["bandit"] })
               }
             >
               <option value="None">Kill All</option>
