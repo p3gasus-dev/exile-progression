@@ -14,7 +14,8 @@ import { StatHintChips } from "../../components/StatHintChips";
 import { gemProgressSelectorFamily } from "../../state/gem-progress";
 import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
-import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
+import { challengeProgressSelectorFamily, challengeCountSelector } from "../../state/challenge-progress";
+import { CHALLENGES } from "../../data/challenge-list";
 import { configSelector } from "../../state/config";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
@@ -28,14 +29,6 @@ const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 const ChallengeTracker = lazy(() => import("./ChallengeTracker"));
 
 type RouteTab = "acts" | "atlas" | "challenges";
-
-const ALL_TABS: RouteTab[] = ["acts", "atlas", "challenges"];
-
-const TAB_LABELS: Record<RouteTab, string> = {
-  acts: "ACT 1–10",
-  atlas: "ATLAS",
-  challenges: "CHALLENGES",
-};
 
 // ─── Step highlight detection ──────────────────────────────────────────────────
 
@@ -148,8 +141,13 @@ function ActRoute() {
 
 // ─── Tab bar ──────────────────────────────────────────────────────────────────
 
+interface TabEntry {
+  id: RouteTab;
+  label: ReactNode;
+}
+
 interface TabBarProps {
-  tabs: RouteTab[];
+  tabs: TabEntry[];
   active: RouteTab;
   onChange: (tab: RouteTab) => void;
 }
@@ -157,17 +155,17 @@ interface TabBarProps {
 function TabBar({ tabs, active, onChange }: TabBarProps) {
   return (
     <div className={classNames(styles.tabBar)}>
-      {tabs.map((tab) => (
+      {tabs.map(({ id, label }) => (
         <button
-          key={tab}
+          key={id}
           className={classNames(styles.tabButton, {
-            [styles.tabActive]: active === tab,
-            [interactiveStyles.activePrimary]: active === tab,
-            [interactiveStyles.activeSecondary]: active !== tab,
+            [styles.tabActive]: active === id,
+            [interactiveStyles.activePrimary]: active === id,
+            [interactiveStyles.activeSecondary]: active !== id,
           })}
-          onClick={() => onChange(tab)}
+          onClick={() => onChange(id)}
         >
-          {TAB_LABELS[tab]}
+          {label}
         </button>
       ))}
     </div>
@@ -177,12 +175,24 @@ function TabBar({ tabs, active, onChange }: TabBarProps) {
 // ─── Main Route container ─────────────────────────────────────────────────────
 
 export default function RouteContainer() {
+  const config = useRecoilValue(configSelector);
+  const challengeCount = useRecoilValue(challengeCountSelector);
   const [activeTab, setActiveTab] = useState<RouteTab>("acts");
-  const visibleTab = ALL_TABS.includes(activeTab) ? activeTab : "acts";
+
+  const tabs: TabEntry[] = [
+    { id: "acts", label: "ACT 1–10" },
+    { id: "atlas", label: "ATLAS" },
+    ...(config.showChallenges
+      ? [{ id: "challenges" as RouteTab, label: `CHALLENGES ${challengeCount}/${CHALLENGES.length}` }]
+      : []),
+  ];
+
+  const validTabs = tabs.map((t) => t.id);
+  const visibleTab = validTabs.includes(activeTab) ? activeTab : "acts";
 
   return (
     <>
-      <TabBar tabs={ALL_TABS} active={visibleTab} onChange={setActiveTab} />
+      <TabBar tabs={tabs} active={visibleTab} onChange={setActiveTab} />
       <Sidebar />
       <div className={classNames(styles.routeContent)}>
         <Suspense fallback={<Loading />}>

@@ -41,9 +41,10 @@ export interface AtlasConfig {
   showUniqueDrops: boolean;
 
   /**
-   * Scarab priority strategy for atlas farming.
+   * Whether to show the Labyrinth Tracker section.
    */
-  scarabStrategy: "bulk" | "boss" | "content" | "none";
+  showLabTracker: boolean;
+
 }
 
 const ATLAS_CONFIG_VERSION = 0;
@@ -55,7 +56,7 @@ const DEFAULT_ATLAS_CONFIG: AtlasConfig = {
   voidstoneOrder: [0, 1, 2, 3],
   showAtlasGuide: false,
   showUniqueDrops: true,
-  scarabStrategy: "boss",
+  showLabTracker: false,
 };
 
 const atlasConfigAtom = atom<AtlasConfig | null>({

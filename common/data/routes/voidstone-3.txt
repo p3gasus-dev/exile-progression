@@ -1,14 +1,14 @@
 #section Maven Witnessing
-Activate {league|Maven} witnessing on your Map Device (press the Maven icon when opening a map)
-Defeat map bosses while {league|Maven} is witnessing — she collects each boss you kill
-After 3 witnessed bosses you receive {quest_text|Maven's Invitation: The Atlas}
-Enter the {arena|Maven's Crucible} via the invitation — defeat all bosses simultaneously for {quest_text|Crescent Splinters}
-    #sub All bosses are added simultaneously — kill them quickly before Maven's memory fails
+Enable {league|Maven} witnessing when opening maps
+Kill map bosses while {league|Maven} witnesses — she collects each
+After 3 bosses, receive {quest_text|Maven's Invitation: The Atlas}
+Run {arena|Maven's Crucible} — defeat all bosses at once for {quest_text|Crescent Splinters}
+    #sub Kill all bosses before Maven's memory fails
 Repeat until you have 10 {quest_text|Crescent Splinters}
-    #sub 10 Crescent Splinters automatically combine into {quest_text|Maven's Writ}
+    #sub Combine into {quest_text|Maven's Writ} at 10
 
 #section The Maven
-Alch the {quest_text|Maven's Writ} to Rare (improves loot)
+Alch {quest_text|Maven's Writ} to Rare
 ➞ {arena|The Maven's Realm}
 {kill|The Maven}
 Take the {quest_text|Ceremonial Voidstone} and socket it into your Atlas Map Device

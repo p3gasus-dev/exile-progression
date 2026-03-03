@@ -23,7 +23,12 @@ export namespace Fragments {
     | AscendFragment
     | CraftingFragment
     | DirectionFragment
-    | CopyFragment;
+    | CopyFragment
+    | MapWhiteFragment
+    | MapYellowFragment
+    | MapRedFragment
+    | MapGuardianFragment
+    | MapPinnacleFragment;
 
   export interface KillFragment {
     type: "kill";
@@ -127,5 +132,30 @@ export namespace Fragments {
   export interface CopyFragment {
     type: "copy";
     text: string;
+  }
+
+  export interface MapWhiteFragment {
+    type: "map_white";
+    value: string;
+  }
+
+  export interface MapYellowFragment {
+    type: "map_yellow";
+    value: string;
+  }
+
+  export interface MapRedFragment {
+    type: "map_red";
+    value: string;
+  }
+
+  export interface MapGuardianFragment {
+    type: "map_guardian";
+    value: string;
+  }
+
+  export interface MapPinnacleFragment {
+    type: "map_pinnacle";
+    value: string;
   }
 }

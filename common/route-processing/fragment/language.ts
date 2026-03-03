@@ -18,7 +18,12 @@ export namespace Language {
     | "ascend"
     | "crafting"
     | "dir"
-    | "copy";
+    | "copy"
+    | "map_white"
+    | "map_yellow"
+    | "map_red"
+    | "map_guardian"
+    | "map_pinnacle";
 
   export interface FragmentParameter {
     name: string;
@@ -199,6 +204,36 @@ export namespace Language {
               description: "Text to copy",
             },
           ],
+        },
+      ],
+      ["map_white"]: [
+        {
+          description: "White map tier reference (T1–T5)",
+          parameters: [{ name: "text", description: "Tier range to display" }],
+        },
+      ],
+      ["map_yellow"]: [
+        {
+          description: "Yellow map tier reference (T6–T10)",
+          parameters: [{ name: "text", description: "Tier range to display" }],
+        },
+      ],
+      ["map_red"]: [
+        {
+          description: "Red map tier reference (T11–T16)",
+          parameters: [{ name: "text", description: "Tier range to display" }],
+        },
+      ],
+      ["map_guardian"]: [
+        {
+          description: "Guardian / T16.5 map tier reference",
+          parameters: [{ name: "text", description: "Tier range to display" }],
+        },
+      ],
+      ["map_pinnacle"]: [
+        {
+          description: "Pinnacle / T17 map tier reference",
+          parameters: [{ name: "text", description: "Tier range to display" }],
         },
       ],
     };

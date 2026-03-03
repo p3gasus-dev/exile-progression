@@ -8,6 +8,7 @@ export interface Config {
   showSubsteps: boolean;
   showLeagueMechanics: boolean;
   showStatHints: boolean;
+  showChallenges: boolean;
 }
 
 const CONFIG_VERSION = 0;
@@ -23,12 +24,13 @@ export const configSelector = selector<Config>({
   get: ({ get }) => {
     const value = get(configAtom);
     if (value === null)
-      return { gemsOnly: false, showSubsteps: true, showLeagueMechanics: false, showStatHints: true };
+      return { gemsOnly: false, showSubsteps: true, showLeagueMechanics: false, showStatHints: true, showChallenges: true };
     return {
       gemsOnly: value.gemsOnly ?? false,
       showSubsteps: value.showSubsteps ?? true,
       showLeagueMechanics: value.showLeagueMechanics ?? false,
       showStatHints: value.showStatHints ?? true,
+      showChallenges: value.showChallenges ?? true,
     };
   },
   set: ({ set }, newValue) => {

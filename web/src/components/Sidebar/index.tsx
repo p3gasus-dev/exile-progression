@@ -46,7 +46,7 @@ export function Sidebar() {
       {/* ── Tree / Gems tabbed content ── */}
       {expand && sections.length > 0 && (
         <>
-          <hr />}
+          <hr />
           <div className={classNames(styles.contents, styles.expand)}>
             {React.Children.toArray(
               sections.map((v, i) => (

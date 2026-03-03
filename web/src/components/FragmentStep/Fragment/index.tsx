@@ -301,6 +301,16 @@ export function Fragment(
       return [DirectionComponent(fragment.dirIndex), null];
     case "copy":
       return [<CopyToClipboard text={fragment.text} />, null];
+    case "map_white":
+      return [<span className={classNames(styles.mapWhite)}>{fragment.value}</span>, null];
+    case "map_yellow":
+      return [<span className={classNames(styles.mapYellow)}>{fragment.value}</span>, null];
+    case "map_red":
+      return [<span className={classNames(styles.mapRed)}>{fragment.value}</span>, null];
+    case "map_guardian":
+      return [<span className={classNames(styles.mapGuardian)}>{fragment.value}</span>, null];
+    case "map_pinnacle":
+      return [<span className={classNames(styles.mapPinnacle)}>{fragment.value}</span>, null];
   }
 
   return [<>{`unmapped: ${JSON.stringify(fragment)}`}</>, null];

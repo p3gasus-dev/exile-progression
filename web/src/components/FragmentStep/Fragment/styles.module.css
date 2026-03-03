@@ -73,3 +73,35 @@
 .league {
   color: #d44444;
 }
+
+/* ── Map tier colours ────────────────────────────────────────────────────────── */
+
+/* White maps T1–T5 — near white */
+.mapWhite {
+  color: #e8e8e8;
+  font-weight: var(--font-heavy);
+}
+
+/* Yellow maps T6–T10 — gold yellow */
+.mapYellow {
+  color: #ffd700;
+  font-weight: var(--font-heavy);
+}
+
+/* Red maps T11–T16 — danger red */
+.mapRed {
+  color: #cc3333;
+  font-weight: var(--font-heavy);
+}
+
+/* Guardian maps T16.5 — sky blue */
+.mapGuardian {
+  color: #7fbce8;
+  font-weight: var(--font-heavy);
+}
+
+/* Pinnacle maps T17 — portal purple */
+.mapPinnacle {
+  color: #9b4fc8;
+  font-weight: var(--font-heavy);
+}

@@ -29,13 +29,39 @@ DESC:
 	UNIQUE ITEMS: Track IMPORT BUILD->UNIQUE ITEMS and where/how they can be acquired.
 	VOIDSTONE1-4: Fastest/easiest route to completing voidstones 1, 2 ,3 ,4.
 
-TODO:
+IDEAS:
 	build system for updating poe info for each league
 		Query poewiki
 			boss info
 			unique item drop info
 			league mechanics
 			challenges
+
+TODO:
+	FIX TEXT FORMATTING & HIGHLIGHTS
+		Better visual separation between quest/kill/area steps
+		KEEP IT SIMPLE AND DON'T OVERDO IT.
+			Only text should be highlighted. Not the background
+
+	MARK ROUTES W/ CHALLENGE PROGRESSION [PARTIAL]
+		[DONE] Toggle challenges tab on/off (showChallenges config)
+		[DONE] Progress count "X/40" in CHALLENGES tab label
+		Add inline challenge badges on relevant route steps
+		Show which challenges auto-complete vs. require manual action
+
+	LABYRINTH TRACKER [DONE]
+		[DONE] Toggle in ATLAS settings (showLabTracker)
+		[DONE] Track normal/cruel/merciless/uber lab with checkboxes
+		[DONE] Show next lab unlock condition per lab
+		[DONE] Link to poelab.com for layouts
+
+	CRAFTING RECIPES
+		Add crafting recipes to ATLAS
+		Add option to toggle off in CAMPAIGN and ATLAS respectively
+
+	LEAGUE MECHANICS SHOW IN CAMPAIGN
+		Toggle should show (Einhar/Beasts, Alva/Incursion, Niko/Delve, etc.) during campaign
+		Fix/Show which acts they appear
 	
 IN PROGRESS:
 	Route pathing

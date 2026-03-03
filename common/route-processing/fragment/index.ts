@@ -34,6 +34,11 @@ const EvaluateLookup: Record<
   ["crafting"]: EvaluateCrafting,
   ["dir"]: EvaluateDirection,
   ["copy"]: EvaluateCopy,
+  ["map_white"]: EvaluateMapWhite,
+  ["map_yellow"]: EvaluateMapYellow,
+  ["map_red"]: EvaluateMapRed,
+  ["map_guardian"]: EvaluateMapGuardian,
+  ["map_pinnacle"]: EvaluateMapPinnacle,
 };
 
 interface ParseContext {
@@ -524,4 +529,44 @@ function EvaluateCopy(
       text: rawFragment.slice(1).join(""),
     },
   };
+}
+
+function EvaluateMapWhite(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
+  return { fragment: { type: "map_white", value: rawFragment[1] } };
+}
+
+function EvaluateMapYellow(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
+  return { fragment: { type: "map_yellow", value: rawFragment[1] } };
+}
+
+function EvaluateMapRed(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
+  return { fragment: { type: "map_red", value: rawFragment[1] } };
+}
+
+function EvaluateMapGuardian(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
+  return { fragment: { type: "map_guardian", value: rawFragment[1] } };
+}
+
+function EvaluateMapPinnacle(
+  rawFragment: RawFragment,
+  { state, logger }: ParseContext
+): string | EvaluateResult {
+  if (rawFragment.length != 2) return ERROR_INVALID_FORMAT;
+  return { fragment: { type: "map_pinnacle", value: rawFragment[1] } };
 }

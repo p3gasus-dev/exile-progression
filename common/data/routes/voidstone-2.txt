@@ -1,14 +1,14 @@
 #section Searing Exarch Progression
-Activate {league|Searing Exarch} influence on your Map Device when opening maps
-Run {quest_text|T1-T4} influenced maps — complete the biome objective in each
-Run {arena|T5-T8} influenced maps — complete the biome objective in each
-Run {arena|T9-T12} influenced maps — complete the biome objective in each
-Run {kill|T13-T15} influenced maps until an {quest_text|Incandescent Invitation} drops from a map boss
+Enable {league|Searing Exarch} influence when opening maps
+Run {map_white|T1-T4} influenced maps — complete biome objectives
+Run {map_yellow|T5-T8} influenced maps — complete biome objectives
+Run {map_red|T9-T12} influenced maps — complete biome objectives
+Farm {map_red|T13-T15} influenced maps until {quest_text|Incandescent Invitation} drops
 
 #section The Searing Exarch
-Alch the {quest_text|Incandescent Invitation} to Rare (improves loot)
-Place the {quest_text|Incandescent Invitation} in your Map Device
-    #sub During the fireball phase, releasing only when the phase ends lets you skip it
+Alch {quest_text|Incandescent Invitation} to Rare
+Place {quest_text|Incandescent Invitation} in your Map Device
+    #sub Hold until the fireball phase ends to skip it
 ➞ {arena|The Searing Exarch's Domain}
 {kill|The Searing Exarch}
 Take the {quest_text|Omniscient Voidstone} and socket it into your Atlas Map Device

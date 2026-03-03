@@ -1,6 +1,7 @@
 import { atlasConfigSelector, AtlasConfig } from "../../state/atlas-config";
 import { SplitRow } from "../../components/SplitRow";
 import { Loading } from "../../components/Loading";
+import { LabTracker } from "./LabTracker";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdDragIndicator } from "react-icons/md";
@@ -233,27 +234,21 @@ export default function AtlasContainer() {
           />
 
           <SplitRow
-            left={<Label>Scarab Focus</Label>}
+            left={<Label>Show Lab Tracker</Label>}
             right={
               <Value>
-                <select
-                  className={classNames(styles.select)}
-                  value={config.scarabStrategy}
+                <input
+                  type="checkbox"
+                  checked={config.showLabTracker}
                   onChange={(e) =>
-                    update({
-                      scarabStrategy: e.target.value as AtlasConfig["scarabStrategy"],
-                    })
+                    update({ showLabTracker: e.target.checked })
                   }
-                  aria-label="Scarab strategy"
-                >
-                  <option value="boss">Boss</option>
-                  <option value="bulk">Bulk</option>
-                  <option value="content">Content</option>
-                  <option value="none">None</option>
-                </select>
+                  aria-label="Show labyrinth tracker"
+                />
               </Value>
             }
           />
+
         </div>
 
       </div>
@@ -264,6 +259,9 @@ export default function AtlasContainer() {
           <AtlasCompletion />
         </Suspense>
       )}
+
+      {/* ── Labyrinth Tracker (optional) ──────────────────────────────── */}
+      {config.showLabTracker && <LabTracker />}
     </>
   );
 }

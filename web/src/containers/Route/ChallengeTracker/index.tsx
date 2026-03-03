@@ -1,4 +1,4 @@
-import { challengeProgressSelectorFamily } from "../../../state/challenge-progress";
+import { challengeProgressSelectorFamily, challengeCountSelector } from "../../../state/challenge-progress";
 import {
   CHALLENGES,
   CHALLENGE_CATEGORIES,
@@ -8,14 +8,7 @@ import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { selector, useRecoilValue } from "recoil";
-
-/** Total challenges completed across all categories. */
-const challengeCountSelector = selector({
-  key: "challengeCountSelector",
-  get: ({ get }) =>
-    CHALLENGES.filter((c) => get(challengeProgressSelectorFamily(c.id))).length,
-});
+import { useRecoilValue } from "recoil";
 
 export default function ChallengeTracker() {
   const totalCompleted = useRecoilValue(challengeCountSelector);

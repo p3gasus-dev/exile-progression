@@ -1,0 +1,48 @@
+.tracker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2);
+  padding: var(--size-3);
+  border-top: var(--border-width) solid var(--accent-secondary);
+}
+
+.header {
+  font-size: 0.75rem;
+  font-weight: var(--font-heavy);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: var(--size-1);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--size-3);
+  font-size: 0.85rem;
+}
+
+.label {
+  font-weight: var(--font-heavy);
+  color: #c8a030;
+  min-width: 9rem;
+}
+
+.done .label {
+  color: var(--accent-primary);
+  text-decoration: line-through;
+}
+
+.unlock {
+  color: var(--on-primary);
+  opacity: 0.6;
+  font-size: 0.78rem;
+  flex: 1;
+}
+
+.link {
+  font-size: 0.75rem;
+  color: #4888e8;
+  white-space: nowrap;
+  margin-left: auto;
+}
