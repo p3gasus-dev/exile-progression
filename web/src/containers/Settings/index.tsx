@@ -2,17 +2,14 @@ import { RouteEditor } from "../../components/RouteEditor";
 import { pobCodeAtom } from "../../state/pob-code";
 import { routeFilesSelector } from "../../state/route-files";
 import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
+import { challengeRouteFilesSelector } from "../../state/challenge-route-files";
 import { routeSelector } from "../../state/route";
-import { challengeProgressSummarySelector } from "../../state/progress-summary";
-import { useClearChallengeProgress } from "../../state/challenge-progress";
-import ChallengeTracker from "../Route/ChallengeTracker";
 import { trackEvent } from "../../utility/telemetry";
 import { formStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { FaGithub, FaRegClipboard } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
-import { useRecoilState, useRecoilCallback, useResetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilCallback, useResetRecoilState } from "recoil";
 import { toast } from "react-toastify";
 
 function SectionHeader({ title }: { title: string }) {
@@ -26,8 +23,8 @@ export default function SettingsContainer() {
   const [voidstoneRouteFiles, setVoidstoneRouteFiles] = useRecoilState(voidstoneRouteFilesSelector);
   const resetVoidstoneRouteFiles = useResetRecoilState(voidstoneRouteFilesSelector);
 
-  const challengeProgress = useRecoilValue(challengeProgressSummarySelector);
-  const clearChallengeProgress = useClearChallengeProgress();
+  const [challengeRouteFiles, setChallengeRouteFiles] = useRecoilState(challengeRouteFilesSelector);
+  const resetChallengeRouteFiles = useResetRecoilState(challengeRouteFilesSelector);
 
   // 3rd-party export: serialise the full route + pob code to clipboard
   const exportToClipboard = useRecoilCallback(
@@ -76,29 +73,17 @@ export default function SettingsContainer() {
 
       <hr className={classNames(styles.divider)} />
 
-      {/* ── Challenges ───────────────────────────────────────────────────── */}
-      <SectionHeader title="Challenges" />
+      {/* ── Edit Challenges ──────────────────────────────────────────────── */}
+      <SectionHeader title="Edit Challenges" />
       <p className={classNames(styles.hint)}>
-        Track your 40 challenge completions. Progress syncs with the Route tab.
+        Modify the challenge guide source file. Changes persist across sessions.
+        Ctrl+S / ⌘S saves while the editor is focused.
       </p>
-      <div className={classNames(styles.challengeRow)}>
-        <span className={classNames(styles.challengeCount)}>
-          {challengeProgress.completed}
-          <span className={classNames(styles.challengeTotal)}>/{challengeProgress.total}</span>
-          {" "}complete
-        </span>
-        <button
-          className={classNames(formStyles.formButton, styles.resetButton)}
-          onClick={() => {
-            clearChallengeProgress();
-            toast.success("Challenge progress reset");
-          }}
-        >
-          <MdDeleteForever className="inlineIcon" />
-          Reset
-        </button>
-      </div>
-      <ChallengeTracker />
+      <RouteEditor
+        routeFiles={challengeRouteFiles}
+        onSubmit={(updated) => setChallengeRouteFiles(updated)}
+        onReset={resetChallengeRouteFiles}
+      />
 
       <hr className={classNames(styles.divider)} />
 
