@@ -7,7 +7,6 @@ import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdDragIndicator } from "react-i
 import { useRecoilState } from "recoil";
 import { useState, Suspense, lazy } from "react";
 
-const VoidstoneRoute = lazy(() => import("../Route/VoidstoneRoute"));
 const AtlasCompletion = lazy(() => import("../Route/AtlasCompletion"));
 
 function SectionHeader({ title }: { title: string }) {
@@ -69,7 +68,7 @@ export default function AtlasContainer() {
         <Hint>
           Drag or use the arrows to set the order you plan to complete each
           voidstone. The recommended order is Eater → Exarch → Maven → Uber
-          Elder. This changes the order of the route below.
+          Elder. This changes the order in the Route → Atlas tab.
         </Hint>
 
         <div className={classNames(styles.voidstoneList)}>
@@ -219,11 +218,6 @@ export default function AtlasContainer() {
         </div>
 
       </div>
-
-      {/* ── Voidstone Route (core content) ────────────────────────────── */}
-      <Suspense fallback={<Loading />}>
-        <VoidstoneRoute />
-      </Suspense>
 
       {/* ── Atlas Completion Guide (optional) ─────────────────────────── */}
       {config.showAtlasGuide && (

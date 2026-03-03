@@ -23,7 +23,6 @@
 
 .default {
   color: var(--on-secondary);
-  font-weight: var(--font-heavy);
 }
 
 /* Unique monster / boss — orange-brown, close to PoE unique item text #AF6025 */
@@ -35,7 +34,6 @@
 /* Zone / area name — cool grey-blue, matches PoE zone loading-screen text */
 .area {
   color: #9ec0d0;
-  font-weight: var(--font-heavy);
 }
 
 /* Area level indicator — dim metadata */
@@ -53,19 +51,16 @@
 /* Quest instruction / flavour text — bright green, matches PoE quest-item green */
 .questText {
   color: #5dca5d;
-  font-weight: var(--font-heavy);
 }
 
 /* Waypoint — magic-item blue */
 .waypoint {
   color: #4888e8;
-  font-weight: var(--font-heavy);
 }
 
 /* Portal — purple, matches PoE portal-stone / Town Portal orb colour */
 .portal {
   color: #9b4fc8;
-  font-weight: var(--font-heavy);
 }
 
 /* Trial of Ascendancy / Ascend — gold-amber, matches PoE labyrinth golden theme */

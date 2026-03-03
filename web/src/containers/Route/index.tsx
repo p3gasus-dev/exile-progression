@@ -23,14 +23,16 @@ import { ReactNode, Suspense, lazy, useState } from "react";
 import { Loading } from "../../components/Loading";
 import { useRecoilCallback, useRecoilValue } from "recoil";
 
+const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 const ChallengeTracker = lazy(() => import("./ChallengeTracker"));
 
-type RouteTab = "acts" | "challenges";
+type RouteTab = "acts" | "atlas" | "challenges";
 
-const ALL_TABS: RouteTab[] = ["acts", "challenges"];
+const ALL_TABS: RouteTab[] = ["acts", "atlas", "challenges"];
 
 const TAB_LABELS: Record<RouteTab, string> = {
   acts: "ACT 1–10",
+  atlas: "ATLAS",
   challenges: "CHALLENGES",
 };
 
@@ -191,6 +193,7 @@ export default function RouteContainer() {
       <TabBar tabs={tabs} active={visibleTab} onChange={setActiveTab} />
       <Suspense fallback={<Loading />}>
         {visibleTab === "acts" && <ActRoute />}
+        {visibleTab === "atlas" && <VoidstoneRoute />}
         {visibleTab === "challenges" && <ChallengeTracker />}
       </Suspense>
     </>

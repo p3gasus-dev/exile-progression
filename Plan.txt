@@ -31,6 +31,10 @@ DESC:
 
 TODO:
 	build system for updating poe info for each league
+		boss info
+		unique item info
+		challenges
+
 	
 IN PROGRESS:
 	Route pathing
