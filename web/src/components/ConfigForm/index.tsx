@@ -65,6 +65,24 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
           </div>
         }
       />
+      <SplitRow
+        left={<div className={classNames(styles.label)}>Show Stat Hints</div>}
+        right={
+          <div className={classNames(styles.value)}>
+            <input
+              type="checkbox"
+              checked={config.showStatHints}
+              onChange={(evt) => {
+                onSubmit({
+                  ...config,
+                  showStatHints: evt.target.checked,
+                });
+              }}
+              aria-label="Show Stat Hints"
+            />
+          </div>
+        }
+      />
     </div>
   );
 }

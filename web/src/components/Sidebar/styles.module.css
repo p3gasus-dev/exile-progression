@@ -66,3 +66,8 @@
 .hidden {
   display: none;
 }
+
+.searchSection {
+  padding: var(--size-1);
+  width: 20rem;
+}

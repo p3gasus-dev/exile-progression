@@ -58,3 +58,14 @@
   font-style: italic;
   color: var(--on-primary);
 }
+
+.filterLinks {
+  gap: var(--size-2);
+}
+
+.filterLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  text-decoration: none;
+}

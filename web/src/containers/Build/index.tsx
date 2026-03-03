@@ -14,6 +14,7 @@ import { uniqueItemsSelector } from "../../state/unique-items";
 import { formStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import { useRecoilState, useResetRecoilState } from "recoil";
 
 function SectionHeader({ title }: { title: string }) {
@@ -178,6 +179,33 @@ export default function BuildContainer() {
       </p>
       <div className={classNames(formStyles.form)}>
         <SearchStringsEditor />
+      </div>
+
+      <hr className={classNames(styles.divider)} />
+      {/* ── FILTERS ───────────────────────────────────────────────────── */}
+      <SectionHeader title="Item Filters" />
+      <p className={classNames(styles.hint)}>
+        Download or customise a loot filter for the league.
+      </p>
+      <div className={classNames(formStyles.groupLeft, styles.filterLinks)}>
+        <a
+          className={classNames(formStyles.formButton, styles.filterLink)}
+          href="https://www.filterblade.xyz/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaExternalLinkAlt className="inlineIcon" />
+          FilterBlade
+        </a>
+        <a
+          className={classNames(formStyles.formButton, styles.filterLink)}
+          href="https://www.pathofexile.com/item-filter/ladder/follower"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaExternalLinkAlt className="inlineIcon" />
+          Popular Filters
+        </a>
       </div>
 
       <hr className={classNames(styles.divider)} />

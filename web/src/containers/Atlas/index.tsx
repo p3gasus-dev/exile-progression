@@ -215,6 +215,45 @@ export default function AtlasContainer() {
               </Value>
             }
           />
+
+          <SplitRow
+            left={<Label>Show Unique Drops</Label>}
+            right={
+              <Value>
+                <input
+                  type="checkbox"
+                  checked={config.showUniqueDrops}
+                  onChange={(e) =>
+                    update({ showUniqueDrops: e.target.checked })
+                  }
+                  aria-label="Show unique drops on atlas route"
+                />
+              </Value>
+            }
+          />
+
+          <SplitRow
+            left={<Label>Scarab Focus</Label>}
+            right={
+              <Value>
+                <select
+                  className={classNames(styles.select)}
+                  value={config.scarabStrategy}
+                  onChange={(e) =>
+                    update({
+                      scarabStrategy: e.target.value as AtlasConfig["scarabStrategy"],
+                    })
+                  }
+                  aria-label="Scarab strategy"
+                >
+                  <option value="boss">Boss</option>
+                  <option value="bulk">Bulk</option>
+                  <option value="content">Content</option>
+                  <option value="none">None</option>
+                </select>
+              </Value>
+            }
+          />
         </div>
 
       </div>

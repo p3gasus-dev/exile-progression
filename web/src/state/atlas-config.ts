@@ -34,6 +34,16 @@ export interface AtlasConfig {
    * Whether to show the Atlas full-completion checklist below the voidstone route.
    */
   showAtlasGuide: boolean;
+
+  /**
+   * Whether to show unique item drop badges on atlas route steps.
+   */
+  showUniqueDrops: boolean;
+
+  /**
+   * Scarab priority strategy for atlas farming.
+   */
+  scarabStrategy: "bulk" | "boss" | "content" | "none";
 }
 
 const ATLAS_CONFIG_VERSION = 0;
@@ -44,6 +54,8 @@ const DEFAULT_ATLAS_CONFIG: AtlasConfig = {
   runBothEarlyBosses: false,
   voidstoneOrder: [0, 1, 2, 3],
   showAtlasGuide: false,
+  showUniqueDrops: true,
+  scarabStrategy: "boss",
 };
 
 const atlasConfigAtom = atom<AtlasConfig | null>({
@@ -54,7 +66,11 @@ const atlasConfigAtom = atom<AtlasConfig | null>({
 
 export const atlasConfigSelector = selector<AtlasConfig>({
   key: "atlasConfigSelector",
-  get: ({ get }) => get(atlasConfigAtom) ?? DEFAULT_ATLAS_CONFIG,
+  get: ({ get }) => {
+    const stored = get(atlasConfigAtom);
+    if (stored === null) return DEFAULT_ATLAS_CONFIG;
+    return { ...DEFAULT_ATLAS_CONFIG, ...stored };
+  },
   set: ({ set }, newValue) => {
     set(atlasConfigAtom, newValue instanceof DefaultValue ? null : newValue);
   },
