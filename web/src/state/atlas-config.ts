@@ -4,20 +4,6 @@ import { DefaultValue, atom, selector } from "recoil";
 
 export interface AtlasConfig {
   /**
-   * Atlas passive tree strategy focus.
-   * boss-rush: prioritise atlas points into boss nodes early
-   * map-sustain: prioritise map quantity/return nodes first
-   * balanced: spread evenly
-   */
-  passiveStrategy: "boss-rush" | "map-sustain" | "balanced";
-
-  /**
-   * Run Kirac missions early for bonus atlas passive points.
-   * Slows map progression slightly but gives extra passive points.
-   */
-  kiracMissionsEarly: boolean;
-
-  /**
    * Spec into both Eater and Exarch early for double atlas passive books,
    * rather than focusing a single boss first.
    */
@@ -31,11 +17,6 @@ export interface AtlasConfig {
   voidstoneOrder: [number, number, number, number];
 
   /**
-   * Whether to show the Atlas full-completion checklist below the voidstone route.
-   */
-  showAtlasGuide: boolean;
-
-  /**
    * Whether to show unique item drop badges on atlas route steps.
    */
   showUniqueDrops: boolean;
@@ -44,17 +25,13 @@ export interface AtlasConfig {
    * Whether to show the Labyrinth Tracker section.
    */
   showLabTracker: boolean;
-
 }
 
 const ATLAS_CONFIG_VERSION = 0;
 
 const DEFAULT_ATLAS_CONFIG: AtlasConfig = {
-  passiveStrategy: "balanced",
-  kiracMissionsEarly: false,
   runBothEarlyBosses: false,
   voidstoneOrder: [0, 1, 2, 3],
-  showAtlasGuide: false,
   showUniqueDrops: true,
   showLabTracker: false,
 };

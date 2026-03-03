@@ -69,8 +69,27 @@
 }
 
 .searchSection {
-  padding: var(--size-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+  padding: var(--size-2);
   width: 14.25rem;
+  border-bottom: var(--border-width) solid var(--accent-secondary);
+}
+
+.searchInput {
+  width: 100%;
+  background: var(--secondary);
+  border: var(--border-width) solid var(--accent-secondary);
+  border-radius: var(--border-radius);
+  color: var(--on-primary);
+  font-size: 0.75rem;
+  padding: var(--size-1) var(--size-2);
+  cursor: pointer;
+}
+
+.searchInput:hover {
+  border-color: var(--accent-primary);
 }
 
 .searchPlaceholder {

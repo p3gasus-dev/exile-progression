@@ -2,6 +2,7 @@ import { FragmentStep } from "../../components/FragmentStep";
 import { GemReward } from "../../components/ItemReward";
 import { SectionHolder } from "../../components/SectionHolder";
 import { Sidebar } from "../../components/Sidebar";
+import { ChallengeBadge } from "../../components/ChallengeBadge";
 import { TaskListProps, StepHighlight } from "../../components/TaskList";
 import { Fragments } from "../../../../common/route-processing/fragment/types";
 import {
@@ -108,7 +109,14 @@ function ActRoute() {
           onToggle: challengeIds.length > 0
             ? (complete) => { if (complete) completeChallenges(challengeIds); }
             : undefined,
-          children: <FragmentStep key={stepIndex} step={step} />,
+          children: (
+            <>
+              <FragmentStep key={stepIndex} step={step} />
+              {config.showChallenges && stepChallenges.length > 0 && (
+                <ChallengeBadge challenges={stepChallenges} />
+              )}
+            </>
+          ),
         });
       }
 

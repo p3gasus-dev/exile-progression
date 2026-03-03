@@ -46,6 +46,7 @@ export function SectionHolder({ name, items }: SectionHolderProps) {
         >
           {icon}
           <div className={classNames(styles.sectionName)}>{name}</div>
+          {icon}
         </button>
         <hr />
       </div>

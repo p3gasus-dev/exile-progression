@@ -1,6 +1,7 @@
 import { FragmentStep } from "../../../components/FragmentStep";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { UniqueItemBadge } from "../../../components/UniqueItemBadge";
+import { ChallengeBadge } from "../../../components/ChallengeBadge";
 import { TaskListProps } from "../../../components/TaskList";
 import { voidstoneProgressSelectorFamily } from "../../../state/voidstone-progress";
 import { voidstoneRouteSelector } from "../../../state/voidstone-route";
@@ -93,6 +94,9 @@ export default function VoidstoneRoute() {
         children: (
           <>
             <FragmentStep step={step} />
+            {config.showChallenges && stepChallenges.length > 0 && (
+              <ChallengeBadge challenges={stepChallenges} />
+            )}
             {atlasConfig.showUniqueDrops && relevantDrops.length > 0 && (
               <UniqueItemBadge items={relevantDrops} />
             )}

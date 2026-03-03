@@ -6,7 +6,7 @@ import { atom, selector } from "recoil";
 export interface Config {
   gemsOnly: boolean;
   showSubsteps: boolean;
-  showLeagueMechanics: boolean;
+  showCraftingRecipes: boolean;
   showStatHints: boolean;
   showChallenges: boolean;
 }
@@ -24,11 +24,11 @@ export const configSelector = selector<Config>({
   get: ({ get }) => {
     const value = get(configAtom);
     if (value === null)
-      return { gemsOnly: false, showSubsteps: true, showLeagueMechanics: false, showStatHints: true, showChallenges: true };
+      return { gemsOnly: false, showSubsteps: true, showCraftingRecipes: true, showStatHints: true, showChallenges: true };
     return {
       gemsOnly: value.gemsOnly ?? false,
       showSubsteps: value.showSubsteps ?? true,
-      showLeagueMechanics: value.showLeagueMechanics ?? false,
+      showCraftingRecipes: value.showCraftingRecipes ?? true,
       showStatHints: value.showStatHints ?? true,
       showChallenges: value.showChallenges ?? true,
     };

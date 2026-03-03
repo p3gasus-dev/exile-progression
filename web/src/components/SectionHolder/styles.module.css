@@ -1,36 +1,33 @@
 .sectionbar {
   position: sticky;
   background-color: var(--primary);
-  top: var(--navbar-height);
+  /* Account for navbar + route tab bar below it */
+  top: calc(var(--navbar-height) + var(--actbar-height));
   z-index: 1;
 }
 
 .sectionbarHeader {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: var(--size-2);
+  justify-content: space-between;
   border-bottom: var(--border-width) solid var(--accent-secondary);
 }
 
-/* Section name takes all remaining space, pushing hint chips to the right */
 .sectionName {
   flex: 1;
-  text-align: left;
+  text-align: center;
 }
 
 .header {
   width: 100%;
   color: var(--on-secondary);
-  font-size: 1rem;
-  padding: var(--size-3) var(--size-2);
+  font-size: var(--size-5);
+  padding: var(--size-2);
   font-weight: var(--font-heavy);
+  text-align: center;
   cursor: pointer;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.85;
 }
 
 .header:hover {
-  opacity: 1;
+  opacity: 0.8;
 }

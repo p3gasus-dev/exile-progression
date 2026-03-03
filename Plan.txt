@@ -38,16 +38,16 @@ IDEAS:
 			challenges
 
 TODO:
-	FIX TEXT FORMATTING & HIGHLIGHTS
-		Better visual separation between quest/kill/area steps
+	FIX TEXT FORMATTING & HIGHLIGHTS [DONE]
+		[DONE] Removed background tints from step highlights (border-only, text-only policy)
+		[DONE] Fragment type colours: enemy/area/quest/questText/waypoint/portal/trial/map tiers
 		KEEP IT SIMPLE AND DON'T OVERDO IT.
-			Only text should be highlighted. Not the background
 
-	MARK ROUTES W/ CHALLENGE PROGRESSION [PARTIAL]
+	MARK ROUTES W/ CHALLENGE PROGRESSION [DONE]
 		[DONE] Toggle challenges tab on/off (showChallenges config)
 		[DONE] Progress count "X/40" in CHALLENGES tab label
-		Add inline challenge badges on relevant route steps
-		Show which challenges auto-complete vs. require manual action
+		[DONE] Inline C# badges on boss/ascend steps (auto-complete indicators)
+		[DONE] All route-linked challenges are auto-complete (shown via ChallengeBadge)
 
 	LABYRINTH TRACKER [DONE]
 		[DONE] Toggle in ATLAS settings (showLabTracker)
@@ -55,13 +55,14 @@ TODO:
 		[DONE] Show next lab unlock condition per lab
 		[DONE] Link to poelab.com for layouts
 
-	CRAFTING RECIPES
-		Add crafting recipes to ATLAS
-		Add option to toggle off in CAMPAIGN and ATLAS respectively
+	CRAFTING RECIPES [DONE]
+		[DONE] showCraftingRecipes toggle in Config + ConfigForm ("Show Crafting" checkbox)
+		[DONE] Campaign: filter crafting-only steps via routeSelector when toggled off (acts 2-10 use {crafting})
+		[DONE] Atlas: Eternal Labyrinth in voidstone-1 ({ascend|eternal} + Get {crafting|EndGame_Labyrinth_boss_3})
+		NOTE: No crafting recipe pickups exist in map areas — only EndGame_Labyrinth_boss_3 (All Resistances Rank 2)
 
-	LEAGUE MECHANICS SHOW IN CAMPAIGN
-		Toggle should show (Einhar/Beasts, Alva/Incursion, Niko/Delve, etc.) during campaign
-		Fix/Show which acts they appear
+	LEAGUE MECHANICS SHOW IN CAMPAIGN [SCRAPPED]
+		All route content and config/preprocessor wiring removed.
 	
 IN PROGRESS:
 	Route pathing

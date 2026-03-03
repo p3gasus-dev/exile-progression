@@ -3,7 +3,6 @@ import { searchStringsSelector } from "../../state/search-strings";
 import { urlTreesSelector } from "../../state/tree/url-tree";
 import { interactiveStyles } from "../../styles";
 import { GemLinkViewer } from "../GemLinkViewer";
-import { SearchStrings } from "../SearchStrings";
 import { SkillTreeViewer } from "../SkillTreeViewer";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -12,6 +11,7 @@ import React from "react";
 import { FaLink, FaListUl } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { TbHierarchy } from "react-icons/tb";
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 
 export function Sidebar() {
@@ -26,22 +26,36 @@ export function Sidebar() {
 
   return (
     <div className={classNames(styles.sidebar)}>
+      {/* ── Regex text boxes — above the planner ── */}
+      {expand && (
+        <div className={classNames(styles.searchSection)}>
+          {hasSearch
+            ? searchStrings!.map((s, i) => (
+                <input
+                  key={i}
+                  className={classNames(styles.searchInput)}
+                  type="text"
+                  readOnly
+                  value={s.alias || s.text}
+                  title={s.text}
+                  onClick={() => {
+                    navigator.clipboard.writeText(s.text);
+                    toast.success("Copied to Clipboard");
+                  }}
+                />
+              ))
+            : <p className={classNames(styles.searchPlaceholder)}>No filter strings — add them in Build</p>
+          }
+        </div>
+      )}
+
+      {/* ── Planner: Tree / Gems tabs + toggle ── */}
       <Header
         expand={expand}
         sections={sections}
         onActiveTab={setActiveTab}
         onToggleExpand={setExpand}
       />
-
-      {/* ── Search strings: always visible above Tree/Gems ── */}
-      {expand && (
-        <div className={classNames(styles.searchSection)}>
-          {hasSearch
-            ? <SearchStrings values={searchStrings!} />
-            : <p className={classNames(styles.searchPlaceholder)}>No filter strings — add them in Build</p>
-          }
-        </div>
-      )}
 
       {/* ── Tree / Gems tabbed content ── */}
       {expand && sections.length > 0 && (

@@ -21,8 +21,8 @@ const baseRouteSelector = selector({
     if (buildData == null || buildData.leagueStart)
       routeState.preprocessorDefinitions.add("LEAGUE_START");
 
-    if (config.showLeagueMechanics)
-      routeState.preprocessorDefinitions.add("SHOW_LEAGUE_MECHANICS");
+    if (config.showCraftingRecipes)
+      routeState.preprocessorDefinitions.add("SHOW_CRAFTING_RECIPES");
 
     if (buildData == null || buildData.library)
       routeState.preprocessorDefinitions.add("LIBRARY");
@@ -92,7 +92,15 @@ export const routeSelector = selector({
           }
         }
 
-        const skipStep = settings.gemsOnly && gemSteps.length === 0;
+        const isCraftingOnly =
+          step.type === "fragment_step" &&
+          step.parts.length > 0 &&
+          step.parts.every(
+            (p) => typeof p !== "string" && p.type === "crafting"
+          );
+        const skipStep =
+          (settings.gemsOnly && gemSteps.length === 0) ||
+          (!settings.showCraftingRecipes && isCraftingOnly);
         if (!skipStep) buildSection.steps.push(step, ...gemSteps);
       }
 

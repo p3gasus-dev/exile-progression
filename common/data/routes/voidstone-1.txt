@@ -1,5 +1,8 @@
 #section Early Atlas
 Talk to {quest_text|Kirac} in Oriath to unlock the Atlas
+{waypoint|Labyrinth_Airlock} #Aspirants' Plaza
+{ascend|eternal}
+Get {crafting|EndGame_Labyrinth_boss_3}
 Run {map_white|T1-T5} maps — complete Kirac's quest chain
 Speak with {league|The Envoy} when it appears to unlock Eldritch Influence
 Unlock {league|Eater of Worlds} and {league|Searing Exarch} on your Map Device via Kirac

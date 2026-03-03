@@ -1,14 +1,11 @@
 import { atlasConfigSelector, AtlasConfig } from "../../state/atlas-config";
 import { SplitRow } from "../../components/SplitRow";
-import { Loading } from "../../components/Loading";
 import { LabTracker } from "./LabTracker";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdDragIndicator } from "react-icons/md";
 import { useRecoilState } from "recoil";
-import { useState, Suspense, lazy } from "react";
-
-const AtlasCompletion = lazy(() => import("../Route/AtlasCompletion"));
+import { useState } from "react";
 
 function SectionHeader({ title }: { title: string }) {
   return <h2 className={classNames(styles.sectionHeader)}>{title}</h2>;
@@ -140,51 +137,8 @@ export default function AtlasContainer() {
 
         {/* ── Atlas Settings ────────────────────────────────────────────── */}
         <SectionHeader title="Atlas Settings" />
-        <Hint>
-          Optional: toggle the atlas passive strategy and completion guide.
-          These help plan your atlas, but the voidstone route below is the core
-          path.
-        </Hint>
 
         <div className={classNames(styles.form)}>
-          <SplitRow
-            left={<Label>Passive Focus</Label>}
-            right={
-              <Value>
-                <select
-                  className={classNames(styles.select)}
-                  value={config.passiveStrategy}
-                  onChange={(e) =>
-                    update({
-                      passiveStrategy: e.target.value as AtlasConfig["passiveStrategy"],
-                    })
-                  }
-                  aria-label="Atlas passive strategy"
-                >
-                  <option value="balanced">Balanced</option>
-                  <option value="boss-rush">Boss Rush</option>
-                  <option value="map-sustain">Map Sustain</option>
-                </select>
-              </Value>
-            }
-          />
-
-          <SplitRow
-            left={<Label>Kirac Missions Early</Label>}
-            right={
-              <Value>
-                <input
-                  type="checkbox"
-                  checked={config.kiracMissionsEarly}
-                  onChange={(e) =>
-                    update({ kiracMissionsEarly: e.target.checked })
-                  }
-                  aria-label="Kirac missions early"
-                />
-              </Value>
-            }
-          />
-
           <SplitRow
             left={<Label>Run Both Early Bosses</Label>}
             right={
@@ -196,22 +150,6 @@ export default function AtlasContainer() {
                     update({ runBothEarlyBosses: e.target.checked })
                   }
                   aria-label="Run both early bosses"
-                />
-              </Value>
-            }
-          />
-
-          <SplitRow
-            left={<Label>Show Atlas Guide</Label>}
-            right={
-              <Value>
-                <input
-                  type="checkbox"
-                  checked={config.showAtlasGuide}
-                  onChange={(e) =>
-                    update({ showAtlasGuide: e.target.checked })
-                  }
-                  aria-label="Show atlas completion guide"
                 />
               </Value>
             }
@@ -252,13 +190,6 @@ export default function AtlasContainer() {
         </div>
 
       </div>
-
-      {/* ── Atlas Completion Guide (optional) ─────────────────────────── */}
-      {config.showAtlasGuide && (
-        <Suspense fallback={<Loading />}>
-          <AtlasCompletion />
-        </Suspense>
-      )}
 
       {/* ── Labyrinth Tracker (optional) ──────────────────────────────── */}
       {config.showLabTracker && <LabTracker />}
