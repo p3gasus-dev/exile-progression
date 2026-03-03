@@ -6,13 +6,23 @@ interface StatHintChipsProps {
   hints: StatTarget[];
 }
 
+function getDamageTypeClass(label: string): string | undefined {
+  const l = label.toLowerCase();
+  if (l.includes("cold") || l.includes("freeze") || l.includes("frozen")) return styles.typeCold;
+  if (l.includes("fire") || l.includes("ignite")) return styles.typeFire;
+  if (l.includes("light")) return styles.typeLight;
+  if (l.includes("chaos") || l.includes("poison")) return styles.typeChaos;
+  if (l.includes("phys")) return styles.typePhys;
+  return undefined;
+}
+
 export function StatHintChips({ hints }: StatHintChipsProps) {
   return (
     <div className={classNames(styles.row)}>
       {hints.map((h) => (
         <span
           key={h.label}
-          className={classNames(styles.chip, h.warn && styles.warn)}
+          className={classNames(styles.chip, h.warn && styles.warn, getDamageTypeClass(h.label))}
           title={h.note}
         >
           <span className={classNames(styles.label)}>{h.label}</span>

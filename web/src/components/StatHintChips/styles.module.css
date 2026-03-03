@@ -26,6 +26,43 @@
   opacity: 1;
 }
 
+/* ── Damage type colours (override .warn when present) ─────────────────── */
+
+.typeCold {
+  color: #88ccff;
+  border-color: rgba(136, 204, 255, 0.35);
+  background-color: rgba(136, 204, 255, 0.06);
+  opacity: 1;
+}
+
+.typeFire {
+  color: #ff8040;
+  border-color: rgba(255, 128, 64, 0.35);
+  background-color: rgba(255, 128, 64, 0.06);
+  opacity: 1;
+}
+
+.typeLight {
+  color: #f0d840;
+  border-color: rgba(240, 216, 64, 0.35);
+  background-color: rgba(240, 216, 64, 0.06);
+  opacity: 1;
+}
+
+.typeChaos {
+  color: #cc60e0;
+  border-color: rgba(204, 96, 224, 0.35);
+  background-color: rgba(204, 96, 224, 0.06);
+  opacity: 1;
+}
+
+.typePhys {
+  color: #c8b8a0;
+  border-color: rgba(200, 184, 160, 0.35);
+  background-color: rgba(200, 184, 160, 0.06);
+  opacity: 1;
+}
+
 .label {
   opacity: 0.65;
   font-weight: normal;
