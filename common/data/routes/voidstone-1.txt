@@ -1,16 +1,16 @@
 #section Early Atlas
 Talk to {quest_text|Kirac} in Oriath to unlock the Atlas
     #sub Complete Acts 1-10 first if you haven't already
-Run white maps (T1-T5) and complete Kirac's opening quest chain
+Run white maps ({quest_text|T1-T5}) and complete Kirac's opening quest chain
 {league|The Envoy} will appear in a map — speak with it to unlock Eldritch Influence
 Talk to Kirac to receive the {league|Eater of Worlds} and {league|Searing Exarch} icons on your Map Device
 
 #section Eater of Worlds Progression
 Activate {league|Eater of Worlds} influence on your Map Device when opening maps
-Run T1-T4 influenced maps — complete the biome objective in each
-Run T5-T8 influenced maps — complete the biome objective in each
-Run T9-T12 influenced maps — complete the biome objective in each
-Run T13-T15 influenced maps until a {quest_text|Screaming Invitation} drops from a map boss
+Run {quest_text|T1-T4} influenced maps — complete the biome objective in each
+Run {arena|T5-T8} influenced maps — complete the biome objective in each
+Run {arena|T9-T12} influenced maps — complete the biome objective in each
+Run {kill|T13-T15} influenced maps until a {quest_text|Screaming Invitation} drops from a map boss
 
 #section The Eater of Worlds
 Alch the {quest_text|Screaming Invitation} to Rare (improves loot)

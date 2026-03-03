@@ -1,6 +1,5 @@
 import {
   routeProgressSummarySelector,
-  routeCurrentSectionSelector,
   routeSectionProgressSelector,
   voidstoneProgressSummarySelector,
   voidstoneSectionProgressSelector,
@@ -11,8 +10,6 @@ import { uniqueItemsSelector } from "../../state/unique-items";
 import { buildDataSelector } from "../../state/build-data";
 import { buildSettingsSelector } from "../../state/build-settings";
 import { getAcquisitionSource, getDivCardOnlyItems } from "../../data/unique-drop-sources";
-import { Data } from "../../../../common/data";
-import { Fragments } from "../../../../common/route-processing/fragment/types";
 import { DivCardBadge } from "../../components/UniqueItemBadge";
 import { MAJOR_GODS, MINOR_GODS } from "../../data/pantheon-data";
 import styles from "./styles.module.css";
@@ -55,47 +52,11 @@ function SectionHeader({ title }: { title: string }) {
   return <h2 className={classNames(styles.sectionHeader)}>{title}</h2>;
 }
 
-// ── Fragment → plain text ─────────────────────────────────────────────────────
-
-function fragmentsToText(parts: Fragments.AnyFragment[]): string {
-  return parts
-    .map((p): string => {
-      if (typeof p === "string") return p;
-      switch (p.type) {
-        case "kill":         return `Kill ${p.value}`;
-        case "arena":        return p.value;
-        case "area":         return Data.Areas[p.areaId]?.name ?? "";
-        case "enter":        return `➞ ${Data.Areas[p.areaId]?.name ?? ""}`;
-        case "logout":       return `Logout ➞ ${Data.Areas[p.areaId]?.name ?? ""}`;
-        case "waypoint":     return "Waypoint";
-        case "waypoint_use": return `Waypoint ➞ ${Data.Areas[p.dstAreaId]?.name ?? ""}`;
-        case "waypoint_get": return "Waypoint";
-        case "portal_set":   return "Set Portal";
-        case "portal_use":   return `Portal ➞ ${Data.Areas[p.dstAreaId]?.name ?? ""}`;
-        case "quest":        return Data.Quests[p.questId]?.name ?? "";
-        case "quest_text":   return p.value;
-        case "generic":      return p.value;
-        case "league":       return p.value;
-        case "reward_quest": return p.item;
-        case "reward_vendor": return p.item;
-        case "trial":        return "Trial of Ascendancy";
-        case "ascend":       return "Ascend";
-        case "crafting":     return `Craft: ${p.crafting_recipes.join(", ")}`;
-        case "dir":          return "";
-        case "copy":         return p.text;
-        default:             return "";
-      }
-    })
-    .filter(Boolean)
-    .join(" ");
-}
-
 // ── ACT 1–10 panel ────────────────────────────────────────────────────────────
 
 function ActProgress() {
   const summary = useRecoilValue(routeProgressSummarySelector);
   const sections = useRecoilValue(routeSectionProgressSelector);
-  const currentSection = useRecoilValue(routeCurrentSectionSelector);
   const league = useRecoilValue(leagueSelector);
 
   return (
@@ -111,25 +72,6 @@ function ActProgress() {
             <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
           ))}
         </div>
-        {currentSection && (
-          <>
-            <div className={classNames(styles.currentSection)}>
-              <span className={classNames(styles.currentSectionName)}>
-                {currentSection.sectionName}
-              </span>
-              <span className={classNames(styles.currentSectionCount)}>
-                {currentSection.completed}/{currentSection.total}
-              </span>
-            </div>
-            <ul className={classNames(styles.pendingStepList)}>
-              {currentSection.pendingParts.map((parts, i) => (
-                <li key={i} className={classNames(styles.pendingStep)}>
-                  {fragmentsToText(parts)}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
       </div>
     </section>
   );

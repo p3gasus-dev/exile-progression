@@ -129,39 +129,39 @@ export const BOSS_STEP_HINTS: Record<string, StatTarget[]> = {
 
   // ── Voidstone pinnacle bosses ─────────────────────────────────────────────
 
-  // Eater of Worlds: ~30M HP → ~500k/s DPS; tentacle slam ~7 500 chaos+phys
+  // Eater of Worlds: ~30M HP → ~500k DPS; tentacle slam ~7 500 chaos+phys
   "The Eater of Worlds": [
-    { label: "DPS",    value: "~500k/s",  note: "~30M HP / 60s phase" },
+    { label: "DPS",    value: "~500k",  note: "~30M HP / 60s phase" },
     { label: "Chaos",  value: "~7.5k",    warn: true, note: "Tentacle slam (phys+chaos)" },
     { label: "Chaos Res", value: "≥ 0%",  warn: true },
   ],
-  // Searing Exarch: ~30M HP → ~500k/s DPS; fire beam ~9 000
+  // Searing Exarch: ~30M HP → ~500k DPS; fire beam ~9 000
   "The Searing Exarch": [
-    { label: "DPS",    value: "~500k/s",  note: "~30M HP / 60s" },
+    { label: "DPS",    value: "~500k",  note: "~30M HP / 60s" },
     { label: "Fire",   value: "~9k",      warn: true, note: "Fire beam" },
     { label: "Fire Res", value: "75%",    warn: true },
   ],
-  // The Maven: ~20M HP → ~330k/s DPS; memory bolts ~5 000 cold; freeze = death
+  // The Maven: ~20M HP → ~330k DPS; memory bolts ~5 000 cold; freeze = death
   "The Maven": [
-    { label: "DPS",    value: "~330k/s",  note: "~20M HP / 60s phase" },
+    { label: "DPS",    value: "~330k",  note: "~20M HP / 60s phase" },
     { label: "Cold",   value: "~5k",      warn: true, note: "Memory game bolts" },
     { label: "Freeze", value: "Immune",   warn: true, note: "Frozen during memory = death" },
   ],
-  // The Shaper: ~25M HP → ~420k/s DPS; slam ~10 000 phys; cold beam ~4 000
+  // The Shaper: ~25M HP → ~420k DPS; slam ~10 000 phys; cold beam ~4 000
   "The Shaper": [
-    { label: "DPS",    value: "~420k/s",  note: "~25M HP / ~4 min Zana" },
+    { label: "DPS",    value: "~420k",  note: "~25M HP / ~4 min Zana" },
     { label: "Phys",   value: "~10k",     warn: true, note: "Slam (biggest threat)" },
     { label: "Cold",   value: "~4k",      note: "Cold beam" },
   ],
-  // The Elder: ~15M HP → ~250k/s DPS; chaos tentacle ~6 500
+  // The Elder: ~15M HP → ~250k DPS; chaos tentacle ~6 500
   "The Elder": [
-    { label: "DPS",    value: "~250k/s",  note: "~15M HP / 60s" },
+    { label: "DPS",    value: "~250k",  note: "~15M HP / 60s" },
     { label: "Chaos",  value: "~6.5k",    warn: true, note: "Tentacle slam" },
     { label: "Chaos Res", value: "≥ 0%",  warn: true },
   ],
-  // Uber Elder: ~20M HP each → ~670k/s DPS; Shaper slam ~12 000; Elder chaos ~7 000
+  // Uber Elder: ~20M HP each → ~670k DPS; Shaper slam ~12 000; Elder chaos ~7 000
   "The Uber Elder": [
-    { label: "DPS",    value: "~670k/s",  warn: true, note: "~20M HP each / 60s" },
+    { label: "DPS",    value: "~670k",  warn: true, note: "~20M HP each / 60s" },
     { label: "Phys",   value: "~12k",     warn: true, note: "Shaper slam" },
     { label: "Freeze", value: "Immune",   warn: true, note: "Shaper freeze = death" },
   ],
