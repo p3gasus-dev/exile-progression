@@ -21,3 +21,8 @@
 .tabActive {
   border-bottom-color: gold;
 }
+
+.searchStringsBox {
+  padding: var(--size-2) var(--size-3);
+  border-bottom: var(--border-width) solid var(--accent-secondary);
+}

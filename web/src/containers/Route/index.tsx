@@ -2,6 +2,7 @@ import { FragmentStep } from "../../components/FragmentStep";
 import { GemReward } from "../../components/ItemReward";
 import { SectionHolder } from "../../components/SectionHolder";
 import { Sidebar } from "../../components/Sidebar";
+import { SearchStrings } from "../../components/SearchStrings";
 import { TaskListProps, StepHighlight } from "../../components/TaskList";
 import { Fragments } from "../../../../common/route-processing/fragment/types";
 import {
@@ -15,6 +16,7 @@ import { gemProgressSelectorFamily } from "../../state/gem-progress";
 import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
 import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
+import { searchStringsSelector } from "../../state/search-strings";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -51,6 +53,7 @@ function getActStepHighlight(parts: Fragments.AnyFragment[]): StepHighlight | un
 
 function ActRoute() {
   const route = useRecoilValue(routeSelector);
+  const searchStrings = useRecoilValue(searchStringsSelector);
   const items: ReactNode[] = [];
 
   // Auto-complete challenges when a boss/ascend step is checked off
@@ -143,6 +146,11 @@ function ActRoute() {
 
   return (
     <>
+      {searchStrings !== null && searchStrings.length > 0 && (
+        <div className={classNames(styles.searchStringsBox)}>
+          <SearchStrings values={searchStrings} />
+        </div>
+      )}
       <Sidebar />
       {items}
     </>

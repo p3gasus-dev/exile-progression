@@ -1,7 +1,5 @@
 import {
-  routeProgressSummarySelector,
   routeSectionProgressSelector,
-  voidstoneProgressSummarySelector,
   voidstoneSectionProgressSelector,
   challengeProgressSummarySelector,
 } from "../../state/progress-summary";
@@ -55,7 +53,6 @@ function SectionHeader({ title }: { title: string }) {
 // ── ACT 1–10 panel ────────────────────────────────────────────────────────────
 
 function ActProgress() {
-  const summary = useRecoilValue(routeProgressSummarySelector);
   const sections = useRecoilValue(routeSectionProgressSelector);
   const league = useRecoilValue(leagueSelector);
 
@@ -66,7 +63,6 @@ function ActProgress() {
         <span className={classNames(styles.leagueBadge)}>{league}</span>
       </div>
       <div className={classNames(styles.progressList)}>
-        <ProgressBar label="Overall" completed={summary.completed} total={summary.total} />
         <div className={classNames(styles.subProgressList)}>
           {sections.map((s) => (
             <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
@@ -80,14 +76,12 @@ function ActProgress() {
 // ── Voidstones panel ──────────────────────────────────────────────────────────
 
 function VoidstoneProgress() {
-  const summary = useRecoilValue(voidstoneProgressSummarySelector);
   const sections = useRecoilValue(voidstoneSectionProgressSelector);
 
   return (
     <section className={classNames(styles.panel)}>
       <SectionHeader title="Voidstones" />
       <div className={classNames(styles.progressList)}>
-        <ProgressBar label="Overall" completed={summary.completed} total={summary.total} />
         <div className={classNames(styles.subProgressList)}>
           {sections.map((s) => (
             <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
@@ -220,30 +214,20 @@ function Misc() {
   const majorGod = MAJOR_GODS.find((g) => g.id === settings.pantheonMajor);
   const minorGod = MINOR_GODS.find((g) => g.id === settings.pantheonMinor);
 
-  const hasBuild = buildData.characterClass !== "None";
-
   return (
     <section className={classNames(styles.panel)}>
       <SectionHeader title="Misc" />
 
-      {hasBuild && (
-        <dl className={classNames(styles.miscList)}>
-          <div className={classNames(styles.miscRow)}>
-            <dt>Class</dt>
-            <dd>{buildData.characterClass}</dd>
-          </div>
-          <div className={classNames(styles.miscRow)}>
-            <dt>Bandit</dt>
-            <dd>{buildData.bandit === "None" ? "Kill All" : buildData.bandit}</dd>
-          </div>
-        </dl>
-      )}
-
-      {!hasBuild && !majorGod && !minorGod && (
-        <p className={classNames(styles.emptyHint)}>
-          Import a build in the Build tab to see character details and Pantheon.
-        </p>
-      )}
+      <div className={classNames(styles.miscList)}>
+        <div className={classNames(styles.miscRow)}>
+          <span>Class</span>
+          <span>{buildData.characterClass === "None" ? "—" : buildData.characterClass}</span>
+        </div>
+        <div className={classNames(styles.miscRow)}>
+          <span>Bandit</span>
+          <span>{buildData.bandit === "None" ? "Kill All" : buildData.bandit}</span>
+        </div>
+      </div>
 
       {(majorGod || minorGod) && (
         <div className={classNames(styles.subSection)}>
@@ -265,7 +249,7 @@ function Misc() {
         </div>
       )}
 
-      {hasBuild && !majorGod && !minorGod && (
+      {!majorGod && !minorGod && (
         <p className={classNames(styles.emptyHint)}>
           Set Pantheon in the Build tab.
         </p>
