@@ -1,6 +1,8 @@
 import { RouteData } from "../../../../common/route-processing/types";
+import { StatTarget } from "../../data/stat-targets";
 import { configSelector } from "../../state/config";
 import { SplitRow } from "../SplitRow";
+import { StatHintChips } from "../StatHintChips";
 import { Fragment } from "./Fragment";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -10,12 +12,15 @@ import { useRecoilValue } from "recoil";
 
 interface StepProps {
   step: RouteData.FragmentStep;
+  statHints?: StatTarget[];
 }
 
-export function FragmentStep({ step }: StepProps) {
+export function FragmentStep({ step, statHints }: StepProps) {
   const config = useRecoilValue(configSelector);
+  const visibleStatHints = config.showStatHints ? (statHints ?? []) : [];
+  const hasSubContent = step.subSteps.length > 0 || visibleStatHints.length > 0;
   const [showSubSteps, setShowSubSteps] = useState(
-    config.showSubsteps && step.subSteps.length > 0
+    config.showSubsteps && hasSubContent
   );
 
   const headNodes: React.ReactNode[] = [];
@@ -29,7 +34,7 @@ export function FragmentStep({ step }: StepProps) {
     if (tail) tailNodes.push(tail);
   }
 
-  if (step.subSteps.length > 0) {
+  if (hasSubContent) {
     headNodes.push(
       <>
         {" "}
@@ -70,6 +75,12 @@ export function FragmentStep({ step }: StepProps) {
                 <FragmentStep step={x} />
               </span>
             ))
+          )}
+          {visibleStatHints.length > 0 && (
+            <span>
+              {"• "}
+              <StatHintChips hints={visibleStatHints} />
+            </span>
           )}
         </>
       )}

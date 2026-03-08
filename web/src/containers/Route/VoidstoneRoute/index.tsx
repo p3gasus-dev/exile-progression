@@ -5,12 +5,10 @@ import { TaskListProps } from "../../../components/TaskList";
 import { voidstoneProgressSelectorFamily } from "../../../state/voidstone-progress";
 import { voidstoneRouteSelector } from "../../../state/voidstone-route";
 import { uniqueItemsSelector } from "../../../state/unique-items";
-import { configSelector } from "../../../state/config";
 import { atlasConfigSelector } from "../../../state/atlas-config";
 import { getDropsForBoss } from "../../../data/unique-drop-sources";
 import { BOSS_CHALLENGE_MAP, RouteChallengeRef } from "../../../data/challenge-list";
 import { BOSS_STEP_HINTS } from "../../../data/stat-targets";
-import { StatHintChips } from "../../../components/StatHintChips";
 import { Fragments } from "../../../../../common/route-processing/fragment/types";
 import { challengeProgressSelectorFamily } from "../../../state/challenge-progress";
 import { ReactNode } from "react";
@@ -34,7 +32,6 @@ export default function VoidstoneRoute() {
   const route = useRecoilValue(voidstoneRouteSelector);
   const uniqueItems = useRecoilValue(uniqueItemsSelector);
   const buildUniqueNames = uniqueItems.map((i) => i.name);
-  const config = useRecoilValue(configSelector);
   const atlasConfig = useRecoilValue(atlasConfigSelector);
 
   // Auto-complete challenges when a pinnacle kill step is checked off
@@ -92,10 +89,7 @@ export default function VoidstoneRoute() {
           : undefined,
         children: (
           <>
-            <FragmentStep step={step} />
-            {config.showStatHints && stepBossHints.length > 0 && (
-              <StatHintChips hints={stepBossHints} />
-            )}
+            <FragmentStep step={step} statHints={stepBossHints} />
             {atlasConfig.showUniqueDrops && relevantDrops.length > 0 && (
               <UniqueItemBadge items={relevantDrops} />
             )}

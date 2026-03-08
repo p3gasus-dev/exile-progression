@@ -10,7 +10,6 @@ import {
   RouteChallengeRef,
 } from "../../data/challenge-list";
 import { BOSS_STEP_HINTS, StatTarget } from "../../data/stat-targets";
-import { StatHintChips } from "../../components/StatHintChips";
 import { gemProgressSelectorFamily } from "../../state/gem-progress";
 import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
@@ -105,12 +104,7 @@ function ActRoute() {
             ? (complete) => { if (complete) completeChallenges(challengeIds); }
             : undefined,
           children: (
-            <>
-              <FragmentStep key={stepIndex} step={step} />
-              {config.showStatHints && stepBossHints.length > 0 && (
-                <StatHintChips hints={stepBossHints} />
-              )}
-            </>
+            <FragmentStep key={stepIndex} step={step} statHints={stepBossHints} />
           ),
         });
       }
