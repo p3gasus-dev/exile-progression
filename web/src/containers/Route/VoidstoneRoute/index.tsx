@@ -1,7 +1,6 @@
 import { FragmentStep } from "../../../components/FragmentStep";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { UniqueItemBadge } from "../../../components/UniqueItemBadge";
-import { ChallengeBadge } from "../../../components/ChallengeBadge";
 import { TaskListProps } from "../../../components/TaskList";
 import { voidstoneProgressSelectorFamily } from "../../../state/voidstone-progress";
 import { voidstoneRouteSelector } from "../../../state/voidstone-route";
@@ -66,6 +65,9 @@ export default function VoidstoneRoute() {
       );
 
       const isPinnacleKill = bossNames.length > 0;
+      const isAscend = step.parts.some(
+        (p) => typeof p !== "string" && p.type === "ascend"
+      );
 
       // Collect challenge refs for each boss kill in this step
       const stepChallenges: RouteChallengeRef[] = bossNames.flatMap(
@@ -84,7 +86,7 @@ export default function VoidstoneRoute() {
         isCompletedState: voidstoneProgressSelectorFamily(
           `${sectionIndex},${stepIndex}`
         ),
-        highlight: isPinnacleKill ? "pinnacle" : undefined,
+        highlight: isPinnacleKill ? "pinnacle" : isAscend ? "ascend" : undefined,
         onToggle: challengeIds.length > 0
           ? (complete) => { if (complete) completeChallenges(challengeIds); }
           : undefined,
@@ -93,9 +95,6 @@ export default function VoidstoneRoute() {
             <FragmentStep step={step} />
             {config.showStatHints && stepBossHints.length > 0 && (
               <StatHintChips hints={stepBossHints} />
-            )}
-            {config.showChallenges && stepChallenges.length > 0 && (
-              <ChallengeBadge challenges={stepChallenges} />
             )}
             {atlasConfig.showUniqueDrops && relevantDrops.length > 0 && (
               <UniqueItemBadge items={relevantDrops} />

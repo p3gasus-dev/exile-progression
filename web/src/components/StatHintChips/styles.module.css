@@ -1,84 +1,55 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px;
-  align-items: center;
+  gap: 2px 0;
+  align-items: baseline;
+  font-size: 0.72rem;
+  opacity: 0.8;
+  margin-top: var(--size-1);
 }
 
-.reqsLabel {
-  font-size: 0.62rem;
-  opacity: 0.45;
-  font-weight: var(--font-heavy);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  flex-shrink: 0;
+.sep {
+  margin: 0 5px;
+  opacity: 0.3;
 }
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  padding: 1px 4px;
-  border-radius: 3px;
-  font-size: 0.65rem;
-  background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.hint {
   color: var(--on-primary);
-  opacity: 0.75;
   white-space: nowrap;
-}
-
-.warn {
-  color: #e8c840;
-  border-color: rgba(232, 200, 64, 0.35);
-  background-color: rgba(232, 200, 64, 0.06);
-  opacity: 1;
-}
-
-/* ── Damage type colours (override .warn when present) ─────────────────── */
-
-.typeCold {
-  color: #88ccff;
-  border-color: rgba(136, 204, 255, 0.35);
-  background-color: rgba(136, 204, 255, 0.06);
-  opacity: 1;
-}
-
-.typeFire {
-  color: #ff8040;
-  border-color: rgba(255, 128, 64, 0.35);
-  background-color: rgba(255, 128, 64, 0.06);
-  opacity: 1;
-}
-
-.typeLight {
-  color: #f0d840;
-  border-color: rgba(240, 216, 64, 0.35);
-  background-color: rgba(240, 216, 64, 0.06);
-  opacity: 1;
-}
-
-.typeChaos {
-  color: #cc60e0;
-  border-color: rgba(204, 96, 224, 0.35);
-  background-color: rgba(204, 96, 224, 0.06);
-  opacity: 1;
-}
-
-.typePhys {
-  color: #c8b8a0;
-  border-color: rgba(200, 184, 160, 0.35);
-  background-color: rgba(200, 184, 160, 0.06);
-  opacity: 1;
-}
-
-.label {
-  opacity: 0.55;
-  font-weight: normal;
-  font-size: 0.6rem;
 }
 
 .value {
   font-weight: var(--font-heavy);
+}
+
+.label {
+  opacity: 0.6;
+  font-weight: normal;
+}
+
+.note {
+  opacity: 0.45;
+  font-style: italic;
+}
+
+/* ── Damage type colours ────────────────────────────────────────────────── */
+
+.typeCold {
+  color: #88ccff;
+}
+
+.typeFire {
+  color: #ff8040;
+}
+
+.typeLight {
+  color: #f0d840;
+}
+
+.typeChaos {
+  color: #cc60e0;
+}
+
+.typePhys {
+  color: #c8b8a0;
 }

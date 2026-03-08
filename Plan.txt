@@ -43,8 +43,6 @@ IDEAS:
 		checks for updates to HeartofPhos/exile-leveling and merges changes
 
 TODO:
-	
-
 
 IN PROGRESS:
 	Route pathing

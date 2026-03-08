@@ -2,7 +2,6 @@ import { FragmentStep } from "../../components/FragmentStep";
 import { GemReward } from "../../components/ItemReward";
 import { SectionHolder } from "../../components/SectionHolder";
 import { Sidebar } from "../../components/Sidebar";
-import { ChallengeBadge } from "../../components/ChallengeBadge";
 import { TaskListProps, StepHighlight } from "../../components/TaskList";
 import { Fragments } from "../../../../common/route-processing/fragment/types";
 import {
@@ -110,9 +109,6 @@ function ActRoute() {
               <FragmentStep key={stepIndex} step={step} />
               {config.showStatHints && stepBossHints.length > 0 && (
                 <StatHintChips hints={stepBossHints} />
-              )}
-              {config.showChallenges && stepChallenges.length > 0 && (
-                <ChallengeBadge challenges={stepChallenges} />
               )}
             </>
           ),
