@@ -4,11 +4,10 @@ import { routeFilesSelector } from "../../state/route-files";
 import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
 import { routeSelector } from "../../state/route";
 import { leagueSelector, LEAGUES, League } from "../../state/league";
-import { trackEvent } from "../../utility/telemetry";
 import { formStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { FaGithub, FaRegClipboard } from "react-icons/fa";
+import { FaRegClipboard } from "react-icons/fa";
 import { useRecoilState, useRecoilCallback, useResetRecoilState } from "recoil";
 import { toast } from "react-toastify";
 
@@ -108,42 +107,6 @@ export default function SettingsContainer() {
         </button>
       </div>
 
-      <hr className={classNames(styles.divider)} />
-
-      {/* ── Project on GitHub ───────────────────────────────────────────── */}
-      <SectionHeader title="Project on GitHub" />
-      <p className={classNames(styles.hint)}>
-        Found a bug or want to contribute? Open an issue or pull request.
-      </p>
-      <div className={classNames(formStyles.groupLeft, styles.repoLinks)}>
-        <button
-          className={classNames(formStyles.formButton)}
-          onClick={() => {
-            trackEvent({ name: "github_exile_progression" });
-            window.open(
-              "https://github.com/p3gasus-dev/exile-progression",
-              "_blank"
-            );
-          }}
-        >
-          <FaGithub className="inlineIcon" />
-          exile-progression
-        </button>
-
-        <button
-          className={classNames(formStyles.formButton, styles.repoLinkSecondary)}
-          onClick={() => {
-            trackEvent({ name: "github_exile_leveling" });
-            window.open(
-              "https://github.com/heartofphos/exile-leveling",
-              "_blank"
-            );
-          }}
-        >
-          <FaGithub className="inlineIcon" />
-          exile-leveling <span className={classNames(styles.upstreamBadge)}>upstream</span>
-        </button>
-      </div>
     </div>
   );
 }

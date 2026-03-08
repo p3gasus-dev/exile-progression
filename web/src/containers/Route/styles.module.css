@@ -31,6 +31,11 @@
   padding-right: 15rem;
 }
 
+.routeContentSidebarCollapsed {
+  /* Small gap for the sidebar toggle button only */
+  padding-right: 2.5rem;
+}
+
 /* ── Mobile ─────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .routeContentWithSidebar {

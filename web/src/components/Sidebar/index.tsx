@@ -1,22 +1,23 @@
 import { gemLinksSelector } from "../../state/gem-links";
 import { searchStringsSelector } from "../../state/search-strings";
 import { urlTreesSelector } from "../../state/tree/url-tree";
+import { sidebarExpandedAtom } from "../../state/sidebar";
 import { interactiveStyles } from "../../styles";
 import { GemLinkViewer } from "../GemLinkViewer";
 import { SkillTreeViewer } from "../SkillTreeViewer";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import React from "react";
 import { FaLink, FaListUl } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { TbHierarchy } from "react-icons/tb";
 import { toast } from "react-toastify";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export function Sidebar() {
-  const [expand, setExpand] = useState(true);
-  const [activeTab, setActiveTab] = useState<number>(0);
+  const [expand, setExpand] = useRecoilState(sidebarExpandedAtom);
+  const [activeTab, setActiveTab] = React.useState<number>(0);
 
   const sections = useSections();
   const searchStrings = useRecoilValue(searchStringsSelector);

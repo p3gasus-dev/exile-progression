@@ -1,13 +1,18 @@
 import { gemLinksSelector } from "./gem-links";
 import { searchStringsSelector } from "./search-strings";
 import { urlTreesSelector } from "./tree/url-tree";
-import { selector } from "recoil";
+import { atom, selector } from "recoil";
+
+/** Whether the sidebar panel is currently expanded (open). */
+export const sidebarExpandedAtom = atom<boolean>({
+  key: "sidebarExpanded",
+  default: true,
+});
 
 /**
- * True when the sidebar would render visible content (build imported with
- * gem links, skill tree, or search strings). Used by the Route container to
- * conditionally apply padding-right so the route content is centred when
- * no build is loaded.
+ * True when the sidebar has content to show (build imported with gem links,
+ * skill tree, or search strings). Used by the Route container to conditionally
+ * apply padding-right so the route is centred when no build is loaded.
  */
 export const sidebarVisibleSelector = selector({
   key: "sidebarVisibleSelector",
