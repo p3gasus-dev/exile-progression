@@ -1,0 +1,1 @@
+import{p as o}from"./index-C8egTy4W.js";import{R as u,u as c,v as m,N as r,t as a}from"./index-or0G7_GL.js";const s=0,i=c({key:"uniqueItemsAtom",default:m("unique-items",s,r),effects:[o("unique-items",s)]}),l=u({key:"uniqueItemsSelector",get:({get:e})=>e(i)??[],set:({set:e},t)=>{const n=t instanceof a?null:t;e(i,n)}});export{l as u};

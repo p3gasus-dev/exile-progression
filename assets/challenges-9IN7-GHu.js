@@ -1,0 +1,41 @@
+const e=`{quest_text|[1] Complete Act 1 — Defeat Merveil, the Twisted and complete Act 1}
+{quest_text|[2] Complete Act 2 — Defeat Vaal Oversoul and complete Act 2}
+{quest_text|[3] Complete Act 3 — Defeat Dominus, Ascendant and complete Act 3}
+{quest_text|[4] Complete Act 4 — Defeat Malachai, The Nightmare and complete Act 4}
+{quest_text|[5] Complete Act 5 — Defeat Kitava (Act 5) and complete Act 5}
+{quest_text|[6] Complete Acts 6–10 — Defeat Kitava (Act 10) and enter maps}
+{quest_text|[7] Complete Normal Labyrinth — Defeat Izaro and claim your first Ascendancy}
+{quest_text|[8] Complete Cruel Labyrinth — Defeat Izaro in the Cruel Labyrinth}
+[9] Complete Merciless Labyrinth — Defeat Izaro in the Merciless Labyrinth
+[10] Complete Eternal Labyrinth — Defeat Izaro and earn all 8 Ascendancy points
+{quest_text|[11] Complete 10 White Maps — Complete 10 T1–T5 maps}
+{quest_text|[12] Complete 10 Yellow Maps — Complete 10 T6–T10 maps}
+[13] Complete 10 Red Maps — Complete 10 T11–T16 maps
+[14] Earn 30 Atlas Passive Points — Complete enough maps to earn 30 points
+[15] Complete a Tier 16 Map — Complete any Tier 16 map
+[16] Set 4 Favourite Maps — Unlock and set 4 favourite map slots on your Atlas
+[17] Complete 5 Unique Maps — Complete 5 different unique maps
+[18] Complete 20 Map Types — Complete 20 different map types on your Atlas
+[19] Complete 10 Map Bonus Objectives — Complete the bonus objective in 10 maps
+[20] Apply 5 Voidstone Enchants — Apply 5 Sextants to socketed Voidstones
+{kill|[21] Defeat The Eater of Worlds — Earn the Grasping Voidstone}
+{kill|[22] Defeat The Searing Exarch — Earn the Omniscient Voidstone}
+{kill|[23] Defeat The Maven — Earn the Ceremonial Voidstone}
+{league|[24] Defeat The Uber Elder — Earn the Decayed Voidstone}
+{kill|[25] Socket All 4 Voidstones — Socket all 4 Voidstones into your Atlas Map Device}
+{kill|[26] Defeat The Shaper — Defeat The Shaper in The Shaper's Realm}
+{kill|[27] Defeat The Elder — Defeat The Elder in The Elder's Realm}
+{kill|[28] Defeat All 8 Guardians — All 4 Shaper Guardians and all 4 Elder Guardians}
+[29] Defeat 100 Map Bosses — Defeat 100 unique map bosses across your Atlas
+{kill|[30] Complete Maven's Crucible — Complete a Maven's Invitation encounter}
+{quest_text|[31] Complete a Delirium Encounter — Complete a Delirium mirror in a map}
+{quest_text|[32] Complete an Expedition — Complete an Expedition encounter in a map}
+{quest_text|[33] Complete a Ritual — Complete a Ritual encounter and spend favour}
+{quest_text|[34] Complete a Heist — Complete a Heist contract}
+{quest_text|[35] Craft via Bestiary — Capture a beast and craft an item with Einhar}
+{quest_text|[36] Complete a Betrayal Safehouse — Complete an Immortal Syndicate Safehouse}
+[37] Use an Orb of Annulment — Remove a modifier from a magic or rare item
+[38] Use a Divine Orb — Re-roll the values of an item's explicit modifiers
+[39] Use 100 Orbs of Alteration — Craft extensively with Orbs of Alteration
+{league|[40] Reach Level 100 — Reach the maximum character level of 100}
+`;export{e as default};

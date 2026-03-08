@@ -1,0 +1,15 @@
+const e=`#section Searing Exarch Progression
+Enable {league|Searing Exarch} influence when opening maps
+Run {map_white|T1-T4} influenced maps — complete biome objectives
+Run {map_yellow|T5-T8} influenced maps — complete biome objectives
+Run {map_red|T9-T12} influenced maps — complete biome objectives
+Farm {map_red|T13-T15} influenced maps until {quest_text|Incandescent Invitation} drops
+
+#section The Searing Exarch
+Alch {quest_text|Incandescent Invitation} to Rare
+Place {quest_text|Incandescent Invitation} in your Map Device
+    #sub Hold until the fireball phase ends to skip it
+➞ {arena|The Searing Exarch's Domain}
+Kill {kill|The Searing Exarch}
+Take the {quest_text|Omniscient Voidstone} and socket it into your Atlas Map Device
+`;export{e as default};
