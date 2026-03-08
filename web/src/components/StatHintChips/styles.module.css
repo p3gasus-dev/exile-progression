@@ -1,21 +1,14 @@
 .hints {
-  display: flex;
-  flex-direction: column;
-}
-
-.hint {
-  /* Match sub-step appearance: same font size, slightly dimmed */
   opacity: 0.75;
 }
 
-.value {
-  font-weight: var(--font-heavy);
+.sep {
+  opacity: 0.4;
 }
 
-/* ── Damage type colours ────────────────────────────────────────────────── */
-
-.typeCold  { color: #88ccff; opacity: 1; }
-.typeFire  { color: #ff8040; opacity: 1; }
-.typeLight { color: #f0d840; opacity: 1; }
-.typeChaos { color: #cc60e0; opacity: 1; }
-.typePhys  { color: #c8b8a0; opacity: 1; }
+/* Resistance / damage type colours only — no size or weight overrides */
+.typeCold  { color: #88ccff; }
+.typeFire  { color: #ff8040; }
+.typeLight { color: #f0d840; }
+.typeChaos { color: #cc60e0; }
+.typePhys  { color: #c8b8a0; }
