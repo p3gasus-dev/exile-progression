@@ -150,15 +150,26 @@ export function Navbar({}: NavbarProps) {
               }}
             />
             <NavbarItem
-              label="GitHub"
+              label="GitHub — exile-progression"
               expand={navExpand}
               icon={<FaGithub className="inlineIcon" />}
               onClick={() => {
-                trackEvent({
-				  name: "github",
-				 });
+                trackEvent({ name: "github_exile_progression" });
                 window.open(
                   "https://github.com/p3gasus-dev/exile-progression",
+                  "_blank"
+                );
+                setNavExpand(false);
+              }}
+            />
+            <NavbarItem
+              label="GitHub — exile-leveling"
+              expand={navExpand}
+              icon={<FaGithub className="inlineIcon" />}
+              onClick={() => {
+                trackEvent({ name: "github_exile_leveling" });
+                window.open(
+                  "https://github.com/HeartofPhos/exile-leveling",
                   "_blank"
                 );
                 setNavExpand(false);

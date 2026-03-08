@@ -189,13 +189,15 @@ export default function RouteContainer() {
   return (
     <>
       <TabBar tabs={tabs} active={visibleTab} onChange={setActiveTab} />
-      <Sidebar />
-      <div className={classNames(styles.routeContent)}>
-        <Suspense fallback={<Loading />}>
-          {visibleTab === "acts" && <ActRoute />}
-          {visibleTab === "atlas" && <VoidstoneRoute />}
-          {visibleTab === "challenges" && <ChallengeTracker />}
-        </Suspense>
+      <div className={classNames(styles.routeLayout)}>
+        <div className={classNames(styles.routeContent)}>
+          <Suspense fallback={<Loading />}>
+            {visibleTab === "acts" && <ActRoute />}
+            {visibleTab === "atlas" && <VoidstoneRoute />}
+            {visibleTab === "challenges" && <ChallengeTracker />}
+          </Suspense>
+        </div>
+        <Sidebar />
       </div>
     </>
   );

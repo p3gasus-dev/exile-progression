@@ -22,6 +22,13 @@
   border-bottom-color: gold;
 }
 
+.routeLayout {
+  display: flex;
+  gap: var(--size-2);
+  align-items: flex-start;
+}
+
 .routeContent {
-  padding-right: 15rem;
+  flex: 1;
+  min-width: 0;
 }

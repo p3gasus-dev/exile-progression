@@ -72,11 +72,18 @@
   top: 100%;
 }
 
-/* On desktop (not expanded): show all 6 primary tabs, hide utility items.
-   Utility items (Reset Progress, GitHub) are the last 2 children — only
-   visible in the expanded hamburger menu. */
-.navItems:not(.expand) > *:nth-last-child(-n + 2) {
+/* On desktop (not expanded): show primary tabs, hide utility items.
+   Utility items (Reset Progress, GitHub, exile-leveling) are the last 3
+   children — only visible in the expanded hamburger menu. */
+.navItems:not(.expand) > *:nth-last-child(-n + 3) {
   display: none;
+}
+
+/* On mobile (not expanded): hide ALL nav items — force hamburger-only. */
+@media (max-width: 640px) {
+  .navItems:not(.expand) > * {
+    display: none;
+  }
 }
 
 /* Collapsed accordion content hidden unless expanded */
