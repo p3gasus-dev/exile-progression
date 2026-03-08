@@ -23,5 +23,22 @@
 }
 
 .routeContent {
+  /* No padding by default — route is centred when sidebar has no content */
+}
+
+.routeContentWithSidebar {
   padding-right: 15rem;
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .routeContentWithSidebar {
+    padding-right: 0;
+  }
+
+  .tabButton {
+    font-size: 0.7rem;
+    padding: var(--size-2);
+    letter-spacing: 0;
+  }
 }

@@ -100,3 +100,10 @@
   padding: var(--size-1);
   font-style: italic;
 }
+
+/* ── Mobile — hide sidebar below 640px ─────────────────────────────────── */
+@media (max-width: 640px) {
+  .sidebar {
+    display: none;
+  }
+}
