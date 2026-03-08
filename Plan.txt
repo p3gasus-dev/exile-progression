@@ -2,14 +2,15 @@ EXILE PROGRESSION (fork of Exile Leveling)
 Relies on heartofphos/exile-leveling for the core ACT1-10 ROUTE
 
 LAYOUT:
-	NAVBAR: [ DASHBOARD | ROUTE | CAMPAIGN | ATLAS | BUILD | SETTINGS ]
+	NAVBAR: [ DASHBOARD | ROUTE | CAMPAIGN | ATLAS | CHALLENGES | BUILD | SETTINGS ]
 	  + expanded: RESET PROGRESS | GITHUB
 	DASHBOARD: ROUTE PROGRESS, UNIQUE ITEMS, MISC.
 	ROUTE: ACT1-10, VOIDSTONE1-4, CHALLENGE1-40
-	CAMPAIGN: CAMPAIGN SETTINGS
+	CAMPAIGN: CAMPAIGN SETTINGS, CAMPAIGN DISPLAY
 	ATLAS: ATLAS SETTINGS, LAB TRACKER
+	CHALLENGES: CHALLENGE DISPLAY, EDIT CHALLENGES
 	BUILD: BUILD IMPORT, BUILD SETTINGS
-	SETTINGS: EDIT ROUTE, 3RD-PARTY EXPORT
+	SETTINGS: EDIT ROUTE, EDIT VOIDSTONE ROUTE, 3RD-PARTY EXPORT
 
 DESC:
 	DASHBOARD: Overall build progression at a glance.
@@ -20,12 +21,13 @@ DESC:
 	ACT1-10: Campaign route with our additions on top of exile-leveling base.
 	VOIDSTONE1-4: Optimal route to completing each voidstone.
 	CHALLENGE1-40: Fastest path per challenge. Auto-tracks from ACT & VOIDSTONE progress.
-	CAMPAIGN: Settings scoped to ACT1-10.
+	CAMPAIGN: Settings and display options scoped to ACT1-10.
 	ATLAS: Settings for atlas points, voidstones, and mapping.
 	LAB TRACKER: Tracks lab runs and enchants.
+	CHALLENGES: Display and editing settings for the challenge guide.
 	BUILD: Build config — uniques, mods, anoints, pantheon, etc.
 	BUILD IMPORT: Import build from PoB code.
-	SETTINGS: Edit/export route, 3rd-party export, league selection.
+	SETTINGS: Edit/export campaign & voidstone routes, 3rd-party export, league selection.
 
 IDEAS:
 	build system for updating poe info for each league
@@ -41,11 +43,6 @@ IDEAS:
 		checks for updates to HeartofPhos/exile-leveling and merges changes
 
 TODO:
- challenges to have it's own settings page
- desc. for each toggle on Settings pages
- "Show All hints" should be show route hints probably
- fix recommendations to match formatting
-  can remove levels on some bosses
 
 IN PROGRESS:
 	Route pathing

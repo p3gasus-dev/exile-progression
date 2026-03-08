@@ -22,6 +22,7 @@ const RouteContainer = pipe(
 
 const CampaignContainer = withBlank(lazy(() => import("./Campaign")));
 const AtlasContainer = withBlank(lazy(() => import("./Atlas")));
+const ChallengesContainer = withBlank(lazy(() => import("./Challenges")));
 const BuildContainer = withBlank(lazy(() => import("./Build")));
 const SettingsContainer = withBlank(lazy(() => import("./Settings")));
 
@@ -78,6 +79,17 @@ export function App() {
                 <Page
                   title="Exile Progression - Atlas"
                   component={<AtlasContainer />}
+                />
+              }
+            />
+
+            {/* CHALLENGES — challenge display settings, edit challenge guide */}
+            <Route
+              path="/challenges"
+              element={
+                <Page
+                  title="Exile Progression - Challenges"
+                  component={<ChallengesContainer />}
                 />
               }
             />
