@@ -3,31 +3,29 @@ Relies on heartofphos/exile-leveling for the core ACT1-10 ROUTE
 
 LAYOUT:
 	NAVBAR: [ DASHBOARD | ROUTE | CAMPAIGN | ATLAS | BUILD | SETTINGS ]
+	  + expanded: RESET PROGRESS | GITHUB
 	DASHBOARD: ROUTE PROGRESS, UNIQUE ITEMS, MISC.
-	ROUTE: ACT1-10, VOIDSTONE1-4 , CHALLENGE1-40
-	CAMPAIGN: ACT1-10 SETTINGS, CAMPAIGN SPECIFIC SETTINGS
-	ENDGAME: VOIDSTONES & MAPPING SETTTINGS
+	ROUTE: ACT1-10, VOIDSTONE1-4, CHALLENGE1-40
+	CAMPAIGN: CAMPAIGN SETTINGS
+	ATLAS: ATLAS SETTINGS, LAB TRACKER
 	BUILD: BUILD IMPORT, BUILD SETTINGS
-	SETTINGS: EDIT ROUTE, 3RD-PARTY EXPORT, PROJECT ON GITHUB
+	SETTINGS: EDIT ROUTE, 3RD-PARTY EXPORT
 
 DESC:
-	3RD-PARTY EXPORT: Export route for use outside of Exile Progression.
-	ACT1-10: Same as original repo. Now has our additions added.
-	ATLAS: Options related to the ATLAS
-	ATLAS SETTINGS: Settings related to ATLAS POINTS, VOIDSTONE1-4, ETC.
-	BUILD: Settings related to UNIQUES, SPECIAL MODS, ANOINTS, PANTHEON, ETC.
-	BUILD IMPORT: Imports build info.
-	CAMPAIGN SETTINGS: Settings related to ACT1-10.
-	CHALLENGE1-40: Fastest/easiest way to completing each challenge. Auto tracks challenges completed during ACT1-10 and VOIDSTONE1-4.
-	DASHBOARD: Shows overall progression of BUILD.
-	EDIT ROUTE: Option to Edit/Export route.
-	MISC.: Shows specifcs such as ANOINTS, SPECIAL MODS, ETC.
-	PROJECT ON GITHUB: Link to GITHUB Repo.
-	ROUTE: Tracking progress of player from early game to endgame.
-	ROUTE PROGRESS: Shows progress of current ACT, VOIDSTONE, or CHALLENGE.
-	SETTINGS: Settings related to Exile Progression functions.
-	UNIQUE ITEMS: Track IMPORT BUILD->UNIQUE ITEMS and where/how they can be acquired.
-	VOIDSTONE1-4: Fastest/easiest route to completing voidstones 1, 2 ,3 ,4.
+	DASHBOARD: Overall build progression at a glance.
+	ROUTE PROGRESS: Current progress through ACT, VOIDSTONE, or CHALLENGE.
+	UNIQUE ITEMS: Tracks build uniques — acquisition method, tier, drop source.
+	MISC.: Build specifics — anoints, special mods, etc.
+	ROUTE: Full progression path from campaign to endgame.
+	ACT1-10: Campaign route with our additions on top of exile-leveling base.
+	VOIDSTONE1-4: Optimal route to completing each voidstone.
+	CHALLENGE1-40: Fastest path per challenge. Auto-tracks from ACT & VOIDSTONE progress.
+	CAMPAIGN: Settings scoped to ACT1-10.
+	ATLAS: Settings for atlas points, voidstones, and mapping.
+	LAB TRACKER: Tracks lab runs and enchants.
+	BUILD: Build config — uniques, mods, anoints, pantheon, etc.
+	BUILD IMPORT: Import build from PoB code.
+	SETTINGS: Edit/export route, 3rd-party export, league selection.
 
 IDEAS:
 	build system for updating poe info for each league
