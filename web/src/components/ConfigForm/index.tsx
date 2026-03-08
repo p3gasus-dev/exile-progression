@@ -12,7 +12,12 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
   return (
     <div className={classNames(styles.form)}>
       <SplitRow
-        left={<div className={classNames(styles.label)}>Gems Only</div>}
+        left={
+          <div>
+            <div className={classNames(styles.label)}>Gems Only</div>
+            <div className={classNames(styles.desc)}>Only show steps with gem rewards.</div>
+          </div>
+        }
         right={
           <div className={classNames(styles.value)}>
             <input
@@ -30,7 +35,12 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
         }
       />
       <SplitRow
-        left={<div className={classNames(styles.label)}>Show All Hints</div>}
+        left={
+          <div>
+            <div className={classNames(styles.label)}>Show Route Hints</div>
+            <div className={classNames(styles.desc)}>Show sub-step tips for each route step.</div>
+          </div>
+        }
         right={
           <div className={classNames(styles.value)}>
             <input
@@ -42,13 +52,18 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
                   showSubsteps: evt.target.checked,
                 });
               }}
-              aria-label="Show Hints"
+              aria-label="Show Route Hints"
             />
           </div>
         }
       />
-<SplitRow
-        left={<div className={classNames(styles.label)}>Show Crafting</div>}
+      <SplitRow
+        left={
+          <div>
+            <div className={classNames(styles.label)}>Show Crafting</div>
+            <div className={classNames(styles.desc)}>Show crafting recipe unlock steps.</div>
+          </div>
+        }
         right={
           <div className={classNames(styles.value)}>
             <input
@@ -66,7 +81,12 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
         }
       />
       <SplitRow
-        left={<div className={classNames(styles.label)}>Show Stat Hints</div>}
+        left={
+          <div>
+            <div className={classNames(styles.label)}>Show Stat Hints</div>
+            <div className={classNames(styles.desc)}>Show damage type breakdowns on boss steps.</div>
+          </div>
+        }
         right={
           <div className={classNames(styles.value)}>
             <input
@@ -79,21 +99,6 @@ export function ConfigForm({ config, onSubmit }: ConfigFormProps) {
                 });
               }}
               aria-label="Show Stat Hints"
-            />
-          </div>
-        }
-      />
-      <SplitRow
-        left={<div className={classNames(styles.label)}>Show Challenges</div>}
-        right={
-          <div className={classNames(styles.value)}>
-            <input
-              type="checkbox"
-              checked={config.showChallenges}
-              onChange={(evt) =>
-                onSubmit({ ...config, showChallenges: evt.target.checked })
-              }
-              aria-label="Show Challenges"
             />
           </div>
         }
