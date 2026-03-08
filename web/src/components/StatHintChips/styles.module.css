@@ -1,29 +1,15 @@
-.row {
+.hints {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0;
-  font-size: 0.8em;
-  opacity: 0.75;
-  margin-top: var(--size-1);
-}
-
-.sep {
-  margin: 0 4px;
-  opacity: 0.35;
+  flex-direction: column;
 }
 
 .hint {
-  color: var(--on-primary);
-  white-space: nowrap;
+  /* Match sub-step appearance: same font size, slightly dimmed */
+  opacity: 0.75;
 }
 
 .value {
   font-weight: var(--font-heavy);
-}
-
-.label {
-  opacity: 0.65;
 }
 
 /* ── Damage type colours ────────────────────────────────────────────────── */

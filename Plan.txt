@@ -4,43 +4,16 @@ Relies on heartofphos/exile-leveling for the core ACT1-10 ROUTE
 LAYOUT:
 	NAVBAR: [ DASHBOARD | ROUTE | CAMPAIGN | ATLAS | CHALLENGES | BUILD | SETTINGS ]
 	  + expanded: RESET PROGRESS | GITHUB
-	DASHBOARD: ROUTE PROGRESS, UNIQUE ITEMS, MISC.
-	ROUTE: ACT1-10, VOIDSTONE1-4, CHALLENGE1-40
+	ROUTE: ACT1-10, VOIDSTONE1-4 (toggleable), CHALLENGE1-40 (toggleable)
 	CAMPAIGN: CAMPAIGN SETTINGS, CAMPAIGN DISPLAY
-	ATLAS: ATLAS SETTINGS, LAB TRACKER
-	CHALLENGES: CHALLENGE DISPLAY, EDIT CHALLENGES
+	ATLAS: ATLAS SETTINGS (voidstone order, unique drops, voidstone route, lab tracker)
+	CHALLENGES: CHALLENGE DISPLAY
 	BUILD: BUILD IMPORT, BUILD SETTINGS
-	SETTINGS: LEAGUE, EDIT ROUTE, EDIT VOIDSTONE ROUTE, 3RD-PARTY EXPORT
+	SETTINGS: LEAGUE, EDIT ROUTE, EDIT VOIDSTONE ROUTE, EDIT CHALLENGES, 3RD-PARTY EXPORT
 
-DESC:
-	DASHBOARD: Overall build progression at a glance.
-	ROUTE PROGRESS: Current progress through ACT, VOIDSTONE, or CHALLENGE.
-	UNIQUE ITEMS: Tracks build uniques — acquisition method, tier, drop source.
-	MISC.: Build specifics — anoints, special mods, pantheon.
-	ROUTE: Full progression path from campaign to endgame.
-	ACT1-10: Campaign route with our additions on top of exile-leveling base.
-	VOIDSTONE1-4: Optimal route to completing each voidstone.
-	CHALLENGE1-40: Fastest path per challenge. Auto-tracks from ACT & VOIDSTONE progress.
-	CAMPAIGN: Settings and display options scoped to ACT1-10.
-	ATLAS: Voidstone order, unique drop display, lab tracker toggle.
-	LAB TRACKER: Tracks Normal/Cruel/Merciless/Uber lab completion with poelab.com links.
-	CHALLENGES: Show/hide toggle + editable challenge guide source.
-	BUILD: Build config — uniques, gems, mods, anoints, pantheon.
-	BUILD IMPORT: Import build from PoB code.
-	SETTINGS: League selection, edit/export campaign & voidstone routes, 3rd-party export.
-
-IDEAS:
-	build system for updating poe info for each league
-		Query poewiki
-			boss info
-			unique item drop info
-			league mechanics
-			challenges
-	build system for automation through claude
-		keep token usage low
-		keep session & weekly limits in mind
-		checks and completes todo items periodically
-		checks for updates to HeartofPhos/exile-leveling and merges changes
+ALWAYS:
+	update settings pages accordingly
+	update plan, readme, format
 
 TODO:
 

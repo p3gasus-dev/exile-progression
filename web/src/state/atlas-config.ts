@@ -22,6 +22,11 @@ export interface AtlasConfig {
   showUniqueDrops: boolean;
 
   /**
+   * Whether to show the Voidstone 1-4 route tab in Route.
+   */
+  showVoidstoneRoute: boolean;
+
+  /**
    * Whether to show the Labyrinth Tracker section.
    */
   showLabTracker: boolean;
@@ -33,6 +38,7 @@ const DEFAULT_ATLAS_CONFIG: AtlasConfig = {
   runBothEarlyBosses: false,
   voidstoneOrder: [0, 1, 2, 3],
   showUniqueDrops: true,
+  showVoidstoneRoute: true,
   showLabTracker: false,
 };
 

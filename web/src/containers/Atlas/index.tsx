@@ -172,6 +172,22 @@ export default function AtlasContainer() {
           />
 
           <SplitRow
+            left={<Label>Show Voidstone Route</Label>}
+            right={
+              <Value>
+                <input
+                  type="checkbox"
+                  checked={config.showVoidstoneRoute}
+                  onChange={(e) =>
+                    update({ showVoidstoneRoute: e.target.checked })
+                  }
+                  aria-label="Show voidstone route tab"
+                />
+              </Value>
+            }
+          />
+
+          <SplitRow
             left={<Label>Show Lab Tracker</Label>}
             right={
               <Value>

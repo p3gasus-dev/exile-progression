@@ -24,21 +24,22 @@
 }
 
 .routeContent {
-  /* No padding by default — route is centred when sidebar has no content */
+  /* No padding — outer wrapper handles sidebar offset */
 }
 
-.routeContentWithSidebar {
+/* Outer wrapper — applied to the div containing TabBar + routeContent */
+.withSidebar {
   padding-right: 15rem;
 }
 
-.routeContentSidebarCollapsed {
-  /* Small gap for the sidebar toggle button only */
+.withCollapsedSidebar {
   padding-right: 2.5rem;
 }
 
 /* ── Mobile ─────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .routeContentWithSidebar {
+  .withSidebar,
+  .withCollapsedSidebar {
     padding-right: 0;
   }
 

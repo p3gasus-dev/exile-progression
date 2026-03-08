@@ -16,6 +16,7 @@ import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
 import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
 import { configSelector } from "../../state/config";
+import { atlasConfigSelector } from "../../state/atlas-config";
 import { sidebarVisibleSelector, sidebarExpandedAtom } from "../../state/sidebar";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
@@ -180,13 +181,16 @@ function TabBar({ tabs, active, onChange }: TabBarProps) {
 
 export default function RouteContainer() {
   const config = useRecoilValue(configSelector);
+  const atlasConfig = useRecoilValue(atlasConfigSelector);
   const sidebarVisible = useRecoilValue(sidebarVisibleSelector);
   const sidebarExpanded = useRecoilValue(sidebarExpandedAtom);
   const [activeTab, setActiveTab] = useState<RouteTab>("acts");
 
   const tabs: TabEntry[] = [
     { id: "acts", label: "ACT 1–10" },
-    { id: "atlas", label: "VOIDSTONE 1-4" },
+    ...(atlasConfig.showVoidstoneRoute
+      ? [{ id: "atlas" as RouteTab, label: "VOIDSTONE 1-4" }]
+      : []),
     ...(config.showChallenges
       ? [{ id: "challenges" as RouteTab, label: "CHALLENGES 1-40" }]
       : []),
@@ -195,21 +199,21 @@ export default function RouteContainer() {
   const validTabs = tabs.map((t) => t.id);
   const visibleTab = validTabs.includes(activeTab) ? activeTab : "acts";
 
+  const sidebarClass = sidebarVisible
+    ? sidebarExpanded ? styles.withSidebar : styles.withCollapsedSidebar
+    : undefined;
+
   return (
-    <>
+    <div className={classNames(sidebarClass)}>
       <TabBar tabs={tabs} active={visibleTab} onChange={setActiveTab} />
       <Sidebar />
-      <div className={classNames(
-          styles.routeContent,
-          sidebarVisible && sidebarExpanded && styles.routeContentWithSidebar,
-          sidebarVisible && !sidebarExpanded && styles.routeContentSidebarCollapsed,
-        )}>
+      <div className={classNames(styles.routeContent)}>
         <Suspense fallback={<Loading />}>
           {visibleTab === "acts" && <ActRoute />}
           {visibleTab === "atlas" && <VoidstoneRoute />}
           {visibleTab === "challenges" && <ChallengeTracker />}
         </Suspense>
       </div>
-    </>
+    </div>
   );
 }

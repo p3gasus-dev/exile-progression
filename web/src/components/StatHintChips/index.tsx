@@ -21,18 +21,17 @@ export function StatHintChips({ hints }: StatHintChipsProps) {
   if (visible.length === 0) return null;
 
   return (
-    <div className={classNames(styles.row)}>
-      {visible.map((h, i) => (
-        <span key={h.label}>
-          {i > 0 && <span className={classNames(styles.sep)}>·</span>}
-          <span
-            className={classNames(styles.hint, getDamageTypeClass(h.label))}
-            title={h.note}
-          >
-            {h.value && <span className={classNames(styles.value)}>{h.value}</span>}
-            {" "}
-            <span className={classNames(styles.label)}>{h.label}</span>
-          </span>
+    <div className={classNames(styles.hints)}>
+      {visible.map((h) => (
+        <span
+          key={h.label}
+          className={classNames(styles.hint, getDamageTypeClass(h.label))}
+          title={h.note}
+        >
+          {"• "}
+          <span className={classNames(styles.value)}>{h.value}</span>
+          {" "}
+          {h.label}
         </span>
       ))}
     </div>

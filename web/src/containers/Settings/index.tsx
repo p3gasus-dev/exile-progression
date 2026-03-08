@@ -2,6 +2,7 @@ import { RouteEditor } from "../../components/RouteEditor";
 import { pobCodeAtom } from "../../state/pob-code";
 import { routeFilesSelector } from "../../state/route-files";
 import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
+import { challengeRouteFilesSelector } from "../../state/challenge-route-files";
 import { routeSelector } from "../../state/route";
 import { leagueSelector, LEAGUES, League } from "../../state/league";
 import { formStyles } from "../../styles";
@@ -21,6 +22,9 @@ export default function SettingsContainer() {
 
   const [voidstoneRouteFiles, setVoidstoneRouteFiles] = useRecoilState(voidstoneRouteFilesSelector);
   const resetVoidstoneRouteFiles = useResetRecoilState(voidstoneRouteFilesSelector);
+
+  const [challengeRouteFiles, setChallengeRouteFiles] = useRecoilState(challengeRouteFilesSelector);
+  const resetChallengeRouteFiles = useResetRecoilState(challengeRouteFilesSelector);
 
   const [league, setLeague] = useRecoilState(leagueSelector);
 
@@ -88,6 +92,19 @@ export default function SettingsContainer() {
         routeFiles={voidstoneRouteFiles}
         onSubmit={(updated) => setVoidstoneRouteFiles(updated)}
         onReset={resetVoidstoneRouteFiles}
+      />
+
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Edit Challenges ──────────────────────────────────────────────── */}
+      <SectionHeader title="Edit Challenges" />
+      <p className={classNames(styles.hint)}>
+        Modify the challenge guide source file. Ctrl+S / ⌘S saves while the editor is focused.
+      </p>
+      <RouteEditor
+        routeFiles={challengeRouteFiles}
+        onSubmit={(updated) => setChallengeRouteFiles(updated)}
+        onReset={resetChallengeRouteFiles}
       />
 
       <hr className={classNames(styles.divider)} />
