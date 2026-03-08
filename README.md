@@ -8,10 +8,11 @@ A Path of Exile progression tracker covering the full journey from campaign to e
 |---|---|
 | **Dashboard** | Route progress bars, unique item acquisition list, Pantheon/Anoints/Special Mods summary |
 | **Route** | ACT 1–10 step tracker, Voidstone 1–4 boss routes, Challenge 1–40 tracker |
-| **Campaign** | Character class, bandit choice, league start and library settings; display toggles |
-| **Atlas** | Voidstone order reference, atlas passive strategy, Kirac mission options |
+| **Campaign** | League start / library settings; display toggles (gems only, hints, crafting, stat hints) |
+| **Atlas** | Voidstone completion order, unique drop display toggle, Labyrinth tracker |
+| **Challenges** | Show/hide challenges toggle; editable challenge guide source |
 | **Build** | PoB import, gem editor, search strings; Pantheon picker, Anoint builder, Special Mods |
-| **Settings** | Edit route source files, 3rd-party clipboard export, GitHub link |
+| **Settings** | League selection, edit route source files, 3rd-party clipboard export |
 
 ---
 
@@ -28,8 +29,8 @@ npm run dev -w web
 
 ### Upstream dependency
 
-The ACT 1–10 route files and core route parser are sourced from  
-[heartofphos/exile-leveling](https://github.com/HeartofPhos/exile-leveling).  
+The ACT 1–10 route files and core route parser are sourced from
+[heartofphos/exile-leveling](https://github.com/HeartofPhos/exile-leveling).
 Exile Progression layers additional features on top without modifying the parser.
 
 ### New files added by Exile Progression
@@ -45,21 +46,24 @@ Exile Progression layers additional features on top without modifying the parser
 #### State
 | File | Purpose |
 |---|---|
-| `web/src/state/atlas-config.ts` | Atlas passive strategy + Kirac mission flags |
+| `web/src/state/atlas-config.ts` | Voidstone order, unique drop flag, lab tracker flag |
 | `web/src/state/build-settings.ts` | Pantheon, Anoints, Special Mods |
 | `web/src/state/challenge-progress.ts` | Toggle state for 40 challenges |
+| `web/src/state/lab-progress.ts` | Toggle state for Normal/Cruel/Merciless/Uber lab |
 | `web/src/state/progress-summary.ts` | Derived selectors: act/voidstone/challenge counts |
+| `web/src/state/sidebar.ts` | Sidebar expanded atom + sidebar-visible selector |
 | `web/src/state/unique-items.ts` | Unique items parsed from PoB import |
 | `web/src/state/voidstone-progress.ts` | Toggle state for voidstone boss steps |
-| `web/src/state/voidstone-route-files.ts` | Loads voidstone route files (no persistence) |
+| `web/src/state/voidstone-route-files.ts` | Loads voidstone route files |
 | `web/src/state/voidstone-route.ts` | Parses voidstone route files into structured Route |
 
 #### Data tables
 | File | Purpose |
 |---|---|
-| `web/src/data/challenge-list.ts` | 40 league-agnostic challenge definitions |
+| `web/src/data/challenge-list.ts` | 40 league-agnostic challenge definitions with auto-detect keys |
 | `web/src/data/oil-data.ts` | 13 oil tiers + Prismatic, with display colours |
 | `web/src/data/pantheon-data.ts` | 4 major + 8 minor Pantheon gods with base effects |
+| `web/src/data/stat-targets.ts` | Boss stat hints: level, DPS, resistances (acts + pinnacles) |
 | `web/src/data/unique-drop-sources.ts` | Unique item → boss/area source map; div card rule |
 
 #### Components
@@ -67,21 +71,24 @@ Exile Progression layers additional features on top without modifying the parser
 |---|---|
 | `web/src/components/BuildImportForm/pob.ts` | PoB XML decoder; parses gems, trees, uniques |
 | `web/src/components/BuildSettingsForm/` | Pantheon pickers, anoint rows, special mods textarea |
-| `web/src/components/Navbar/` | 6-tab navbar with active state highlighting |
-| `web/src/components/UniqueItemBadge/` | Gold star badge (direct drop) and div card badge |
+| `web/src/components/ChallengeBadge/` | Auto-complete challenge badge (internal, not shown in route) |
+| `web/src/components/Navbar/` | 7-tab navbar with hamburger expand (Reset Progress, GitHub) |
+| `web/src/components/StatHintChips/` | Inline boss stat hints (level · DPS · resistances) |
+| `web/src/components/UniqueItemBadge/` | Drop badge shown on voidstone boss steps |
 
 #### Containers
 | File | Purpose |
 |---|---|
-| `web/src/containers/Atlas/` | Voidstone order table, atlas passive settings form |
+| `web/src/containers/Atlas/` | Voidstone order (drag/arrows), unique drops toggle, lab tracker |
+| `web/src/containers/Atlas/LabTracker/` | Normal/Cruel/Merciless/Uber lab checkboxes + poelab.com links |
 | `web/src/containers/Build/` | Build Import + Build Settings sections |
-| `web/src/containers/Campaign/` | ACT 1–10 Settings + Display Settings |
+| `web/src/containers/Campaign/` | ACT 1–10 Settings + Campaign Display toggles |
+| `web/src/containers/Challenges/` | Show Challenges toggle + editable challenge guide |
 | `web/src/containers/Dashboard/` | Route Progress, Unique Items, Misc panels |
-| `web/src/containers/Route/` | Three-tab Route view: ACT, Voidstones, Challenges |
-| `web/src/containers/Route/ChallengeTracker/` | 40-challenge grid with auto-detect and category filter |
+| `web/src/containers/Route/` | Three-tab Route view: ACT 1-10, Voidstones, Challenges |
+| `web/src/containers/Route/ChallengeTracker/` | Challenge list with auto-detect and progress bar |
 | `web/src/containers/Route/VoidstoneRoute/` | Voidstone step list with unique item annotations |
-| `web/src/containers/Settings/` | Edit Route, 3rd-Party Export, GitHub link |
-| `web/src/containers/index.tsx` | App router wiring all 6 tabs |
+| `web/src/containers/Settings/` | League selector, Edit Route, 3rd-Party Export |
 
 ---
 
@@ -101,7 +108,7 @@ npm run seed tree -w seeding
 
 ### General
 
-Find the required `dat` files in `seeding/data/index.ts`.  
+Find the required `dat` files in `seeding/data/index.ts`.
 Use [exile-export](https://github.com/HeartofPhos/exile-export) to get `.dat.json` files, then:
 
 ```bash
@@ -112,21 +119,23 @@ npm run seed data -w seeding
 
 ## Route Customisation
 
-Use **Settings → Edit Route** to customise the ACT 1–10 route source files.  
-Voidstone routes and Challenge tracking are Exile Progression additions and are not editable from the UI.
+- **Campaign route**: Settings → Edit Route
+- **Voidstone route**: Settings → Edit Voidstone Route
+- **Challenge guide**: Challenges → Edit Challenges
+- For syntax, see [ROUTE_FORMAT.md](ROUTE_FORMAT.md)
 
 ---
 
 ## Adding New League Challenges
 
-Replace or extend `web/src/data/challenge-list.ts`. The `autoDetectKey` field wires a challenge to a toggle-state key (e.g. a voidstone boss kill step) so it auto-completes when that step is checked.
+Replace or extend `web/src/data/challenge-list.ts`. The `autoDetectKey` field wires a challenge to a route step (e.g. a boss kill) so it auto-completes when that step is checked off.
 
 ---
 
 ## Adding New Unique Item Sources
 
 Add entries to `web/src/data/unique-drop-sources.ts`. Follow the divination card rule:
-- If a direct boss drop exists → set `boss` (and optionally `divCard` for reference only, no `divCardOnly`)
+- If a direct boss drop exists → set `bosses` or `areas` (div card suppressed)
 - If div card is the only way → set `divCard` + `divCardOnly: true`
 
 ---

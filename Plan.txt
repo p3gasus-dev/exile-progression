@@ -10,24 +10,24 @@ LAYOUT:
 	ATLAS: ATLAS SETTINGS, LAB TRACKER
 	CHALLENGES: CHALLENGE DISPLAY, EDIT CHALLENGES
 	BUILD: BUILD IMPORT, BUILD SETTINGS
-	SETTINGS: EDIT ROUTE, EDIT VOIDSTONE ROUTE, 3RD-PARTY EXPORT
+	SETTINGS: LEAGUE, EDIT ROUTE, EDIT VOIDSTONE ROUTE, 3RD-PARTY EXPORT
 
 DESC:
 	DASHBOARD: Overall build progression at a glance.
 	ROUTE PROGRESS: Current progress through ACT, VOIDSTONE, or CHALLENGE.
 	UNIQUE ITEMS: Tracks build uniques — acquisition method, tier, drop source.
-	MISC.: Build specifics — anoints, special mods, etc.
+	MISC.: Build specifics — anoints, special mods, pantheon.
 	ROUTE: Full progression path from campaign to endgame.
 	ACT1-10: Campaign route with our additions on top of exile-leveling base.
 	VOIDSTONE1-4: Optimal route to completing each voidstone.
 	CHALLENGE1-40: Fastest path per challenge. Auto-tracks from ACT & VOIDSTONE progress.
 	CAMPAIGN: Settings and display options scoped to ACT1-10.
-	ATLAS: Settings for atlas points, voidstones, and mapping.
-	LAB TRACKER: Tracks lab runs and enchants.
-	CHALLENGES: Display and editing settings for the challenge guide.
-	BUILD: Build config — uniques, mods, anoints, pantheon, etc.
+	ATLAS: Voidstone order, unique drop display, lab tracker toggle.
+	LAB TRACKER: Tracks Normal/Cruel/Merciless/Uber lab completion with poelab.com links.
+	CHALLENGES: Show/hide toggle + editable challenge guide source.
+	BUILD: Build config — uniques, gems, mods, anoints, pantheon.
 	BUILD IMPORT: Import build from PoB code.
-	SETTINGS: Edit/export campaign & voidstone routes, 3rd-party export, league selection.
+	SETTINGS: League selection, edit/export campaign & voidstone routes, 3rd-party export.
 
 IDEAS:
 	build system for updating poe info for each league
@@ -45,18 +45,16 @@ IDEAS:
 TODO:
 
 IN PROGRESS:
-	Route pathing
-	Text formatting
 	UNIQUES/BOSSES
 		REBUILD unique item system
-			Each unique item has Drop Acuisition
+			Each unique item has Drop Acquisition
 			Additional Drop Restrictions
 			Monster drops
 			Tier #
 		FIX boss info
 			HP
 			DMG
-				Phys 
+				Phys
 				Cold
 				Fire
 				Lightning
