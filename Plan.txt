@@ -17,8 +17,6 @@ ALWAYS:
 	update plan, readme, format
 
 TODO:
-	import BUILD
-		automatically select pantheons using the imported build (major & minor god)
 
 IN PROGRESS:
 	UNIQUES/BOSSES
