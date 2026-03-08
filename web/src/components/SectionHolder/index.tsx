@@ -3,15 +3,17 @@ import { TaskList, TaskListProps } from "../TaskList";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useLayoutEffect } from "react";
+import React from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useRecoilState } from "recoil";
 
 interface SectionHolderProps {
   name: string;
+  nameRight?: React.ReactNode;
   items: TaskListProps["items"];
 }
 
-export function SectionHolder({ name, items }: SectionHolderProps) {
+export function SectionHolder({ name, nameRight, items }: SectionHolderProps) {
   const sectionId = `section-${name.replace(/\s+/g, "_")}`;
   const [collapsed, setCollapsed] = useRecoilState(
     sectionCollapseSelectorFamily(sectionId)
@@ -45,7 +47,10 @@ export function SectionHolder({ name, items }: SectionHolderProps) {
           }}
         >
           {icon}
-          <div className={classNames(styles.sectionName)}>{name}</div>
+          <div className={classNames(styles.sectionName)}>
+            {name}
+            {nameRight && <span className={classNames(styles.nameRight)}>{nameRight}</span>}
+          </div>
           {icon}
         </button>
         <hr />

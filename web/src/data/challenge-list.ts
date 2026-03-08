@@ -18,12 +18,15 @@ export type ChallengeCategory =
   | "crafting"
   | "misc";
 
+export type ChallengeDifficulty = "easy" | "medium" | "hard" | "endgame";
+
 export interface Challenge {
   id: string;
   number: number;
   name: string;
   description: string;
   category: ChallengeCategory;
+  difficulty: ChallengeDifficulty;
   /** Optional: key in toggle-state that auto-completes this challenge */
   autoDetectKey?: string;
 }
@@ -36,6 +39,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Act 1",
     description: "Defeat Merveil, the Twisted and complete Act 1.",
     category: "campaign",
+    difficulty: "easy",
   },
   {
     id: "complete-act-2",
@@ -43,6 +47,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Act 2",
     description: "Defeat Vaal Oversoul and complete Act 2.",
     category: "campaign",
+    difficulty: "easy",
   },
   {
     id: "complete-act-3",
@@ -50,6 +55,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Act 3",
     description: "Defeat Dominus, Ascendant and complete Act 3.",
     category: "campaign",
+    difficulty: "easy",
   },
   {
     id: "complete-act-4",
@@ -57,6 +63,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Act 4",
     description: "Defeat Malachai, The Nightmare and complete Act 4.",
     category: "campaign",
+    difficulty: "easy",
   },
   {
     id: "complete-act-5",
@@ -64,6 +71,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Act 5",
     description: "Defeat Kitava (Act 5) and complete Act 5.",
     category: "campaign",
+    difficulty: "easy",
   },
   {
     id: "complete-acts-6-10",
@@ -71,6 +79,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Acts 6–10",
     description: "Defeat Kitava (Act 10) and enter maps.",
     category: "campaign",
+    difficulty: "easy",
   },
   {
     id: "complete-normal-lab",
@@ -78,6 +87,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Normal Labyrinth",
     description: "Defeat Izaro and claim your first Ascendancy.",
     category: "campaign",
+    difficulty: "easy",
   },
   {
     id: "complete-cruel-lab",
@@ -85,6 +95,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Cruel Labyrinth",
     description: "Defeat Izaro in the Cruel Labyrinth.",
     category: "campaign",
+    difficulty: "easy",
   },
   {
     id: "complete-merciless-lab",
@@ -92,6 +103,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Merciless Labyrinth",
     description: "Defeat Izaro in the Merciless Labyrinth.",
     category: "campaign",
+    difficulty: "medium",
   },
   {
     id: "complete-eternal-lab",
@@ -99,6 +111,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Eternal Labyrinth",
     description: "Defeat Izaro in the Eternal Labyrinth and earn all 8 Ascendancy points.",
     category: "campaign",
+    difficulty: "medium",
   },
 
   // ── Atlas Progression (11–20) ────────────────────────────────────────────────
@@ -108,6 +121,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete 10 White Maps",
     description: "Complete 10 T1–T5 maps.",
     category: "atlas",
+    difficulty: "easy",
   },
   {
     id: "complete-yellow-maps",
@@ -115,6 +129,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete 10 Yellow Maps",
     description: "Complete 10 T6–T10 maps.",
     category: "atlas",
+    difficulty: "easy",
   },
   {
     id: "complete-red-maps",
@@ -122,6 +137,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete 10 Red Maps",
     description: "Complete 10 T11–T16 maps.",
     category: "atlas",
+    difficulty: "medium",
   },
   {
     id: "unlock-atlas-passives",
@@ -129,6 +145,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Earn 30 Atlas Passive Points",
     description: "Complete enough maps to earn 30 Atlas passive skill points.",
     category: "atlas",
+    difficulty: "medium",
   },
   {
     id: "complete-t16-map",
@@ -136,6 +153,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete a Tier 16 Map",
     description: "Complete any Tier 16 map.",
     category: "atlas",
+    difficulty: "medium",
   },
   {
     id: "complete-favourite-maps",
@@ -143,6 +161,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Set 4 Favourite Maps",
     description: "Unlock and set 4 favourite map slots on your Atlas.",
     category: "atlas",
+    difficulty: "easy",
   },
   {
     id: "complete-unique-maps",
@@ -150,6 +169,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete 5 Unique Maps",
     description: "Complete 5 different unique maps.",
     category: "atlas",
+    difficulty: "medium",
   },
   {
     id: "complete-conqueror-maps",
@@ -157,6 +177,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete 20 Map Types",
     description: "Complete 20 different map types on your Atlas.",
     category: "atlas",
+    difficulty: "easy",
   },
   {
     id: "complete-bonus-objective",
@@ -164,6 +185,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete 10 Map Bonus Objectives",
     description: "Complete the bonus objective in 10 different maps.",
     category: "atlas",
+    difficulty: "easy",
   },
   {
     id: "open-sextant-sockets",
@@ -171,6 +193,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Apply 5 Voidstone Enchants",
     description: "Apply 5 Sextants to socketed Voidstones.",
     category: "atlas",
+    difficulty: "medium",
   },
 
   // ── Boss Kills (21–30) ───────────────────────────────────────────────────────
@@ -180,6 +203,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Defeat The Eater of Worlds",
     description: "Defeat The Eater of Worlds and earn the Grasping Voidstone.",
     category: "boss",
+    difficulty: "hard",
     autoDetectKey: "voidstone-progress:The Eater of Worlds",
   },
   {
@@ -188,6 +212,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Defeat The Searing Exarch",
     description: "Defeat The Searing Exarch and earn the Omniscient Voidstone.",
     category: "boss",
+    difficulty: "hard",
     autoDetectKey: "voidstone-progress:The Searing Exarch",
   },
   {
@@ -196,6 +221,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Defeat The Maven",
     description: "Defeat The Maven and earn the Ceremonial Voidstone.",
     category: "boss",
+    difficulty: "hard",
     autoDetectKey: "voidstone-progress:The Maven",
   },
   {
@@ -204,6 +230,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Defeat The Uber Elder",
     description: "Defeat The Uber Elder and earn the Decayed Voidstone.",
     category: "boss",
+    difficulty: "hard",
     autoDetectKey: "voidstone-progress:The Uber Elder",
   },
   {
@@ -212,6 +239,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Socket All 4 Voidstones",
     description: "Socket all 4 Voidstones into your Atlas Map Device.",
     category: "boss",
+    difficulty: "hard",
   },
   {
     id: "kill-shaper",
@@ -219,6 +247,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Defeat The Shaper",
     description: "Defeat The Shaper in The Shaper's Realm.",
     category: "boss",
+    difficulty: "hard",
   },
   {
     id: "kill-elder",
@@ -226,6 +255,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Defeat The Elder",
     description: "Defeat The Elder in The Elder's Realm.",
     category: "boss",
+    difficulty: "hard",
   },
   {
     id: "kill-all-guardians",
@@ -233,6 +263,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Defeat All 8 Guardians",
     description: "Defeat all 4 Shaper Guardians and all 4 Elder Guardians.",
     category: "boss",
+    difficulty: "hard",
   },
   {
     id: "kill-map-boss-100",
@@ -240,6 +271,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Defeat 100 Map Bosses",
     description: "Defeat 100 unique map bosses across your Atlas.",
     category: "boss",
+    difficulty: "medium",
   },
   {
     id: "complete-maven-crucible",
@@ -247,6 +279,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete Maven's Crucible",
     description: "Complete a Maven's Invitation encounter in the Maven's Crucible.",
     category: "boss",
+    difficulty: "hard",
   },
 
   // ── League Mechanics (31–36) ─────────────────────────────────────────────────
@@ -256,6 +289,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete a Delirium Encounter",
     description: "Complete a Delirium mirror encounter in a map.",
     category: "mechanics",
+    difficulty: "easy",
   },
   {
     id: "complete-expedition",
@@ -263,6 +297,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete an Expedition",
     description: "Complete an Expedition encounter in a map.",
     category: "mechanics",
+    difficulty: "easy",
   },
   {
     id: "complete-ritual",
@@ -270,6 +305,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete a Ritual",
     description: "Complete a Ritual encounter and spend favour.",
     category: "mechanics",
+    difficulty: "easy",
   },
   {
     id: "complete-heist",
@@ -277,6 +313,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete a Heist",
     description: "Complete a Heist contract.",
     category: "mechanics",
+    difficulty: "easy",
   },
   {
     id: "complete-bestiary",
@@ -284,6 +321,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Craft via Bestiary",
     description: "Capture a beast and craft an item using Einhar's bestiary.",
     category: "mechanics",
+    difficulty: "easy",
   },
   {
     id: "complete-betrayal",
@@ -291,6 +329,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Complete a Betrayal Safehouse",
     description: "Complete an Immortal Syndicate Safehouse.",
     category: "mechanics",
+    difficulty: "medium",
   },
 
   // ── Crafting & Currency (37–39) ───────────────────────────────────────────────
@@ -300,6 +339,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Use an Orb of Annulment",
     description: "Remove a modifier from a magic or rare item.",
     category: "crafting",
+    difficulty: "medium",
   },
   {
     id: "use-divine-orb",
@@ -307,6 +347,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Use a Divine Orb",
     description: "Re-roll the values of an item's explicit modifiers.",
     category: "crafting",
+    difficulty: "medium",
   },
   {
     id: "use-orb-of-alteration-x100",
@@ -314,6 +355,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Use 100 Orbs of Alteration",
     description: "Craft extensively — use 100 Orbs of Alteration.",
     category: "crafting",
+    difficulty: "hard",
   },
 
   // ── Misc (40) ─────────────────────────────────────────────────────────────────
@@ -323,6 +365,7 @@ export const CHALLENGES: Challenge[] = [
     name: "Reach Level 100",
     description: "Reach the maximum character level of 100.",
     category: "misc",
+    difficulty: "endgame",
   },
 ];
 

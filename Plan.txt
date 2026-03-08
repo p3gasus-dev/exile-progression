@@ -16,11 +16,8 @@ ALWAYS:
 	update plan, readme, format
 
 TODO:
-	rework the challenges
-		rely on CraniumViolence/craniumviolence.github.io repo
-			use the info
-			don't use the css
-				i do like the difficulty being colored text
+	import BUILD
+		automatically select pantheons using the imported build (major & minor god)
 
 IN PROGRESS:
 	UNIQUES/BOSSES

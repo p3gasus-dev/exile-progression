@@ -46,11 +46,16 @@
   transition: width 0.3s ease;
 }
 
-/* ── Challenge description text ──────────────────────────────── */
+/* ── Difficulty badges ───────────────────────────────────────── */
 
-.desc {
-  display: block;
-  font-size: 0.8rem;
-  opacity: 0.55;
-  margin-top: 2px;
+.diff {
+  font-size: 0.7rem;
+  font-weight: var(--font-heavy);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
+
+.diffEasy    { color: #5db86c; }
+.diffMedium  { color: #e0c040; }
+.diffHard    { color: #e07030; }
+.diffEndgame { color: #c040c0; }

@@ -3,7 +3,10 @@
     "allow": [
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(timeout 15)",
+      "WebFetch(domain:craniumviolence.github.io)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/CraniumViolence/craniumviolence.github.io/master/index.html\")"
     ]
   }
 }

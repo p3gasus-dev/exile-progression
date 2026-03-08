@@ -16,6 +16,16 @@
 .sectionName {
   flex: 1;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-2);
+}
+
+.nameRight {
+  font-size: 0.7rem;
+  font-weight: normal;
+  opacity: 0.9;
 }
 
 .header {

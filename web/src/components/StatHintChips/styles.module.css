@@ -6,7 +6,7 @@
   opacity: 0.4;
 }
 
-/* Resistance / damage type colours only — no size or weight overrides */
+/* Only the damage-type word itself is coloured */
 .typeCold  { color: #88ccff; }
 .typeFire  { color: #ff8040; }
 .typeLight { color: #f0d840; }

@@ -1,10 +1,24 @@
 import { challengeProgressSelectorFamily, challengeCountSelector } from "../../../state/challenge-progress";
-import { CHALLENGES } from "../../../data/challenge-list";
+import { CHALLENGES, ChallengeDifficulty } from "../../../data/challenge-list";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useRecoilValue } from "recoil";
+
+const DIFFICULTY_LABEL: Record<ChallengeDifficulty, string> = {
+  easy: "Easy",
+  medium: "Medium",
+  hard: "Hard",
+  endgame: "Endgame",
+};
+
+const DIFFICULTY_CLASS: Record<ChallengeDifficulty, string> = {
+  easy: styles.diffEasy,
+  medium: styles.diffMedium,
+  hard: styles.diffHard,
+  endgame: styles.diffEndgame,
+};
 
 export default function ChallengeTracker() {
   const totalCompleted = useRecoilValue(challengeCountSelector);
@@ -32,13 +46,22 @@ export default function ChallengeTracker() {
           {
             key: c.id,
             isCompletedState: challengeProgressSelectorFamily(c.id),
-            children: <span>{c.description}</span>,
+            children: (
+              <span>
+                {c.description}
+              </span>
+            ),
           },
         ];
         return (
           <SectionHolder
             key={c.id}
             name={`${c.number}. ${c.name}`}
+            nameRight={
+              <span className={classNames(styles.diff, DIFFICULTY_CLASS[c.difficulty])}>
+                {DIFFICULTY_LABEL[c.difficulty]}
+              </span>
+            }
             items={taskItems}
           />
         );

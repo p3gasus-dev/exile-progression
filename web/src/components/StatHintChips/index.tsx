@@ -6,14 +6,33 @@ interface StatHintChipsProps {
   hints: StatTarget[];
 }
 
-function getDamageTypeClass(label: string): string | undefined {
-  const l = label.toLowerCase();
-  if (l.includes("cold") || l.includes("freeze") || l.includes("frozen")) return styles.typeCold;
-  if (l.includes("fire") || l.includes("ignite")) return styles.typeFire;
-  if (l.includes("light")) return styles.typeLight;
-  if (l.includes("chaos") || l.includes("poison")) return styles.typeChaos;
-  if (l.includes("phys")) return styles.typePhys;
-  return undefined;
+// Map of keyword → CSS class. Only the matched word gets coloured.
+const DAMAGE_WORDS: [RegExp, string][] = [
+  [/\bCold\b/i,      styles.typeCold],
+  [/\bFire\b/i,      styles.typeFire],
+  [/\bLight(ning)?\b/i, styles.typeLight],
+  [/\bChaos\b/i,     styles.typeChaos],
+  [/\bPhys(ical)?\b/i,  styles.typePhys],
+];
+
+/** Render a label string with only the damage-type word coloured. */
+function ColouredLabel({ label }: { label: string }) {
+  for (const [re, cls] of DAMAGE_WORDS) {
+    const m = re.exec(label);
+    if (m) {
+      const before = label.slice(0, m.index);
+      const word   = m[0];
+      const after  = label.slice(m.index + word.length);
+      return (
+        <>
+          {before}
+          <span className={cls}>{word}</span>
+          {after}
+        </>
+      );
+    }
+  }
+  return <>{label}</>;
 }
 
 export function StatHintChips({ hints }: StatHintChipsProps) {
@@ -24,11 +43,9 @@ export function StatHintChips({ hints }: StatHintChipsProps) {
     <span className={classNames(styles.hints)}>
       {"• "}
       {visible.map((h, i) => (
-        <span key={h.label}>
+        <span key={h.label} title={h.note}>
           {i > 0 && <span className={classNames(styles.sep)}> · </span>}
-          <span className={classNames(getDamageTypeClass(h.label))} title={h.note}>
-            {h.value} {h.label}
-          </span>
+          {h.value} <ColouredLabel label={h.label} />
         </span>
       ))}
     </span>
