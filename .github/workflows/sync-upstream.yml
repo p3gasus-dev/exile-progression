@@ -1,0 +1,136 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 06:00 UTC
+  workflow_dispatch:      # Manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream and fetch
+        run: |
+          git remote add upstream https://github.com/HeartofPhos/exile-leveling.git
+          git fetch upstream main
+
+      # Detect commits in upstream that are not yet in our main
+      - name: Check for new upstream commits
+        id: check
+        run: |
+          MERGE_BASE=$(git merge-base HEAD upstream/main)
+          UPSTREAM_SHA=$(git rev-parse upstream/main)
+          if [ "$UPSTREAM_SHA" = "$MERGE_BASE" ]; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "Upstream is already merged — nothing to do."
+          else
+            COUNT=$(git rev-list "${MERGE_BASE}..upstream/main" --count)
+            LOG=$(git log "${MERGE_BASE}..upstream/main" --oneline --no-decorate | head -30)
+            echo "has_changes=true"   >> "$GITHUB_OUTPUT"
+            echo "commit_count=$COUNT" >> "$GITHUB_OUTPUT"
+            {
+              echo "log<<EOF"
+              echo "$LOG"
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+            echo "Found $COUNT new upstream commit(s)."
+          fi
+
+      # Skip if a sync PR is already open to avoid duplicates
+      - name: Check for existing sync PR
+        id: existing_pr
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          EXISTING=$(gh pr list \
+            --base main \
+            --label "upstream-sync" \
+            --state open \
+            --json number \
+            --jq '.[0].number // ""')
+          echo "pr_number=$EXISTING" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Branch from OUR main, then merge upstream into it.
+      # This preserves all our custom code; the PR shows only new upstream changes.
+      - name: Create sync branch and attempt merge
+        id: branch
+        if: steps.check.outputs.has_changes == 'true' && steps.existing_pr.outputs.pr_number == ''
+        run: |
+          BRANCH="sync/upstream-$(date +%Y%m%d)"
+          git checkout -b "$BRANCH"
+
+          HAS_CONFLICTS=false
+          if ! git merge upstream/main --no-commit --no-ff 2>/dev/null; then
+            HAS_CONFLICTS=true
+          fi
+
+          # Commit merged state (clean merge) or conflict state (markers in files)
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: merge upstream exile-leveling $(date +%Y-%m-%d)"
+          fi
+
+          git push origin "$BRANCH"
+          echo "name=$BRANCH"             >> "$GITHUB_OUTPUT"
+          echo "has_conflicts=$HAS_CONFLICTS" >> "$GITHUB_OUTPUT"
+
+      # Create the label if it doesn't exist yet
+      - name: Ensure upstream-sync label
+        if: steps.check.outputs.has_changes == 'true' && steps.existing_pr.outputs.pr_number == ''
+        run: |
+          gh label create "upstream-sync" \
+            --color "0075ca" \
+            --description "Automated upstream sync PR" 2>/dev/null || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Open pull request
+        if: steps.check.outputs.has_changes == 'true' && steps.existing_pr.outputs.pr_number == ''
+        run: |
+          CONFLICT_WARN=""
+          if [ "${{ steps.branch.outputs.has_conflicts }}" = "true" ]; then
+            CONFLICT_WARN=$'\n> ⚠️ **Merge conflicts detected.** Resolve conflict markers before merging.\n'
+          fi
+
+          gh pr create \
+            --base main \
+            --head "${{ steps.branch.outputs.name }}" \
+            --title "chore: sync upstream exile-leveling ($(date +%Y-%m-%d))" \
+            --label "upstream-sync" \
+            --body "## Upstream Changes
+
+          Automated sync from [HeartofPhos/exile-leveling](https://github.com/HeartofPhos/exile-leveling).
+          ${CONFLICT_WARN}
+          **${{ steps.check.outputs.commit_count }} new commit(s):**
+          \`\`\`
+          ${{ steps.check.outputs.log }}
+          \`\`\`
+
+          ### Review checklist
+          - [ ] No conflict markers (\`<<<<<<\`) left in files
+          - [ ] Custom route files (voidstone-*.txt, act-*.txt) not overwritten
+          - [ ] Custom components / state unchanged
+          - [ ] \`npm run build\` passes locally
+          - [ ] Merge into \`main\` and verify GitHub Pages deploy"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip — PR already open
+        if: steps.existing_pr.outputs.pr_number != ''
+        run: echo "Sync PR #${{ steps.existing_pr.outputs.pr_number }} is already open. Skipping."

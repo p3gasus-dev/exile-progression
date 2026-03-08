@@ -56,11 +56,3 @@
   padding-left: calc(var(--size-3) - 3px);
 }
 
-/* Right-aligned slot for inline stat hint chips on boss steps */
-.rightSlot {
-  display: flex;
-  align-items: flex-start;
-  padding-top: 1px;
-  padding-left: var(--size-2);
-  flex-shrink: 0;
-}

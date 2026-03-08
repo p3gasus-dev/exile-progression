@@ -6,7 +6,7 @@ LAYOUT:
 	DASHBOARD: ROUTE PROGRESS, UNIQUE ITEMS, MISC.
 	ROUTE: ACT1-10, VOIDSTONE1-4 , CHALLENGE1-40
 	CAMPAIGN: ACT1-10 SETTINGS, CAMPAIGN SPECIFIC SETTINGS
-	ATLAS: ATLAS SETTINGS
+	ENDGAME: VOIDSTONES & MAPPING SETTTINGS
 	BUILD: BUILD IMPORT, BUILD SETTINGS
 	SETTINGS: EDIT ROUTE, 3RD-PARTY EXPORT, PROJECT ON GITHUB
 
@@ -36,9 +36,16 @@ IDEAS:
 			unique item drop info
 			league mechanics
 			challenges
+	build system for automation through claude
+		keep token usage low
+		keep session & weekly limits in mind
+		checks and completes todo items periodically
+		checks for updates to HeartofPhos/exile-leveling and merges changes
 
 TODO:
 	
+
+
 IN PROGRESS:
 	Route pathing
 	Text formatting

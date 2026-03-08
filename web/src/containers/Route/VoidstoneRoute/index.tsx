@@ -85,15 +85,15 @@ export default function VoidstoneRoute() {
           `${sectionIndex},${stepIndex}`
         ),
         highlight: isPinnacleKill ? "pinnacle" : undefined,
-        rightContent: config.showStatHints && stepBossHints.length > 0
-          ? <StatHintChips hints={stepBossHints} />
-          : undefined,
         onToggle: challengeIds.length > 0
           ? (complete) => { if (complete) completeChallenges(challengeIds); }
           : undefined,
         children: (
           <>
             <FragmentStep step={step} />
+            {config.showStatHints && stepBossHints.length > 0 && (
+              <StatHintChips hints={stepBossHints} />
+            )}
             {config.showChallenges && stepChallenges.length > 0 && (
               <ChallengeBadge challenges={stepChallenges} />
             )}

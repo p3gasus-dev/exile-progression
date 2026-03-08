@@ -15,8 +15,7 @@ import { StatHintChips } from "../../components/StatHintChips";
 import { gemProgressSelectorFamily } from "../../state/gem-progress";
 import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
-import { challengeProgressSelectorFamily, challengeCountSelector } from "../../state/challenge-progress";
-import { CHALLENGES } from "../../data/challenge-list";
+import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
 import { configSelector } from "../../state/config";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
@@ -103,15 +102,15 @@ function ActRoute() {
             [sectionIndex, stepIndex].toString()
           ),
           highlight: getActStepHighlight(step.parts),
-          rightContent: config.showStatHints && stepBossHints.length > 0
-            ? <StatHintChips hints={stepBossHints} />
-            : undefined,
           onToggle: challengeIds.length > 0
             ? (complete) => { if (complete) completeChallenges(challengeIds); }
             : undefined,
           children: (
             <>
               <FragmentStep key={stepIndex} step={step} />
+              {config.showStatHints && stepBossHints.length > 0 && (
+                <StatHintChips hints={stepBossHints} />
+              )}
               {config.showChallenges && stepChallenges.length > 0 && (
                 <ChallengeBadge challenges={stepChallenges} />
               )}
@@ -184,14 +183,13 @@ function TabBar({ tabs, active, onChange }: TabBarProps) {
 
 export default function RouteContainer() {
   const config = useRecoilValue(configSelector);
-  const challengeCount = useRecoilValue(challengeCountSelector);
   const [activeTab, setActiveTab] = useState<RouteTab>("acts");
 
   const tabs: TabEntry[] = [
     { id: "acts", label: "ACT 1–10" },
     { id: "atlas", label: "VOIDSTONE 1-4" },
     ...(config.showChallenges
-      ? [{ id: "challenges" as RouteTab, label: `CHALLENGES ${challengeCount}/${CHALLENGES.length}` }]
+      ? [{ id: "challenges" as RouteTab, label: "CHALLENGES 1-40" }]
       : []),
   ];
 
