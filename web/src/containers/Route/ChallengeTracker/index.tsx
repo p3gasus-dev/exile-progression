@@ -64,6 +64,9 @@ export default function ChallengeTracker() {
             children: (
               <span>
                 {c.description}
+                <span className={classNames(styles.diffHint, DIFFICULTY_CLASS[c.difficulty])}>
+                  {DIFFICULTY_LABEL[c.difficulty]}
+                </span>
                 {c.tips && c.tips.length > 0 && (
                   <span className={classNames(styles.tips)}>
                     {c.tips.map((tip, i) => (
@@ -79,11 +82,6 @@ export default function ChallengeTracker() {
           <SectionHolder
             key={c.id}
             name={`${c.number}. ${c.name}`}
-            nameRight={
-              <span className={classNames(styles.diff, DIFFICULTY_CLASS[c.difficulty])}>
-                {DIFFICULTY_LABEL[c.difficulty]}
-              </span>
-            }
             items={taskItems}
           />
         );

@@ -27,4 +27,4 @@ IN PROGRESS:
 			Tier # [DONE - auto-derived from sourceType in Dashboard]
 		FIX boss info
 			HP
-			DAMAGE TYPES (DPS, RES: Phys/Cold/Fire/Lightning/Chaos)
+			DAMAGE TYPES (Phys/Cold/Fire/Lightning/Chaos)
