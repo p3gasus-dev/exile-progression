@@ -15,7 +15,6 @@ import {
   FaSlidersH,
   FaTachometerAlt,
   FaTools,
-  FaTrophy,
   FaUndoAlt,
 } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -114,13 +113,6 @@ export function Navbar({}: NavbarProps) {
               active={isActive("/atlas")}
               icon={<FaLayerGroup className="inlineIcon" />}
               onClick={() => go("/atlas")}
-            />
-            <NavbarItem
-              label="Challenges"
-              expand={navExpand}
-              active={isActive("/challenges")}
-              icon={<FaTrophy className="inlineIcon" />}
-              onClick={() => go("/challenges")}
             />
             <NavbarItem
               label="Build"
