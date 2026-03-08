@@ -35,8 +35,11 @@ function ColouredLabel({ label }: { label: string }) {
   return <>{label}</>;
 }
 
+// Only show Level, DPS, and resistance entries
+const SHOW_LABEL = /^(Level|DPS|.*\bRes\b.*)$/i;
+
 export function StatHintChips({ hints }: StatHintChipsProps) {
-  const visible = hints.filter((h) => h.value !== "Immune");
+  const visible = hints.filter((h) => h.value !== "Immune" && SHOW_LABEL.test(h.label));
   if (visible.length === 0) return null;
 
   return (

@@ -94,9 +94,9 @@ export const routeSelector = selector({
 
         const isCraftingOnly =
           step.type === "fragment_step" &&
-          step.parts.length > 0 &&
+          step.parts.some((p) => typeof p !== "string" && p.type === "crafting") &&
           step.parts.every(
-            (p) => typeof p !== "string" && p.type === "crafting"
+            (p) => typeof p === "string" || (typeof p !== "string" && p.type === "crafting")
           );
         const skipStep =
           (settings.gemsOnly && gemSteps.length === 0) ||

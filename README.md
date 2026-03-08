@@ -10,9 +10,9 @@ A Path of Exile progression tracker from campaign to endgame, built on [exile-le
 | **Route** | ACT 1–10 · Voidstone 1–4 (toggleable) · Challenge 1–40 (toggleable) |
 | **Campaign** | League start, library; display toggles (gems, hints, crafting, stat hints) |
 | **Atlas** | Voidstone order, show voidstone route, unique drops, lab tracker |
-| **Challenges** | Show/hide challenges tab |
+| **Challenges** | Show/hide challenges tab, sort by difficulty |
 | **Build** | PoB import, gem editor, search strings, Pantheon, Anoints, Special Mods |
-| **Settings** | League, edit route/voidstone/challenge files, 3rd-party export |
+| **Settings** | Edit route/voidstone/challenge files |
 
 ## Getting Started
 
