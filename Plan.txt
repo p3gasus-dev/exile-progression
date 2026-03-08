@@ -43,6 +43,11 @@ IDEAS:
 		checks for updates to HeartofPhos/exile-leveling and merges changes
 
 TODO:
+ challenges to have it's own settings page
+ desc. for each toggle on Settings pages
+ "Show All hints" should be show route hints probably
+ fix recommendations to match formatting
+  can remove levels on some bosses
 
 IN PROGRESS:
 	Route pathing
