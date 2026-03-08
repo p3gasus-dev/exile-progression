@@ -59,3 +59,19 @@
 .diffMedium  { color: #e0c040; }
 .diffHard    { color: #e07030; }
 .diffEndgame { color: #c040c0; }
+
+/* ── Tips list ───────────────────────────────────────────────── */
+
+.tips {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--size-1);
+}
+
+.tip {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.55;
+  padding-left: var(--size-1);
+}

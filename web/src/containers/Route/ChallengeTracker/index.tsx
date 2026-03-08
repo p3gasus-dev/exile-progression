@@ -2,6 +2,7 @@ import { challengeProgressSelectorFamily, challengeCountSelector } from "../../.
 import { CHALLENGES, ChallengeDifficulty } from "../../../data/challenge-list";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
+import { configSelector } from "../../../state/config";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useRecoilValue } from "recoil";
@@ -20,8 +21,22 @@ const DIFFICULTY_CLASS: Record<ChallengeDifficulty, string> = {
   endgame: styles.diffEndgame,
 };
 
+const DIFFICULTY_ORDER: Record<ChallengeDifficulty, number> = {
+  easy: 0,
+  medium: 1,
+  hard: 2,
+  endgame: 3,
+};
+
 export default function ChallengeTracker() {
   const totalCompleted = useRecoilValue(challengeCountSelector);
+  const config = useRecoilValue(configSelector);
+
+  const challenges = config.sortChallengesByDifficulty
+    ? [...CHALLENGES].sort(
+        (a, b) => DIFFICULTY_ORDER[a.difficulty] - DIFFICULTY_ORDER[b.difficulty] || a.number - b.number
+      )
+    : CHALLENGES;
 
   return (
     <>
@@ -41,7 +56,7 @@ export default function ChallengeTracker() {
         </div>
       </div>
 
-      {CHALLENGES.map((c) => {
+      {challenges.map((c) => {
         const taskItems: TaskListProps["items"] = [
           {
             key: c.id,
@@ -49,6 +64,13 @@ export default function ChallengeTracker() {
             children: (
               <span>
                 {c.description}
+                {c.tips && c.tips.length > 0 && (
+                  <span className={classNames(styles.tips)}>
+                    {c.tips.map((tip, i) => (
+                      <span key={i} className={classNames(styles.tip)}>· {tip}</span>
+                    ))}
+                  </span>
+                )}
               </span>
             ),
           },

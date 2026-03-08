@@ -9,6 +9,7 @@ export interface Config {
   showCraftingRecipes: boolean;
   showStatHints: boolean;
   showChallenges: boolean;
+  sortChallengesByDifficulty: boolean;
 }
 
 const CONFIG_VERSION = 0;
@@ -24,13 +25,14 @@ export const configSelector = selector<Config>({
   get: ({ get }) => {
     const value = get(configAtom);
     if (value === null)
-      return { gemsOnly: false, showSubsteps: true, showCraftingRecipes: true, showStatHints: true, showChallenges: true };
+      return { gemsOnly: false, showSubsteps: true, showCraftingRecipes: true, showStatHints: true, showChallenges: true, sortChallengesByDifficulty: false };
     return {
       gemsOnly: value.gemsOnly ?? false,
       showSubsteps: value.showSubsteps ?? true,
       showCraftingRecipes: value.showCraftingRecipes ?? true,
       showStatHints: value.showStatHints ?? true,
       showChallenges: value.showChallenges ?? true,
+      sortChallengesByDifficulty: value.sortChallengesByDifficulty ?? false,
     };
   },
   set: ({ set }, newValue) => {

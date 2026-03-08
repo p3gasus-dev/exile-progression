@@ -38,6 +38,24 @@ export default function ChallengesContainer() {
             </div>
           }
         />
+        <SplitRow
+          left={
+            <div>
+              <div className={classNames(styles.label)}>Sort by Difficulty</div>
+              <div className={classNames(styles.desc)}>Sort challenges easiest to hardest instead of by number.</div>
+            </div>
+          }
+          right={
+            <div className={classNames(styles.value)}>
+              <input
+                type="checkbox"
+                checked={config.sortChallengesByDifficulty}
+                onChange={(e) => setConfig({ ...config, sortChallengesByDifficulty: e.target.checked })}
+                aria-label="Sort by Difficulty"
+              />
+            </div>
+          }
+        />
       </div>
 
     </div>
