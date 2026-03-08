@@ -78,6 +78,17 @@ export interface UniqueDropSource {
    *   "league"   — league-mechanic encounters
    */
   sourceType?: "pinnacle" | "guardian" | "league";
+  /**
+   * Content tier (1–4). Derived automatically from sourceType if omitted:
+   *   1 = campaign/global, 2 = league mechanics, 3 = guardians, 4 = pinnacle.
+   * Set explicitly to override (e.g. campaign-locked league-specific items).
+   */
+  tier?: 1 | 2 | 3 | 4;
+  /**
+   * Additional drop restriction note shown as a tooltip on the tier badge.
+   * E.g. "Only drops in T11+ maps" or "Requires Atziri (not Uber)".
+   */
+  restriction?: string;
 }
 
 export const UNIQUE_DROP_SOURCES: Record<string, UniqueDropSource> = {

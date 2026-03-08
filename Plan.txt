@@ -24,12 +24,7 @@ IN PROGRESS:
 			Each unique item has Drop Acquisition
 			Additional Drop Restrictions
 			Monster drops
-			Tier #
+			Tier # [DONE - auto-derived from sourceType in Dashboard]
 		FIX boss info
 			HP
-			DMG
-				Phys
-				Cold
-				Fire
-				Lightning
-				Chaos
+			DAMAGE TYPES (DPS, RES: Phys/Cold/Fire/Lightning/Chaos)

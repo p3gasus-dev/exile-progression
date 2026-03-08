@@ -132,6 +132,13 @@ function UniqueItems() {
       <ul className={classNames(styles.itemList)}>
         {items.map((item) => {
           const source = getAcquisitionSource(item.name);
+          const tier = source?.tier ?? (
+            source?.sourceType === "pinnacle" ? 4 :
+            source?.sourceType === "guardian" ? 3 :
+            source?.sourceType === "league"   ? 2 : 1
+          );
+          const showTier = !source?.globalDrop && !source?.divCardOnly &&
+            (source?.bosses?.length || source?.areas?.length);
           return (
             <li key={item.name} className={classNames(styles.itemRow)}>
               <div className={classNames(styles.itemInfo)}>
@@ -142,6 +149,14 @@ function UniqueItems() {
                 <span className={classNames(styles.itemBase)}>{item.base}</span>
               </div>
               <div className={classNames(styles.itemSource)}>
+                {showTier && (
+                  <span
+                    className={classNames(styles.tierBadge, styles[`tier${tier}`])}
+                    title={source?.restriction ?? `Content tier ${tier}`}
+                  >
+                    T{tier}
+                  </span>
+                )}
                 {source?.divCardOnly ? (
                   <span
                     className={classNames(styles.sourceDiv)}
