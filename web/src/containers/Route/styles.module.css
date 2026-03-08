@@ -2,6 +2,7 @@
   display: flex;
   position: sticky;
   top: var(--navbar-height);
+  height: var(--actbar-height);
   z-index: 3;
   background-color: var(--primary);
   border-bottom: var(--border-width) solid var(--accent-primary);

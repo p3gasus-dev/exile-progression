@@ -17,19 +17,22 @@ function getDamageTypeClass(label: string): string | undefined {
 }
 
 export function StatHintChips({ hints }: StatHintChipsProps) {
+  const visible = hints.filter((h) => h.value !== "Immune");
+  if (visible.length === 0) return null;
+
   return (
-    <div className={classNames(styles.list)}>
-      {hints.map((h) => (
-        <span
-          key={h.label}
-          className={classNames(styles.hint, getDamageTypeClass(h.label))}
-          title={h.note}
-        >
-          {"• "}
-          {h.value && <span className={classNames(styles.value)}>{h.value}</span>}
-          {" "}
-          <span className={classNames(styles.label)}>{h.label}</span>
-          {h.note && <span className={classNames(styles.note)}> — {h.note}</span>}
+    <div className={classNames(styles.row)}>
+      {visible.map((h, i) => (
+        <span key={h.label}>
+          {i > 0 && <span className={classNames(styles.sep)}>·</span>}
+          <span
+            className={classNames(styles.hint, getDamageTypeClass(h.label))}
+            title={h.note}
+          >
+            {h.value && <span className={classNames(styles.value)}>{h.value}</span>}
+            {" "}
+            <span className={classNames(styles.label)}>{h.label}</span>
+          </span>
         </span>
       ))}
     </div>
