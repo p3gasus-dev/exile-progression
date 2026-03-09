@@ -57,26 +57,50 @@ export default function ChallengeTracker() {
       </div>
 
       {challenges.map((c) => {
+        const completedState = challengeProgressSelectorFamily(c.id);
         const taskItems: TaskListProps["items"] = [
-          {
-            key: c.id,
-            isCompletedState: challengeProgressSelectorFamily(c.id),
-            children: (
-              <span>
-                {c.description}
-                <span className={classNames(styles.diffHint, DIFFICULTY_CLASS[c.difficulty])}>
-                  {DIFFICULTY_LABEL[c.difficulty]}
-                </span>
-                {c.tips && c.tips.length > 0 && (
-                  <span className={classNames(styles.tips)}>
-                    {c.tips.map((tip, i) => (
-                      <span key={i} className={classNames(styles.tip)}>· {tip}</span>
-                    ))}
+          // Steps — each shares the same completion toggle
+          ...c.steps.map((step, i) => ({
+            key: `${c.id}-step-${i}`,
+            isCompletedState: completedState,
+            children: <span>{step}</span>,
+          })),
+          // Requires line (only when partial completion)
+          ...(c.requires != null && c.requires < c.steps.length
+            ? [{
+                key: `${c.id}-req`,
+                children: (
+                  <span className={classNames(styles.infoItem)}>
+                    Requires: {c.requires}/{c.steps.length}
                   </span>
-                )}
+                ),
+              }]
+            : []),
+          // Difficulty
+          {
+            key: `${c.id}-diff`,
+            children: (
+              <span className={classNames(styles.infoItem, styles.diffHint, DIFFICULTY_CLASS[c.difficulty])}>
+                Difficulty: {DIFFICULTY_LABEL[c.difficulty]}
               </span>
             ),
           },
+          // Tips
+          ...(c.tips && c.tips.length > 0
+            ? [{
+                key: `${c.id}-tips`,
+                children: (
+                  <span className={classNames(styles.infoItem)}>
+                    <span className={classNames(styles.tipsHeader)}>Quest Hints:</span>
+                    <span className={classNames(styles.tips)}>
+                      {c.tips.map((tip, i) => (
+                        <span key={i} className={classNames(styles.tip)}>· {tip}</span>
+                      ))}
+                    </span>
+                  </span>
+                ),
+              }]
+            : []),
         ];
         return (
           <SectionHolder
