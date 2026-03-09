@@ -13,10 +13,13 @@ LAYOUT:
 	SETTINGS: EDIT ROUTE, EDIT VOIDSTONE ROUTE, EDIT CHALLENGES
 
 ALWAYS:
+	review changes
 	update settings pages accordingly
-	update plan, readme, format
+	update plan, readme, format accordingly
 
 TODO:
+	import BUILD
+		pantheons are still not importing
 
 IN PROGRESS:
 	UNIQUES/BOSSES
