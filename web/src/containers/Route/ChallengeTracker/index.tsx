@@ -31,12 +31,6 @@ import blightIcon     from "../../../components/FragmentStep/Fragment/images/bli
 import strongboxIcon  from "../../../components/FragmentStep/Fragment/images/strongbox.webp";
 import shrineIcon     from "../../../components/FragmentStep/Fragment/images/shrine.webp";
 import essenceIcon    from "../../../components/FragmentStep/Fragment/images/essence.webp";
-import divcardIcon    from "../../../components/FragmentStep/Fragment/images/divcard.webp";
-import heistIcon      from "../../../components/FragmentStep/Fragment/images/heist.webp";
-import ultimatumIcon  from "../../../components/FragmentStep/Fragment/images/ultimatum.webp";
-import beyondIcon     from "../../../components/FragmentStep/Fragment/images/beyond.webp";
-import possessedIcon  from "../../../components/FragmentStep/Fragment/images/possessed.webp";
-import kingsmarchIcon from "../../../components/FragmentStep/Fragment/images/kingsmarch.webp";
 
 const DIFFICULTY_LABEL: Record<ChallengeDifficulty, string> = {
   easy: "Easy",
@@ -119,7 +113,7 @@ function StepContent({ text }: { text: string }) {
   // Currency: orb names, catalysts, scarabs (any "Use X Scarab" step)
   const hasCurrency   = /\borbs?\b|\bregal\b|\bchaos\b|\bdivine\b|\bexalted\b|\bsacred\b|\bblessed\b|\bchromatic\b|\bfusing\b|\bjeweller|\bscarab\b|\bcatalyst\b|\bincubator\b|\bfog\b/i.test(text);
 
-  // Icon-backed mechanics
+  // Color-only mechanics (no dedicated icon)
   const hasBeyond     = /\bbeyond\b/i.test(text);
   const hasPossessed  = /\bpossessed\b/i.test(text);
   const hasUltimatum  = /\bultimatum\b|\btrialmaster\b/i.test(text);
@@ -156,14 +150,14 @@ function StepContent({ text }: { text: string }) {
   else if (hasShrine)                          icon = shrineIcon;
   else if (hasEssence)                         icon = essenceIcon;
   else if (isUseOrb || hasCurrency)            icon = currencyIcon;
-  else if (hasUltimatum)                       icon = ultimatumIcon;
-  else if (hasBeyond)                          icon = beyondIcon;
-  else if (hasPossessed)                       icon = possessedIcon;
-  else if (hasHeist)                           icon = heistIcon;
-  else if (hasKingsmarch || hasOreDeposit)     icon = kingsmarchIcon;
-  else if (hasDivCard)                         icon = divcardIcon;
   // Color-only fallbacks (no icon file)
   else if (hasRareMob)                         colorClass = fragmentStyles.rare;
+  else if (hasUltimatum)                       colorClass = fragmentStyles.trial;    // gold
+  else if (hasBeyond)                          colorClass = fragmentStyles.league;   // danger red
+  else if (hasPossessed)                       colorClass = fragmentStyles.portal;   // purple
+  else if (hasHeist)                           colorClass = fragmentStyles.area;     // grey-blue
+  else if (hasKingsmarch || hasOreDeposit)     colorClass = fragmentStyles.trial;    // gold
+  else if (hasDivCard)                         colorClass = fragmentStyles.quest;    // warm gold
   else if (hasBetrayal)                        colorClass = fragmentStyles.league;   // danger red
   else if (hasDelve)                           colorClass = fragmentStyles.waypoint; // blue
   else if (hasBeast)                           colorClass = fragmentStyles.questText;// bright green
