@@ -11,9 +11,10 @@ interface SectionHolderProps {
   name: string;
   nameRight?: React.ReactNode;
   items: TaskListProps["items"];
+  meta?: React.ReactNode;
 }
 
-export function SectionHolder({ name, nameRight, items }: SectionHolderProps) {
+export function SectionHolder({ name, nameRight, items, meta }: SectionHolderProps) {
   const sectionId = `section-${name.replace(/\s+/g, "_")}`;
   const [collapsed, setCollapsed] = useRecoilState(
     sectionCollapseSelectorFamily(sectionId)
@@ -58,6 +59,7 @@ export function SectionHolder({ name, nameRight, items }: SectionHolderProps) {
       {collapsed || (
         <>
           <TaskList items={items} />
+          {meta && <div className={classNames(styles.meta)}>{meta}</div>}
           <hr />
         </>
       )}

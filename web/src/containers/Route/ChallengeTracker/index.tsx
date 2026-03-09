@@ -95,62 +95,48 @@ export default function ChallengeTracker() {
 
       {challenges.map((c) => {
         const completedState = challengeProgressSelectorFamily(c.id);
-        const taskItems: TaskListProps["items"] = [
-          // Steps — each shares the same completion toggle
-          ...c.steps.map((step, i) => ({
-            key: `${c.id}-step-${i}`,
-            isCompletedState: completedState,
-            children: <StepContent text={step} />,
-          })),
-          // Requires (only when partial completion)
-          ...(c.requires != null && c.requires < c.steps.length
-            ? [{
-                key: `${c.id}-req`,
-                children: (
-                  <span className={classNames(fragmentStyles.default)}>
-                    Requires:{" "}
-                    <span className={classNames(styles.requiresCount)}>
-                      {c.requires}/{c.steps.length}
-                    </span>
-                  </span>
-                ),
-              }]
-            : []),
-          // Difficulty
-          {
-            key: `${c.id}-diff`,
-            children: (
+        const taskItems: TaskListProps["items"] = c.steps.map((step, i) => ({
+          key: `${c.id}-step-${i}`,
+          isCompletedState: completedState,
+          children: <StepContent text={step} />,
+        }));
+
+        const meta = (
+          <>
+            {c.requires != null && c.requires < c.steps.length && (
               <span className={classNames(fragmentStyles.default)}>
-                Difficulty:{" "}
-                <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
-                  {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+                Requires:{" "}
+                <span className={classNames(styles.requiresCount)}>
+                  {c.requires}/{c.steps.length}
                 </span>
               </span>
-            ),
-          },
-          // Tips
-          ...(c.tips && c.tips.length > 0
-            ? [{
-                key: `${c.id}-tips`,
-                children: (
-                  <span>
-                    <span className={classNames(fragmentStyles.quest)}>Quest Hints</span>
-                    {c.tips.map((tip, i) => (
-                      <span key={i} className={classNames(styles.tip)}>
-                        {"• "}
-                        <span className={classNames(fragmentStyles.default)}>{tip}</span>
-                      </span>
-                    ))}
+            )}
+            <span className={classNames(fragmentStyles.default)}>
+              Difficulty:{" "}
+              <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
+                {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+              </span>
+            </span>
+            {c.tips && c.tips.length > 0 && (
+              <span>
+                <span className={classNames(fragmentStyles.quest)}>Quest Hints</span>
+                {c.tips.map((tip, i) => (
+                  <span key={i} className={classNames(styles.tip)}>
+                    {"• "}
+                    <span className={classNames(fragmentStyles.default)}>{tip}</span>
                   </span>
-                ),
-              }]
-            : []),
-        ];
+                ))}
+              </span>
+            )}
+          </>
+        );
+
         return (
           <SectionHolder
             key={c.id}
             name={`${c.number}. ${c.name}`}
             items={taskItems}
+            meta={meta}
           />
         );
       })}
