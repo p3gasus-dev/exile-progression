@@ -198,10 +198,10 @@ function parseUniqueItems(doc: Document): UniqueItem[] {
 }
 
 // ─── Pantheon parsing ─────────────────────────────────────────────────────────
-// POBF stores pantheon as attributes on the <Build> element:
-//   pantheonMajorGod="SoulOfSolaris"  pantheonMinorGod="SoulOfGruthkul"
+// PoB stores pantheon as attributes on the <Build> element:
+//   pantheonMajorGod="TheBrineKing"  pantheonMinorGod="Garukhan"
 // Some PoB versions instead store it in <Config> as:
-//   <Input name="pantheonMajorGod" string="SoulOfSolaris"/>
+//   <Input name="pantheonMajorGod" string="TheBrineKing"/>
 
 const POB_PANTHEON_MAP: Record<string, string> = {
   // Major gods — PoB internal names
