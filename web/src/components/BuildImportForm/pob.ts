@@ -204,18 +204,20 @@ function parseUniqueItems(doc: Document): UniqueItem[] {
 //   <Input name="pantheonMajorGod" string="SoulOfSolaris"/>
 
 const POB_PANTHEON_MAP: Record<string, string> = {
-  SoulOfLunaris: "lunaris",
-  SoulOfSolaris: "solaris",
-  SoulOfArakaali: "arakaali",
-  SoulOfBrineKing: "brine_king",
-  SoulOfAbberath: "abberath",
-  SoulOfGarukhan: "garukhan",
-  SoulOfGruthkul: "gruthkul",
-  SoulOfRalakesh: "ralakesh",
-  SoulOfRyslatha: "ryslatha",
-  SoulOfShakari: "shakari",
-  SoulOfTukohama: "tukohama",
-  SoulOfYugul: "yugul",
+  // Major gods — PoB internal names
+  TheMoon: "lunaris",
+  TheSun: "solaris",
+  Arakaali: "arakaali",
+  TheBrineKing: "brine_king",
+  // Minor gods
+  Abberath: "abberath",
+  Garukhan: "garukhan",
+  Gruthkul: "gruthkul",
+  Ralakesh: "ralakesh",
+  Ryslatha: "ryslatha",
+  Shakari: "shakari",
+  Tukohama: "tukohama",
+  Yugul: "yugul",
 };
 
 function readPantheonFromConfig(doc: Document, name: string): string {
