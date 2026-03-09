@@ -36,23 +36,52 @@ function getImageUrl(path: string) {
   ).href;
 }
 
+// Match "Defeat <Boss Name> (Act N)" or "Defeat <Boss Name> (level N+)"
+// to extract and color only the boss name in enemy orange.
+// Counter steps like "Defeat Monsters... (0/30)" won't match.
+const NAMED_BOSS_DEFEAT = /^(defeat )(.*?)( \((?:act \d|level \d)/i;
+
 function StepContent({ text }: { text: string }) {
-  const isCrafting = /^vendor recipe:/i.test(text);
-  const isAscend   = /^use the ascendancy device|^gain a bloodline class/i.test(text);
-  const isVisit    = /^visit /i.test(text);
-  const isEnter    = /^enter /i.test(text);
-  const isComplete = /^complete /i.test(text);
+  const isCrafting  = /^vendor recipe:/i.test(text);
+  const isUseOrb    = /^use an? /i.test(text);
+  const isAscend    = /^use the ascendancy device|^gain a bloodline class/i.test(text);
+  const isVisit     = /^visit |^go to /i.test(text);
+  const isEnter     = /^enter /i.test(text);
+  const isComplete  = /^complete /i.test(text);
+  const hasWaypoint = /\bwaypoint\b/i.test(text);
+
+  // Named boss defeat: color boss name in enemy orange
+  const bossMatch = NAMED_BOSS_DEFEAT.exec(text);
+  if (bossMatch) {
+    const [, prefix, bossName, suffix] = bossMatch;
+    const rest = text.slice(prefix.length + bossName.length);
+    return (
+      <span>
+        <span className={classNames(fragmentStyles.default)}>{prefix}</span>
+        <span className={classNames(fragmentStyles.enemy)}>{bossName}</span>
+        <span className={classNames(fragmentStyles.default)}>{rest}</span>
+      </span>
+    );
+  }
+
+  // Visit / Go to: use ➞ arrow prefix instead of an icon
+  if (isVisit) {
+    return (
+      <span className={classNames(fragmentStyles.noWrap)}>
+        <span className={classNames(fragmentStyles.default)}>{"➞ "}</span>
+        <span className={classNames(fragmentStyles.default)}>{text}</span>
+      </span>
+    );
+  }
 
   let icon: string | null = null;
-  if (isCrafting)       icon = "crafting.png";
-  else if (isAscend)    icon = "trial.png";
-  else if (isVisit || isEnter) icon = "waypoint.png";
-  else if (isComplete)  icon = "quest.png";
+  if (isCrafting || isUseOrb) icon = "crafting.png";
+  else if (isAscend)          icon = "trial.png";
+  else if (isEnter || hasWaypoint) icon = "waypoint.png";
+  else if (isComplete)        icon = "quest.png";
 
   const textSpan = (
-    <span className={classNames(fragmentStyles.default)}>
-      {text}
-    </span>
+    <span className={classNames(fragmentStyles.default)}>{text}</span>
   );
 
   if (!icon) return textSpan;
