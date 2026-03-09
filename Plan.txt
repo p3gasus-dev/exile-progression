@@ -18,6 +18,28 @@ ALWAYS:
 	update plan, readme, format accordingly
 
 TODO:
+	fix the formatting of text on CHALLENGES
+		i'm tired of asking you
+	make sure the substep toggle exists for all steps that have substeps
+	show/hide hints should have toggle options in challenge settings
+	the substeps should still show up underneath the step, hints for the entire quest should be at the bottom
+	make sure the currency items are set to the correct icons
+	smugglers cache(heist), ultimatum, and ore deposit icons are not showing
+		we're also missing possessed, rare, and beyond icons
+			if we can't get icons, let's color them according to how they look in path of exile
+	locations in challenges are not formatted accordingly
+	niko=delve, einhar=beasts, jun=betrayal,alva=incursion
+	blueprints are heist related
+	Atlas runners are kinsgmarch/ore
+	hive is breach
+	let's add an icon for div cards
+	in quest 21, the bosses related league mechanic is showing as the boss color instead of the league mechanic
+		+ icon can be added here
+	some of the steps are not descriptive enough
+		22, 23, 24, 27, 29, and more. what action?
+	let's use some different colors for pinnacle bosses, maybe a bright purple or their ingame color
+
+IDEAS:
 	UNIQUES/BOSSES
 		REBUILD unique item system
 			Each unique item has Drop Acquisition
