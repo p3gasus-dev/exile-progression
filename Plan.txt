@@ -18,6 +18,9 @@ ALWAYS:
 	update plan, readme, format accordingly
 
 TODO:
+	add icons for
+		league mechanics (need new image assets)
+		currency (need new image assets)
 
 IN PROGRESS:
 	UNIQUES/BOSSES
