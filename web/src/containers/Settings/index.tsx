@@ -1,7 +1,6 @@
 import { RouteEditor } from "../../components/RouteEditor";
 import { routeFilesSelector } from "../../state/route-files";
 import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
-import { challengeRouteFilesSelector } from "../../state/challenge-route-files";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useRecoilState, useResetRecoilState } from "recoil";
@@ -16,9 +15,6 @@ export default function SettingsContainer() {
 
   const [voidstoneRouteFiles, setVoidstoneRouteFiles] = useRecoilState(voidstoneRouteFilesSelector);
   const resetVoidstoneRouteFiles = useResetRecoilState(voidstoneRouteFilesSelector);
-
-  const [challengeRouteFiles, setChallengeRouteFiles] = useRecoilState(challengeRouteFilesSelector);
-  const resetChallengeRouteFiles = useResetRecoilState(challengeRouteFilesSelector);
 
   return (
     <div className={classNames(styles.container)}>
@@ -47,19 +43,6 @@ export default function SettingsContainer() {
         routeFiles={voidstoneRouteFiles}
         onSubmit={(updated) => setVoidstoneRouteFiles(updated)}
         onReset={resetVoidstoneRouteFiles}
-      />
-
-      <hr className={classNames(styles.divider)} />
-
-      {/* ── Edit Challenges ──────────────────────────────────────────────── */}
-      <SectionHeader title="Edit Challenges" />
-      <p className={classNames(styles.hint)}>
-        Modify the challenge guide source file. Ctrl+S / ⌘S saves while the editor is focused.
-      </p>
-      <RouteEditor
-        routeFiles={challengeRouteFiles}
-        onSubmit={(updated) => setChallengeRouteFiles(updated)}
-        onReset={resetChallengeRouteFiles}
       />
 
     </div>

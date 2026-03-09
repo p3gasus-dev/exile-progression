@@ -1,5 +1,9 @@
-import { challengeProgressSelectorFamily, challengeCountSelector } from "../../../state/challenge-progress";
-import { CHALLENGES, ChallengeDifficulty } from "../../../data/challenge-list";
+import {
+  challengeStepProgressSelectorFamily,
+  challengeDoneCountSelectorFamily,
+  challengeCountSelector,
+} from "../../../state/challenge-progress";
+import { CHALLENGES, Challenge, ChallengeDifficulty } from "../../../data/challenge-list";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
 import { configSelector } from "../../../state/config";
@@ -7,6 +11,26 @@ import styles from "./styles.module.css";
 import fragmentStyles from "../../../components/FragmentStep/Fragment/styles.module.css";
 import classNames from "classnames";
 import { useRecoilValue } from "recoil";
+import { useState } from "react";
+import { BiInfoCircle, BiSolidInfoCircle } from "react-icons/bi";
+
+// ── Static icon imports (avoids Vite dynamic-import bundling issues) ──────────
+import craftingIcon   from "../../../components/FragmentStep/Fragment/images/crafting.png";
+import questIcon      from "../../../components/FragmentStep/Fragment/images/quest.png";
+import waypointIcon   from "../../../components/FragmentStep/Fragment/images/waypoint.png";
+import trialIcon      from "../../../components/FragmentStep/Fragment/images/trial.png";
+import currencyIcon   from "../../../components/FragmentStep/Fragment/images/currency.png";
+import breachIcon     from "../../../components/FragmentStep/Fragment/images/breach.webp";
+import abyssIcon      from "../../../components/FragmentStep/Fragment/images/abyss.webp";
+import deliriumIcon   from "../../../components/FragmentStep/Fragment/images/delirium.webp";
+import expeditionIcon from "../../../components/FragmentStep/Fragment/images/expedition.webp";
+import harvestIcon    from "../../../components/FragmentStep/Fragment/images/harvest.webp";
+import legionIcon     from "../../../components/FragmentStep/Fragment/images/legion.webp";
+import ritualIcon     from "../../../components/FragmentStep/Fragment/images/ritual.webp";
+import blightIcon     from "../../../components/FragmentStep/Fragment/images/blight.webp";
+import strongboxIcon  from "../../../components/FragmentStep/Fragment/images/strongbox.webp";
+import shrineIcon     from "../../../components/FragmentStep/Fragment/images/shrine.webp";
+import essenceIcon    from "../../../components/FragmentStep/Fragment/images/essence.webp";
 
 const DIFFICULTY_LABEL: Record<ChallengeDifficulty, string> = {
   easy: "Easy",
@@ -29,13 +53,6 @@ const DIFFICULTY_ORDER: Record<ChallengeDifficulty, number> = {
   endgame: 3,
 };
 
-function getImageUrl(path: string) {
-  return new URL(
-    `../../../components/FragmentStep/Fragment/images/${path}`,
-    import.meta.url
-  ).href;
-}
-
 // Match "Defeat <Boss Name> (Act N)" or "Defeat <Boss Name> (level N+)"
 // to extract and color only the boss name in enemy orange.
 // Counter steps like "Defeat Monsters... (0/30)" won't match.
@@ -53,7 +70,7 @@ function StepContent({ text }: { text: string }) {
   // Named boss defeat: color boss name in enemy orange
   const bossMatch = NAMED_BOSS_DEFEAT.exec(text);
   if (bossMatch) {
-    const [, prefix, bossName, suffix] = bossMatch;
+    const [, prefix, bossName] = bossMatch;
     const rest = text.slice(prefix.length + bossName.length);
     return (
       <span>
@@ -90,22 +107,22 @@ function StepContent({ text }: { text: string }) {
   const hasCurrency   = /\borbs?\b|\bregal\b|\bchaos\b|\bdivine\b|\bexalted\b|\bsacred\b|\bblessed\b|\bchromatic\b|\bfusing\b|\bjeweller/i.test(text);
 
   let icon: string | null = null;
-  if (isCrafting)                   icon = "crafting.png";
-  else if (isAscend)                icon = "trial.png";
-  else if (isEnter || hasWaypoint)  icon = "waypoint.png";
-  else if (isComplete)              icon = "quest.png";
-  else if (isUseOrb || hasCurrency) icon = "currency.png";
-  else if (hasBreach)               icon = "breach.webp";
-  else if (hasAbyss)                icon = "abyss.webp";
-  else if (hasDelirium)             icon = "delirium.webp";
-  else if (hasExpedition)           icon = "expedition.webp";
-  else if (hasHarvest)              icon = "harvest.webp";
-  else if (hasLegion)               icon = "legion.webp";
-  else if (hasRitual)               icon = "ritual.webp";
-  else if (hasBlight)               icon = "blight.webp";
-  else if (hasStrongbox)            icon = "strongbox.webp";
-  else if (hasShrine)               icon = "shrine.webp";
-  else if (hasEssence)              icon = "essence.webp";
+  if (isCrafting)                   icon = craftingIcon;
+  else if (isAscend)                icon = trialIcon;
+  else if (isEnter || hasWaypoint)  icon = waypointIcon;
+  else if (isComplete)              icon = questIcon;
+  else if (isUseOrb || hasCurrency) icon = currencyIcon;
+  else if (hasBreach)               icon = breachIcon;
+  else if (hasAbyss)                icon = abyssIcon;
+  else if (hasDelirium)             icon = deliriumIcon;
+  else if (hasExpedition)           icon = expeditionIcon;
+  else if (hasHarvest)              icon = harvestIcon;
+  else if (hasLegion)               icon = legionIcon;
+  else if (hasRitual)               icon = ritualIcon;
+  else if (hasBlight)               icon = blightIcon;
+  else if (hasStrongbox)            icon = strongboxIcon;
+  else if (hasShrine)               icon = shrineIcon;
+  else if (hasEssence)              icon = essenceIcon;
 
   const textSpan = (
     <span className={classNames(fragmentStyles.default)}>{text}</span>
@@ -115,11 +132,96 @@ function StepContent({ text }: { text: string }) {
 
   return (
     <div className={classNames(fragmentStyles.noWrap)}>
-      <img src={getImageUrl(icon)} className="inlineIcon" alt="" />
+      <img src={icon} className="inlineIcon" alt="" />
       {textSpan}
     </div>
   );
 }
+
+// ── Per-challenge section ─────────────────────────────────────────────────────
+
+function ChallengeSection({ c }: { c: Challenge }) {
+  const [showTips, setShowTips] = useState(false);
+  const doneCount = useRecoilValue(challengeDoneCountSelectorFamily(c.id));
+  const needed = c.requires ?? c.steps.length;
+  const hasTips = c.tips && c.tips.length > 0;
+
+  const taskItems: TaskListProps["items"] = c.steps.map((step, i) => ({
+    key: `${c.id}-step-${i}`,
+    isCompletedState: challengeStepProgressSelectorFamily(`${c.id}:${i}`),
+    children: <StepContent text={step} />,
+  }));
+
+  // Difficulty badge shown in header (nameRight)
+  const nameRight = (
+    <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
+      {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+    </span>
+  );
+
+  const meta = (
+    <>
+      {/* Requires row — only show when not all steps are required */}
+      {c.requires != null && c.requires < c.steps.length && (
+        <div className={classNames(styles.metaRow)}>
+          <span className={classNames(fragmentStyles.default)}>
+            Need any{" "}
+            <span className={classNames(styles.requiresCount)}>
+              {c.requires}
+            </span>
+            {" of "}
+            <span className={classNames(styles.requiresCount)}>
+              {c.steps.length}
+            </span>
+            {" — done: "}
+            <span className={classNames(styles.requiresCount, doneCount >= needed ? styles.requiresMet : undefined)}>
+              {doneCount}
+            </span>
+          </span>
+        </div>
+      )}
+
+      {/* Tips toggle — only shown when tips exist */}
+      {hasTips && (
+        <div className={classNames(styles.metaRow)}>
+          <button
+            className={classNames(styles.tipsToggle)}
+            onClick={() => setShowTips(!showTips)}
+          >
+            {showTips
+              ? <BiSolidInfoCircle className="inlineIcon" />
+              : <BiInfoCircle className="inlineIcon" />}
+            {" "}
+            <span className={classNames(fragmentStyles.quest)}>
+              {showTips ? "Hide hints" : "Show hints"}
+            </span>
+          </button>
+          {showTips && (
+            <ul className={classNames(styles.tipsList)}>
+              {c.tips!.map((tip, i) => (
+                <li key={i} className={classNames(styles.tipItem)}>
+                  <span className={classNames(fragmentStyles.default)}>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </>
+  );
+
+  return (
+    <SectionHolder
+      key={c.id}
+      name={`${c.number}. ${c.name}`}
+      nameRight={nameRight}
+      items={taskItems}
+      meta={meta}
+    />
+  );
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
 
 export default function ChallengeTracker() {
   const totalCompleted = useRecoilValue(challengeCountSelector);
@@ -149,53 +251,9 @@ export default function ChallengeTracker() {
         </div>
       </div>
 
-      {challenges.map((c) => {
-        const completedState = challengeProgressSelectorFamily(c.id);
-        const taskItems: TaskListProps["items"] = c.steps.map((step, i) => ({
-          key: `${c.id}-step-${i}`,
-          isCompletedState: completedState,
-          children: <StepContent text={step} />,
-        }));
-
-        const meta = (
-          <>
-            {c.requires != null && c.requires < c.steps.length && (
-              <span className={classNames(fragmentStyles.default)}>
-                Requires:{" "}
-                <span className={classNames(styles.requiresCount)}>
-                  {c.requires}/{c.steps.length}
-                </span>
-              </span>
-            )}
-            <span className={classNames(fragmentStyles.default)}>
-              Difficulty:{" "}
-              <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
-                {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
-              </span>
-            </span>
-            {c.tips && c.tips.length > 0 && (
-              <span>
-                <span className={classNames(fragmentStyles.quest)}>Quest Hints</span>
-                {c.tips.map((tip, i) => (
-                  <span key={i} className={classNames(styles.tip)}>
-                    {"• "}
-                    <span className={classNames(fragmentStyles.default)}>{tip}</span>
-                  </span>
-                ))}
-              </span>
-            )}
-          </>
-        );
-
-        return (
-          <SectionHolder
-            key={c.id}
-            name={`${c.number}. ${c.name}`}
-            items={taskItems}
-            meta={meta}
-          />
-        );
-      })}
+      {challenges.map((c) => (
+        <ChallengeSection key={c.id} c={c} />
+      ))}
     </>
   );
 }

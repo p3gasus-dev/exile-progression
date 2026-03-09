@@ -9,7 +9,7 @@ import { routeSelector } from "./route";
 import { voidstoneRouteSelector } from "./voidstone-route";
 import { routeProgressKeys, routeProgressSelectorFamily } from "./route-progress";
 import { voidstoneProgressSelectorFamily } from "./voidstone-progress";
-import { challengeProgressKeys } from "./challenge-progress";
+import { challengeCountSelector } from "./challenge-progress";
 import { CHALLENGES } from "../data/challenge-list";
 import { Fragments } from "../../../common/route-processing/fragment/types";
 import { selector } from "recoil";
@@ -160,9 +160,9 @@ export const voidstoneProgressSummarySelector = selector({
 
 export const challengeProgressSummarySelector = selector({
   key: "challengeProgressSummarySelector",
-  get: () => {
+  get: ({ get }) => {
     const total = CHALLENGES.length;
-    const completed = [...challengeProgressKeys()].length;
+    const completed = get(challengeCountSelector);
     return { total, completed };
   },
 });

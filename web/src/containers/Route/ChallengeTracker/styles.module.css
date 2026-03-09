@@ -60,6 +60,14 @@
   letter-spacing: 0.04em;
 }
 
+/* ── Meta row ────────────────────────────────────────────────── */
+
+.metaRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
 /* ── Requires count ──────────────────────────────────────────── */
 
 .requiresCount {
@@ -67,10 +75,42 @@
   color: var(--accent-primary);
 }
 
-/* ── Tip line ────────────────────────────────────────────────── */
+.requiresMet {
+  color: #5db86c;
+}
 
-.tip {
-  display: block;
-  margin-top: var(--size-1);
-  opacity: 0.65;
+/* ── Tips toggle button ──────────────────────────────────────── */
+
+.tipsToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--on-primary);
+  opacity: 0.8;
+}
+
+.tipsToggle:hover {
+  opacity: 1;
+}
+
+/* ── Tips list ───────────────────────────────────────────────── */
+
+.tipsList {
+  list-style: disc;
+  margin: var(--size-1) 0 0 var(--size-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.tipItem {
+  font-size: 0.82rem;
+  opacity: 0.75;
+  line-height: 1.4;
 }
