@@ -74,11 +74,38 @@ function StepContent({ text }: { text: string }) {
     );
   }
 
+  // League mechanic detection (keyword-based, checked before generic fallbacks)
+  const hasBreach     = /\bbreaches?\b/i.test(text);
+  const hasAbyss      = /\babyssal|\babysses?\b/i.test(text);
+  const hasDelirium   = /\bdelirium\b|\bsimulacrum\b/i.test(text);
+  const hasExpedition = /\bexpeditions?\b|\blogbooks?\b/i.test(text);
+  const hasHarvest    = /\bharvests?\b/i.test(text);
+  const hasLegion     = /\blegion\b/i.test(text);
+  const hasRitual     = /\brituals?\b/i.test(text);
+  const hasBlight     = /\bblights?\b|\bblight-ravaged\b/i.test(text);
+  const hasStrongbox  = /\bstrongboxes?\b/i.test(text);
+  const hasShrine     = /\bshrines?\b/i.test(text);
+  const hasEssence    = /\bessences?\b/i.test(text);
+  // Currency: bare orb names (e.g. "Chaos Orb (0/20)") or "Use an Orb..."
+  const hasCurrency   = /\borbs?\b|\bregal\b|\bchaos\b|\bdivine\b|\bexalted\b|\bsacred\b|\bblessed\b|\bchromatic\b|\bfusing\b|\bjeweller/i.test(text);
+
   let icon: string | null = null;
-  if (isCrafting || isUseOrb) icon = "crafting.png";
-  else if (isAscend)          icon = "trial.png";
-  else if (isEnter || hasWaypoint) icon = "waypoint.png";
-  else if (isComplete)        icon = "quest.png";
+  if (isCrafting)                   icon = "crafting.png";
+  else if (isAscend)                icon = "trial.png";
+  else if (isEnter || hasWaypoint)  icon = "waypoint.png";
+  else if (isComplete)              icon = "quest.png";
+  else if (isUseOrb || hasCurrency) icon = "currency.png";
+  else if (hasBreach)               icon = "breach.webp";
+  else if (hasAbyss)                icon = "abyss.webp";
+  else if (hasDelirium)             icon = "delirium.webp";
+  else if (hasExpedition)           icon = "expedition.webp";
+  else if (hasHarvest)              icon = "harvest.webp";
+  else if (hasLegion)               icon = "legion.webp";
+  else if (hasRitual)               icon = "ritual.webp";
+  else if (hasBlight)               icon = "blight.webp";
+  else if (hasStrongbox)            icon = "strongbox.webp";
+  else if (hasShrine)               icon = "shrine.webp";
+  else if (hasEssence)              icon = "essence.webp";
 
   const textSpan = (
     <span className={classNames(fragmentStyles.default)}>{text}</span>
