@@ -259,12 +259,17 @@ export function processPob(pobCode: string): PobData | undefined {
   const bandit =
     buildElement[0].attributes.getNamedItem("bandit")?.value || "None";
 
-  const pantheonMajorRaw =
-    buildElement[0].attributes.getNamedItem("pantheonMajorGod")?.value ||
-    readPantheonFromConfig(doc, "pantheonMajorGod");
-  const pantheonMinorRaw =
-    buildElement[0].attributes.getNamedItem("pantheonMinorGod")?.value ||
-    readPantheonFromConfig(doc, "pantheonMinorGod");
+  // PoB exports "None" on the Build element when no pantheon is set;
+  // treat that as absent and fall through to Config lookup.
+  const pantheonMajorAttr = buildElement[0].attributes.getNamedItem("pantheonMajorGod")?.value ?? "";
+  const pantheonMajorRaw = (pantheonMajorAttr && pantheonMajorAttr !== "None")
+    ? pantheonMajorAttr
+    : readPantheonFromConfig(doc, "pantheonMajorGod");
+
+  const pantheonMinorAttr = buildElement[0].attributes.getNamedItem("pantheonMinorGod")?.value ?? "";
+  const pantheonMinorRaw = (pantheonMinorAttr && pantheonMinorAttr !== "None")
+    ? pantheonMinorAttr
+    : readPantheonFromConfig(doc, "pantheonMinorGod");
 
   const requiredGems: RouteData.RequiredGem[] = [];
   const gemLinks: RouteData.GemLinkGroup[] = [];

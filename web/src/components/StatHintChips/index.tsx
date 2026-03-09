@@ -1,80 +1,76 @@
 import { StatTarget } from "../../data/stat-targets";
 import styles from "./styles.module.css";
 import classNames from "classnames";
+import React from "react";
 
 interface StatHintChipsProps {
   hints: StatTarget[];
 }
 
-// Map of keyword → CSS class. Only the matched word gets coloured.
+// Map of keyword → CSS class
 const DAMAGE_WORDS: [RegExp, string][] = [
-  [/\bCold\b/i,            styles.typeCold],
-  [/\bFire\b/i,            styles.typeFire],
-  [/\bLight(ning)?\b/i,    styles.typeLight],
-  [/\bChaos\b/i,           styles.typeChaos],
-  [/\bPhys(ical)?\b/i,     styles.typePhys],
+  [/\bCold\b/i,        styles.typeCold],
+  [/\bFire\b/i,        styles.typeFire],
+  [/\bLightning\b/i,   styles.typeLight],
+  [/\bChaos\b/i,       styles.typeChaos],
+  [/\bPhys(ical)?\b/i, styles.typePhys],
 ];
 
-/** Render a label string with only the damage-type word coloured. */
-function ColouredLabel({ label }: { label: string }) {
+/** Render a single word with its damage-type colour. */
+function ColouredWord({ word }: { word: string }) {
   for (const [re, cls] of DAMAGE_WORDS) {
-    const m = re.exec(label);
-    if (m) {
-      const before = label.slice(0, m.index);
-      const word   = m[0];
-      const after  = label.slice(m.index + word.length);
-      return (
-        <>
-          {before}
-          <span className={cls}>{word}</span>
-          {after}
-        </>
-      );
-    }
+    if (re.test(word)) return <span className={cls}>{word}</span>;
   }
-  return <>{label}</>;
+  return <>{word}</>;
 }
 
-const DAMAGE_TYPE_RE = /^(Cold|Fire|Light(ning)?|Chaos|Phys(ical)?)$/i;
-const RES_RE = /.*\bRes\b.*/i;
-
-type HintCat = "dps" | "damage" | "res";
-
-function categorize(h: StatTarget): HintCat | null {
-  if (h.value === "Immune") return null;
-  if (h.label === "DPS") return "dps";
-  if (DAMAGE_TYPE_RE.test(h.label)) return "damage";
-  if (RES_RE.test(h.label)) return "res";
-  return null;
-}
+const DPS_RE = /^DPS$/i;
+/** Matches "Cold Res", "Lightning Res", "Chaos Res", "Physical Res", etc. */
+const RES_LABEL_RE = /^(.+?)\s+Res$/i;
 
 function cleanValue(v: string): string {
   return v.replace(/^[~≈≥]/, "").trim();
 }
 
 export function StatHintChips({ hints }: StatHintChipsProps) {
-  const visible = hints
-    .map((h) => ({ h, cat: categorize(h) }))
-    .filter((x): x is { h: StatTarget; cat: HintCat } => x.cat !== null);
+  const dps = hints.find((h) => DPS_RE.test(h.label) && h.value !== "Immune");
+  const resHints = hints.filter(
+    (h) => RES_LABEL_RE.test(h.label) && h.value !== "Immune"
+  );
 
-  if (visible.length === 0) return null;
+  if (!dps && resHints.length === 0) return null;
 
-  // Split into enemy-damage and player-side (dps + res)
-  const damage = visible.filter((x) => x.cat === "damage");
-  const player = visible.filter((x) => x.cat !== "damage");
+  // Extract the type word from each Res label ("Cold Res" → "Cold")
+  const resTypes = resHints
+    .map((h) => RES_LABEL_RE.exec(h.label)?.[1] ?? h.label)
+    .filter(Boolean);
 
-  const allChips = [...damage, ...player];
+  const parts: React.ReactNode[] = [];
+
+  if (dps) parts.push(<>DPS: {cleanValue(dps.value)}+</>);
+
+  if (resTypes.length > 0) {
+    parts.push(
+      <>
+        {resTypes.map((type, i) => (
+          <React.Fragment key={type}>
+            {i > 0 && "/"}
+            <ColouredWord word={type} />
+          </React.Fragment>
+        ))}
+        {" Res"}
+      </>
+    );
+  }
 
   return (
     <span className={classNames(styles.hints)}>
-      {"• "}
-      {allChips.map(({ h, cat }, i) => (
-        <span key={h.label} title={h.note}>
-          {i > 0 && <span className={classNames(styles.sep)}> · </span>}
-          {cat === "dps" && <>DPS: {cleanValue(h.value)}+</>}
-          {cat === "damage" && <>Deals <ColouredLabel label={h.label} /> Damage</>}
-          {cat === "res" && <ColouredLabel label={h.label} />}
-        </span>
+      {"• Recommend: "}
+      {parts.map((p, i) => (
+        <React.Fragment key={i}>
+          {i > 0 && ", "}
+          {p}
+        </React.Fragment>
       ))}
     </span>
   );
