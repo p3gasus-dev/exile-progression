@@ -56,6 +56,24 @@ export default function ChallengesContainer() {
             </div>
           }
         />
+        <SplitRow
+          left={
+            <div>
+              <div className={classNames(styles.label)}>Show Hints by Default</div>
+              <div className={classNames(styles.desc)}>Expand challenge hints automatically when a section is opened.</div>
+            </div>
+          }
+          right={
+            <div className={classNames(styles.value)}>
+              <input
+                type="checkbox"
+                checked={config.showChallengeHints}
+                onChange={(e) => setConfig({ ...config, showChallengeHints: e.target.checked })}
+                aria-label="Show Hints by Default"
+              />
+            </div>
+          }
+        />
       </div>
 
     </div>

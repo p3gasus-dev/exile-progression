@@ -74,6 +74,12 @@
   color: #d44444;
 }
 
+/* Pinnacle boss name — bright arcane purple */
+.pinnacle {
+  color: #bf40bf;
+  font-weight: var(--font-heavy);
+}
+
 /* ── Map tier colours ────────────────────────────────────────────────────────── */
 
 /* White maps T1–T5 — near white */

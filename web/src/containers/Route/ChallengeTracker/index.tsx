@@ -54,34 +54,40 @@ const DIFFICULTY_ORDER: Record<ChallengeDifficulty, number> = {
 };
 
 // Match "Defeat <Boss Name> (Act N)" or "Defeat <Boss Name> (level N+)"
-// to extract and color only the boss name in enemy orange.
-// Counter steps like "Defeat Monsters... (0/30)" won't match.
+// Boss name colored enemy orange (or pinnacle purple for major bosses).
+// Steps using "(Mechanic, level N+)" format won't match — fall through to mechanic detection.
 const NAMED_BOSS_DEFEAT = /^(defeat )(.*?)( \((?:act \d|level \d))/i;
 
+// Pinnacle / major endgame bosses — shown in bright purple instead of enemy orange
+const PINNACLE_BOSS = /^(sirus|the shaper|the elder|the maven|the searing exarch|the eater of worlds|high templar venarius|incarnation of|uber atziri|uber elder|kitava)/i;
+
 function StepContent({ text }: { text: string }) {
-  const isCrafting  = /^vendor recipe:/i.test(text);
-  const isUseOrb    = /^use an? /i.test(text);
+  const isCrafting  = /^vendor recipe:|^craft\b/i.test(text);
+  const isUseOrb    = /^use\b/i.test(text);
   const isAscend    = /^use the ascendancy device|^gain a bloodline class/i.test(text);
+  const isChoose    = /^choose\b/i.test(text);
+  const isCollect   = /^collect\b/i.test(text);
   const isVisit     = /^visit |^go to /i.test(text);
   const isEnter     = /^enter /i.test(text);
   const isComplete  = /^complete /i.test(text);
   const hasWaypoint = /\bwaypoint\b/i.test(text);
 
-  // Named boss defeat: color boss name in enemy orange
+  // Named boss defeat: color boss name — pinnacle purple or enemy orange
   const bossMatch = NAMED_BOSS_DEFEAT.exec(text);
   if (bossMatch) {
     const [, prefix, bossName] = bossMatch;
     const rest = text.slice(prefix.length + bossName.length);
+    const bossClass = PINNACLE_BOSS.test(bossName) ? fragmentStyles.pinnacle : fragmentStyles.enemy;
     return (
       <span>
         <span className={classNames(fragmentStyles.default)}>{prefix}</span>
-        <span className={classNames(fragmentStyles.enemy)}>{bossName}</span>
+        <span className={classNames(bossClass)}>{bossName}</span>
         <span className={classNames(fragmentStyles.default)}>{rest}</span>
       </span>
     );
   }
 
-  // Visit / Go to: use ➞ arrow prefix instead of an icon
+  // Visit / Go to: use ➞ arrow prefix
   if (isVisit) {
     return (
       <span className={classNames(fragmentStyles.noWrap)}>
@@ -91,41 +97,72 @@ function StepContent({ text }: { text: string }) {
     );
   }
 
-  // League mechanic detection (keyword-based, checked before generic fallbacks)
-  const hasBreach     = /\bbreaches?\b/i.test(text);
-  const hasAbyss      = /\babyssal|\babysses?\b/i.test(text);
-  const hasDelirium   = /\bdelirium\b|\bsimulacrum\b/i.test(text);
-  const hasExpedition = /\bexpeditions?\b|\blogbooks?\b/i.test(text);
-  const hasHarvest    = /\bharvests?\b/i.test(text);
+  // ── League mechanic / icon detection ────────────────────────────────────────
+  // Icon-backed mechanics
+  const hasBreach     = /\bbreaches?\b|\bhives?\b|\bhive\b/i.test(text);
+  const hasAbyss      = /\babyssal\b|\babysses?\b|\babyss\b/i.test(text);
+  const hasDelirium   = /\bdelirium\b|\bsimulacrum\b|\bking in the mists\b/i.test(text);
+  const hasExpedition = /\bexpeditions?\b|\blogbooks?\b|\bolroth\b|\bmedved\b|\bvorana\b|\buhtred\b/i.test(text);
+  const hasHarvest    = /\bharvests?\b|\boshabi\b|\bsacred blossom\b/i.test(text);
   const hasLegion     = /\blegion\b/i.test(text);
   const hasRitual     = /\brituals?\b/i.test(text);
   const hasBlight     = /\bblights?\b|\bblight-ravaged\b/i.test(text);
   const hasStrongbox  = /\bstrongboxes?\b/i.test(text);
   const hasShrine     = /\bshrines?\b/i.test(text);
   const hasEssence    = /\bessences?\b/i.test(text);
-  // Currency: bare orb names (e.g. "Chaos Orb (0/20)") or "Use an Orb..."
-  const hasCurrency   = /\borbs?\b|\bregal\b|\bchaos\b|\bdivine\b|\bexalted\b|\bsacred\b|\bblessed\b|\bchromatic\b|\bfusing\b|\bjeweller/i.test(text);
+  // Currency: orb names, catalysts, scarabs (any "Use X Scarab" step)
+  const hasCurrency   = /\borbs?\b|\bregal\b|\bchaos\b|\bdivine\b|\bexalted\b|\bsacred\b|\bblessed\b|\bchromatic\b|\bfusing\b|\bjeweller|\bscarab\b|\bcatalyst\b|\bincubator\b|\bfog\b/i.test(text);
 
+  // Color-only mechanics (no dedicated icon)
+  const hasBeyond     = /\bbeyond\b/i.test(text);
+  const hasPossessed  = /\bpossessed\b/i.test(text);
+  const hasUltimatum  = /\bultimatum\b|\btrialmaster\b/i.test(text);
+  const hasHeist      = /\bheist\b|\bblueprints?\b|\bcontracts?\b|\bsmuggler'?s?\s*cache/i.test(text);
+  const hasKingsmarch = /\bkingsmarch\b|\batlas\s+runner/i.test(text);
+  const hasOreDeposit = /\bore\s+deposit/i.test(text);
+  const hasDivCard    = /\bdivination\b|\bdiv(?:ination)?\s+card/i.test(text);
+  const hasBetrayal   = /\bbetrayal\b|\bsyndicate\b|\bcatarina\b|\bjun\b/i.test(text);
+  const hasDelve      = /\bdelve\b|\bniko\b|\baul\b/i.test(text);
+  const hasBeast      = /\bmenagerie\b|\bbestiary\b|\beinhar\b|\bfarrul\b/i.test(text);
+  const hasIncursion  = /\bincursion\b|\bomnitect\b|\balva\b|\bchronicle\b/i.test(text);
+  const hasSanctum    = /\bsanctum\b|\blycia\b/i.test(text);
+
+  // ── Icon assignment (highest priority first) ─────────────────────────────────
   let icon: string | null = null;
-  if (isCrafting)                   icon = craftingIcon;
-  else if (isAscend)                icon = trialIcon;
-  else if (isEnter || hasWaypoint)  icon = waypointIcon;
-  else if (isComplete)              icon = questIcon;
-  else if (isUseOrb || hasCurrency) icon = currencyIcon;
-  else if (hasBreach)               icon = breachIcon;
-  else if (hasAbyss)                icon = abyssIcon;
-  else if (hasDelirium)             icon = deliriumIcon;
-  else if (hasExpedition)           icon = expeditionIcon;
-  else if (hasHarvest)              icon = harvestIcon;
-  else if (hasLegion)               icon = legionIcon;
-  else if (hasRitual)               icon = ritualIcon;
-  else if (hasBlight)               icon = blightIcon;
-  else if (hasStrongbox)            icon = strongboxIcon;
-  else if (hasShrine)               icon = shrineIcon;
-  else if (hasEssence)              icon = essenceIcon;
+  let colorClass: string | null = null;
+
+  if (isCrafting)                              icon = craftingIcon;
+  else if (isAscend)                           icon = trialIcon;
+  else if (isChoose || isCollect)              icon = questIcon;
+  else if (isEnter || hasWaypoint)             icon = waypointIcon;
+  else if (isComplete)                         icon = questIcon;
+  else if (hasBreach)                          icon = breachIcon;
+  else if (hasAbyss)                           icon = abyssIcon;
+  else if (hasDelirium)                        icon = deliriumIcon;
+  else if (hasExpedition)                      icon = expeditionIcon;
+  else if (hasHarvest)                         icon = harvestIcon;
+  else if (hasLegion)                          icon = legionIcon;
+  else if (hasRitual)                          icon = ritualIcon;
+  else if (hasBlight)                          icon = blightIcon;
+  else if (hasStrongbox)                       icon = strongboxIcon;
+  else if (hasShrine)                          icon = shrineIcon;
+  else if (hasEssence)                         icon = essenceIcon;
+  else if (isUseOrb || hasCurrency)            icon = currencyIcon;
+  // Color-only fallbacks (no icon file)
+  else if (hasUltimatum)                       colorClass = fragmentStyles.trial;    // gold
+  else if (hasBeyond)                          colorClass = fragmentStyles.league;   // danger red
+  else if (hasPossessed)                       colorClass = fragmentStyles.portal;   // purple
+  else if (hasHeist)                           colorClass = fragmentStyles.area;     // grey-blue
+  else if (hasKingsmarch || hasOreDeposit)     colorClass = fragmentStyles.trial;   // gold
+  else if (hasDivCard)                         colorClass = fragmentStyles.quest;    // warm gold
+  else if (hasBetrayal)                        colorClass = fragmentStyles.league;   // danger red
+  else if (hasDelve)                           colorClass = fragmentStyles.waypoint; // blue
+  else if (hasBeast)                           colorClass = fragmentStyles.questText;// bright green
+  else if (hasIncursion)                       colorClass = fragmentStyles.trial;    // gold
+  else if (hasSanctum)                         colorClass = fragmentStyles.portal;   // purple
 
   const textSpan = (
-    <span className={classNames(fragmentStyles.default)}>{text}</span>
+    <span className={classNames(colorClass ?? fragmentStyles.default)}>{text}</span>
   );
 
   if (!icon) return textSpan;
@@ -140,8 +177,8 @@ function StepContent({ text }: { text: string }) {
 
 // ── Per-challenge section ─────────────────────────────────────────────────────
 
-function ChallengeSection({ c }: { c: Challenge }) {
-  const [showTips, setShowTips] = useState(false);
+function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHints: boolean }) {
+  const [showTips, setShowTips] = useState(defaultShowHints);
   const doneCount = useRecoilValue(challengeDoneCountSelectorFamily(c.id));
   const needed = c.requires ?? c.steps.length;
   const hasTips = c.tips && c.tips.length > 0;
@@ -252,7 +289,7 @@ export default function ChallengeTracker() {
       </div>
 
       {challenges.map((c) => (
-        <ChallengeSection key={c.id} c={c} />
+        <ChallengeSection key={c.id} c={c} defaultShowHints={config.showChallengeHints} />
       ))}
     </>
   );
