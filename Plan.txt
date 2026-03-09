@@ -17,10 +17,6 @@ ALWAYS:
 	update plan, readme, format
 
 TODO:
-	challenges
-		sections & tasks are not accurate
-			go through the https://github.com/CraniumViolence/craniumviolence.github.io repo again for challege info
-			seciton/task hints seem ok
 
 IN PROGRESS:
 	UNIQUES/BOSSES
