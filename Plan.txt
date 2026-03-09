@@ -18,12 +18,6 @@ ALWAYS:
 	update plan, readme, format accordingly
 
 TODO:
-	CHALLENGES
-		make sure the substep toggle exists for all steps that have substeps
-		the substeps should still show up underneath the step, hints for the entire quest should be at the bottom
-		rare monsters still need an icon or color
-		let's add an icon for div cards (currently colored gold, no icon)
-		let's try to get icons for: heist, ultimatum, kingsmarch/ore, beyond, possessed
 
 IDEAS:
 	UNIQUES/BOSSES

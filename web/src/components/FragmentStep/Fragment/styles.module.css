@@ -80,6 +80,12 @@
   font-weight: var(--font-heavy);
 }
 
+/* Rare monster / 4-mod rare — PoE rare item yellow */
+.rare {
+  color: #ffd700;
+  font-weight: var(--font-heavy);
+}
+
 /* ── Map tier colours ────────────────────────────────────────────────────────── */
 
 /* White maps T1–T5 — near white */
