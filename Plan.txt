@@ -17,6 +17,8 @@ ALWAYS:
 	update settings pages accordingly
 	update plan, readme, format accordingly
 
+TODO:
+
 IN PROGRESS:
 	UNIQUES/BOSSES
 		REBUILD unique item system
