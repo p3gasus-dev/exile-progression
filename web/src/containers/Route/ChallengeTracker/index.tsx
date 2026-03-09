@@ -40,15 +40,17 @@ function StepContent({ text }: { text: string }) {
   const isCrafting = /^vendor recipe:/i.test(text);
   const isAscend   = /^use the ascendancy device|^gain a bloodline class/i.test(text);
   const isVisit    = /^visit /i.test(text);
-  const isDefeat   = /^defeat /i.test(text);
+  const isEnter    = /^enter /i.test(text);
+  const isComplete = /^complete /i.test(text);
 
   let icon: string | null = null;
-  if (isCrafting) icon = "crafting.png";
-  else if (isAscend) icon = "trial.png";
-  else if (isVisit)  icon = "waypoint.png";
+  if (isCrafting)       icon = "crafting.png";
+  else if (isAscend)    icon = "trial.png";
+  else if (isVisit || isEnter) icon = "waypoint.png";
+  else if (isComplete)  icon = "quest.png";
 
   const textSpan = (
-    <span className={classNames(isDefeat ? fragmentStyles.enemy : fragmentStyles.default)}>
+    <span className={classNames(fragmentStyles.default)}>
       {text}
     </span>
   );
