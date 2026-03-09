@@ -39,7 +39,7 @@ function getImageUrl(path: string) {
 // Match "Defeat <Boss Name> (Act N)" or "Defeat <Boss Name> (level N+)"
 // to extract and color only the boss name in enemy orange.
 // Counter steps like "Defeat Monsters... (0/30)" won't match.
-const NAMED_BOSS_DEFEAT = /^(defeat )(.*?)( \((?:act \d|level \d)/i;
+const NAMED_BOSS_DEFEAT = /^(defeat )(.*?)( \((?:act \d|level \d))/i;
 
 function StepContent({ text }: { text: string }) {
   const isCrafting  = /^vendor recipe:/i.test(text);
