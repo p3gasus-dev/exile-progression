@@ -47,14 +47,18 @@ function StepContent({ text }: { text: string }) {
   else if (isAscend) icon = "trial.png";
   else if (isVisit)  icon = "waypoint.png";
 
+  const textSpan = (
+    <span className={classNames(isDefeat ? fragmentStyles.enemy : fragmentStyles.default)}>
+      {text}
+    </span>
+  );
+
+  if (!icon) return textSpan;
+
   return (
     <div className={classNames(fragmentStyles.noWrap)}>
-      {icon && (
-        <img src={getImageUrl(icon)} className="inlineIcon" alt="" />
-      )}
-      <span className={classNames(isDefeat ? fragmentStyles.enemy : fragmentStyles.default)}>
-        {text}
-      </span>
+      <img src={getImageUrl(icon)} className="inlineIcon" alt="" />
+      {textSpan}
     </div>
   );
 }

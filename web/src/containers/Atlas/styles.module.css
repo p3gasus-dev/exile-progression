@@ -40,6 +40,15 @@
   text-align: left;
 }
 
+.desc {
+  width: 100%;
+  text-align: right;
+  color: var(--on-primary);
+  font-size: 0.8rem;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+
 .select {
   color: var(--on-primary);
   background-color: var(--primary);

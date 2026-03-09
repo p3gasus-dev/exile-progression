@@ -25,7 +25,12 @@ export default function CampaignContainer() {
       </p>
       <div className={classNames(styles.form)}>
         <SplitRow
-          left={<div className={classNames(styles.label)}>League Start</div>}
+          left={
+            <div>
+              <div className={classNames(styles.label)}>League Start</div>
+              <div className={classNames(styles.desc)}>Removes gem rewards that require gold (league start default).</div>
+            </div>
+          }
           right={
             <div className={classNames(styles.value)}>
               <input
@@ -40,7 +45,12 @@ export default function CampaignContainer() {
           }
         />
         <SplitRow
-          left={<div className={classNames(styles.label)}>Library</div>}
+          left={
+            <div>
+              <div className={classNames(styles.label)}>Library</div>
+              <div className={classNames(styles.desc)}>Include the Act 3 library detour for socket crafting recipes.</div>
+            </div>
+          }
           right={
             <div className={classNames(styles.value)}>
               <input

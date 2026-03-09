@@ -137,10 +137,18 @@ export default function AtlasContainer() {
 
         {/* ── Atlas Settings ────────────────────────────────────────────── */}
         <SectionHeader title="Atlas Settings" />
+        <p className={classNames(styles.hint)}>
+          Controls what appears on this page and in the Route tab.
+        </p>
 
         <div className={classNames(styles.form)}>
           <SplitRow
-            left={<Label>Run Both Early Bosses</Label>}
+            left={
+              <div>
+                <Label>Run Both Early Bosses</Label>
+                <div className={classNames(styles.desc)}>Run Eater and Exarch before your first voidstone.</div>
+              </div>
+            }
             right={
               <Value>
                 <input
@@ -156,7 +164,12 @@ export default function AtlasContainer() {
           />
 
           <SplitRow
-            left={<Label>Show Unique Drops</Label>}
+            left={
+              <div>
+                <Label>Show Unique Drops</Label>
+                <div className={classNames(styles.desc)}>Show unique item drops on voidstone route steps.</div>
+              </div>
+            }
             right={
               <Value>
                 <input
@@ -172,7 +185,12 @@ export default function AtlasContainer() {
           />
 
           <SplitRow
-            left={<Label>Show Voidstone Route</Label>}
+            left={
+              <div>
+                <Label>Show Voidstone Route</Label>
+                <div className={classNames(styles.desc)}>Show the Voidstone 1–4 tab in the Route screen.</div>
+              </div>
+            }
             right={
               <Value>
                 <input
@@ -188,7 +206,12 @@ export default function AtlasContainer() {
           />
 
           <SplitRow
-            left={<Label>Show Lab Tracker</Label>}
+            left={
+              <div>
+                <Label>Show Lab Tracker</Label>
+                <div className={classNames(styles.desc)}>Show a labyrinth completion tracker on this page.</div>
+              </div>
+            }
             right={
               <Value>
                 <input
