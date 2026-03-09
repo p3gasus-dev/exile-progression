@@ -4,6 +4,7 @@ import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
 import { configSelector } from "../../../state/config";
 import styles from "./styles.module.css";
+import fragmentStyles from "../../../components/FragmentStep/Fragment/styles.module.css";
 import classNames from "classnames";
 import { useRecoilValue } from "recoil";
 
@@ -27,6 +28,36 @@ const DIFFICULTY_ORDER: Record<ChallengeDifficulty, number> = {
   hard: 2,
   endgame: 3,
 };
+
+function getImageUrl(path: string) {
+  return new URL(
+    `../../../components/FragmentStep/Fragment/images/${path}`,
+    import.meta.url
+  ).href;
+}
+
+function StepContent({ text }: { text: string }) {
+  const isCrafting = /^vendor recipe:/i.test(text);
+  const isAscend   = /^use the ascendancy device|^gain a bloodline class/i.test(text);
+  const isVisit    = /^visit /i.test(text);
+  const isDefeat   = /^defeat /i.test(text);
+
+  let icon: string | null = null;
+  if (isCrafting) icon = "crafting.png";
+  else if (isAscend) icon = "trial.png";
+  else if (isVisit)  icon = "waypoint.png";
+
+  return (
+    <div className={classNames(fragmentStyles.noWrap)}>
+      {icon && (
+        <img src={getImageUrl(icon)} className="inlineIcon" alt="" />
+      )}
+      <span className={classNames(isDefeat ? fragmentStyles.enemy : fragmentStyles.default)}>
+        {text}
+      </span>
+    </div>
+  );
+}
 
 export default function ChallengeTracker() {
   const totalCompleted = useRecoilValue(challengeCountSelector);
@@ -63,15 +94,18 @@ export default function ChallengeTracker() {
           ...c.steps.map((step, i) => ({
             key: `${c.id}-step-${i}`,
             isCompletedState: completedState,
-            children: <span>{step}</span>,
+            children: <StepContent text={step} />,
           })),
-          // Requires line (only when partial completion)
+          // Requires (only when partial completion)
           ...(c.requires != null && c.requires < c.steps.length
             ? [{
                 key: `${c.id}-req`,
                 children: (
-                  <span className={classNames(styles.infoItem)}>
-                    Requires: {c.requires}/{c.steps.length}
+                  <span className={classNames(fragmentStyles.default)}>
+                    Requires:{" "}
+                    <span className={classNames(styles.requiresCount)}>
+                      {c.requires}/{c.steps.length}
+                    </span>
                   </span>
                 ),
               }]
@@ -80,8 +114,11 @@ export default function ChallengeTracker() {
           {
             key: `${c.id}-diff`,
             children: (
-              <span className={classNames(styles.infoItem, styles.diffHint, DIFFICULTY_CLASS[c.difficulty])}>
-                Difficulty: {DIFFICULTY_LABEL[c.difficulty]}
+              <span className={classNames(fragmentStyles.default)}>
+                Difficulty:{" "}
+                <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
+                  {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+                </span>
               </span>
             ),
           },
@@ -90,13 +127,14 @@ export default function ChallengeTracker() {
             ? [{
                 key: `${c.id}-tips`,
                 children: (
-                  <span className={classNames(styles.infoItem)}>
-                    <span className={classNames(styles.tipsHeader)}>Quest Hints:</span>
-                    <span className={classNames(styles.tips)}>
-                      {c.tips.map((tip, i) => (
-                        <span key={i} className={classNames(styles.tip)}>· {tip}</span>
-                      ))}
-                    </span>
+                  <span>
+                    <span className={classNames(fragmentStyles.quest)}>Quest Hints</span>
+                    {c.tips.map((tip, i) => (
+                      <span key={i} className={classNames(styles.tip)}>
+                        {"• "}
+                        <span className={classNames(fragmentStyles.default)}>{tip}</span>
+                      </span>
+                    ))}
                   </span>
                 ),
               }]

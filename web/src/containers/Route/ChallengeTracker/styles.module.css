@@ -46,58 +46,31 @@
   transition: width 0.3s ease;
 }
 
-/* ── Difficulty badges ───────────────────────────────────────── */
-
-.diff {
-  font-size: 0.7rem;
-  font-weight: var(--font-heavy);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
+/* ── Difficulty colours ──────────────────────────────────────── */
 
 .diffEasy    { color: #5db86c; }
 .diffMedium  { color: #e0c040; }
 .diffHard    { color: #e07030; }
 .diffEndgame { color: #c040c0; }
 
-/* ── Difficulty hint (inline below description) ─────────────── */
+/* ── Difficulty badge (inline in Difficulty step) ────────────── */
 
-.diffHint {
-  display: block;
-  font-size: 0.7rem;
+.diffBadge {
   font-weight: var(--font-heavy);
-  text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-top: 2px;
-  opacity: 0.8;
 }
 
-/* ── Non-interactive info items ──────────────────────────────── */
+/* ── Requires count ──────────────────────────────────────────── */
 
-.infoItem {
-  display: block;
-}
-
-.tipsHeader {
-  display: block;
-  font-size: 0.75rem;
+.requiresCount {
   font-weight: var(--font-heavy);
-  opacity: 0.7;
-  margin-bottom: 2px;
+  color: var(--accent-primary);
 }
 
-/* ── Tips list ───────────────────────────────────────────────── */
-
-.tips {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-top: var(--size-1);
-}
+/* ── Tip line ────────────────────────────────────────────────── */
 
 .tip {
   display: block;
-  font-size: 0.75rem;
-  opacity: 0.55;
-  padding-left: var(--size-1);
+  margin-top: var(--size-1);
+  opacity: 0.65;
 }
