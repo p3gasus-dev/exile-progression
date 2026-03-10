@@ -53,11 +53,35 @@
 .diffHard    { color: #e07030; }
 .diffEndgame { color: #c040c0; }
 
-/* ── Difficulty badge (inline in Difficulty step) ────────────── */
+/* ── Header right (difficulty + requires badges) ─────────────── */
+
+.headerRight {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-2);
+}
+
+/* ── Difficulty badge ────────────────────────────────────────── */
 
 .diffBadge {
+  font-size: 0.75rem;
   font-weight: var(--font-heavy);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+}
+
+/* ── Requires badge (done/needed in header) ──────────────────── */
+
+.requiresBadge {
+  font-size: 0.75rem;
+  font-weight: var(--font-heavy);
+  color: var(--accent-primary);
+  letter-spacing: 0.02em;
+}
+
+/* ── Requires met (green when threshold reached) ─────────────── */
+
+.requiresMet {
+  color: #5db86c;
 }
 
 /* ── Meta row ────────────────────────────────────────────────── */
@@ -68,15 +92,43 @@
   gap: var(--size-1);
 }
 
-/* ── Requires count ──────────────────────────────────────────── */
+/* ── Per-step hints ──────────────────────────────────────────── */
 
-.requiresCount {
-  font-weight: var(--font-heavy);
-  color: var(--accent-primary);
+.stepContentRow {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
 }
 
-.requiresMet {
-  color: #5db86c;
+.stepHintsToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: var(--on-primary);
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.stepHintsToggle:hover {
+  opacity: 1;
+}
+
+.stepHintsList {
+  list-style: disc;
+  margin: var(--size-1) 0 0 var(--size-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.stepHintItem {
+  font-size: 0.82rem;
+  color: var(--on-secondary);
+  opacity: 0.7;
+  line-height: 1.4;
 }
 
 /* ── Tips toggle button ──────────────────────────────────────── */
@@ -110,7 +162,8 @@
 }
 
 .tipItem {
-  font-size: 0.82rem;
-  opacity: 0.75;
+  font-size: 0.85rem;
+  color: var(--on-secondary);
+  opacity: 0.7;
   line-height: 1.4;
 }

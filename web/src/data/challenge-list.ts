@@ -25,6 +25,8 @@ export interface Challenge {
   category: ChallengeCategory;
   difficulty: ChallengeDifficulty;
   tips?: string[];
+  /** Per-step hints keyed by 0-based step index. */
+  stepHints?: Record<number, string[]>;
   autoDetectKey?: string;
 }
 

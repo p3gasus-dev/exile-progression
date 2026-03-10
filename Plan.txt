@@ -21,8 +21,10 @@ TODO:
 
 IDEAS:
 	UNIQUES/BOSSES
+		query poe wiki for boss and unique info
 		REBUILD unique item system
-			Each unique item has Drop Acquisition
+			Name
+			Drop Acquisition
 			Additional Drop Restrictions
 			Monster drops
 			Tier # [DONE - auto-derived from sourceType in Dashboard]

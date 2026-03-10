@@ -61,6 +61,42 @@ const NAMED_BOSS_DEFEAT = /^(defeat )(.*?)( \((?:act \d|level \d))/i;
 // Pinnacle / major endgame bosses — shown in bright purple instead of enemy orange
 const PINNACLE_BOSS = /^(sirus|the shaper|the elder|the maven|the searing exarch|the eater of worlds|high templar venarius|incarnation of|uber atziri|uber elder|kitava)/i;
 
+// ── Map tier coloring ─────────────────────────────────────────────────────────
+// Matches "T14+", "T16.5", "T1", "Tier 11+", "Tier 14"
+const TIER_RE = /\bT(\d+(?:\.\d+)?)(\+?)|\bTier (\d+)(\+?)/g;
+
+function getTierClass(num: number): string {
+  if (num >= 17)   return fragmentStyles.mapPinnacle;
+  if (num >= 16.5) return fragmentStyles.mapGuardian;
+  if (num >= 11)   return fragmentStyles.mapRed;
+  if (num >= 6)    return fragmentStyles.mapYellow;
+  return fragmentStyles.mapWhite;
+}
+
+/** Split `text` into spans, coloring T#/Tier # tokens with map-tier CSS classes. */
+function renderTierSplit(text: string, baseClass: string): React.ReactNode {
+  TIER_RE.lastIndex = 0;
+  if (!TIER_RE.test(text)) return <span className={baseClass}>{text}</span>;
+  TIER_RE.lastIndex = 0;
+  const parts: React.ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = TIER_RE.exec(text)) !== null) {
+    if (m.index > last) {
+      parts.push(<span key={`s${last}`}>{text.slice(last, m.index)}</span>);
+    }
+    const num = parseFloat(m[1] ?? m[3]);
+    parts.push(
+      <span key={`t${m.index}`} className={classNames(getTierClass(num))}>{m[0]}</span>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) {
+    parts.push(<span key={`s${last}`}>{text.slice(last)}</span>);
+  }
+  return <span className={baseClass}>{parts}</span>;
+}
+
 function StepContent({ text }: { text: string }) {
   const isCrafting  = /^vendor recipe:|^craft\b/i.test(text);
   const isUseOrb    = /^use\b/i.test(text);
@@ -110,8 +146,8 @@ function StepContent({ text }: { text: string }) {
   const hasStrongbox  = /\bstrongboxes?\b/i.test(text);
   const hasShrine     = /\bshrines?\b/i.test(text);
   const hasEssence    = /\bessences?\b/i.test(text);
-  // Currency: orb names, catalysts, scarabs (any "Use X Scarab" step)
-  const hasCurrency   = /\borbs?\b|\bregal\b|\bchaos\b|\bdivine\b|\bexalted\b|\bsacred\b|\bblessed\b|\bchromatic\b|\bfusing\b|\bjeweller|\bscarab\b|\bcatalyst\b|\bincubator\b|\bfog\b/i.test(text);
+  // Currency: orb names, catalysts, scarabs
+  const hasCurrency   = /\borbs?\b|\bregal\b|\bchaos\b|\bdivine\b|\bexalted\b|\bsacred\b|\bblessed\b|\bchromatic\b|\bfusing\b|\bjeweller|\bscarab\b|\bcatalyst\b|\bincubator\b|\bfog\b|\bcoins?\b|\bprisms?\b/i.test(text);
 
   // Color-only mechanics (no dedicated icon)
   const hasBeyond     = /\bbeyond\b/i.test(text);
@@ -135,6 +171,8 @@ function StepContent({ text }: { text: string }) {
 
   if (isCrafting)                              icon = craftingIcon;
   else if (isAscend)                           icon = trialIcon;
+  // isUseOrb before league mechanics — "Use X Scarab/Currency" always gets currencyIcon
+  else if (isUseOrb)                           icon = currencyIcon;
   else if (isChoose || isCollect)              icon = questIcon;
   else if (isEnter || hasWaypoint)             icon = waypointIcon;
   else if (isComplete)                         icon = questIcon;
@@ -149,7 +187,7 @@ function StepContent({ text }: { text: string }) {
   else if (hasStrongbox)                       icon = strongboxIcon;
   else if (hasShrine)                          icon = shrineIcon;
   else if (hasEssence)                         icon = essenceIcon;
-  else if (isUseOrb || hasCurrency)            icon = currencyIcon;
+  else if (hasCurrency)                        icon = currencyIcon;
   // Color-only fallbacks (no icon file)
   else if (hasRareMob)                         colorClass = fragmentStyles.rare;
   else if (hasUltimatum)                       colorClass = fragmentStyles.trial;    // gold
@@ -164,16 +202,44 @@ function StepContent({ text }: { text: string }) {
   else if (hasIncursion)                       colorClass = fragmentStyles.trial;    // gold
   else if (hasSanctum)                         colorClass = fragmentStyles.portal;   // purple
 
-  const textSpan = (
-    <span className={classNames(colorClass ?? fragmentStyles.default)}>{text}</span>
-  );
+  const baseClass = colorClass ?? fragmentStyles.default;
+  const textNode = renderTierSplit(text, baseClass);
 
-  if (!icon) return textSpan;
+  if (!icon) return textNode;
 
   return (
     <div className={classNames(fragmentStyles.noWrap)}>
       <img src={icon} className="inlineIcon" alt="" />
-      {textSpan}
+      {textNode}
+    </div>
+  );
+}
+
+// ── Per-step hints component ──────────────────────────────────────────────────
+
+function StepWithHints({ text, hints }: { text: string; hints: string[] }) {
+  const [showHints, setShowHints] = useState(false);
+  return (
+    <div>
+      <div className={classNames(styles.stepContentRow)}>
+        <StepContent text={text} />
+        <button
+          className={classNames(styles.stepHintsToggle)}
+          onClick={(e) => { setShowHints((v) => !v); e.stopPropagation(); }}
+          aria-label={showHints ? "Hide step hints" : "Show step hints"}
+        >
+          {showHints
+            ? <BiSolidInfoCircle className="inlineIcon" />
+            : <BiInfoCircle className="inlineIcon" />}
+        </button>
+      </div>
+      {showHints && (
+        <ul className={classNames(styles.stepHintsList)}>
+          {hints.map((hint, i) => (
+            <li key={i} className={classNames(styles.stepHintItem)}>{hint}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -185,70 +251,54 @@ function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHi
   const doneCount = useRecoilValue(challengeDoneCountSelectorFamily(c.id));
   const needed = c.requires ?? c.steps.length;
   const hasTips = c.tips && c.tips.length > 0;
+  const hasRequires = c.requires != null && c.requires < c.steps.length;
 
-  const taskItems: TaskListProps["items"] = c.steps.map((step, i) => ({
-    key: `${c.id}-step-${i}`,
-    isCompletedState: challengeStepProgressSelectorFamily(`${c.id}:${i}`),
-    children: <StepContent text={step} />,
-  }));
+  const taskItems: TaskListProps["items"] = c.steps.map((step, i) => {
+    const hints = c.stepHints?.[i];
+    return {
+      key: `${c.id}-step-${i}`,
+      isCompletedState: challengeStepProgressSelectorFamily(`${c.id}:${i}`),
+      children: hints
+        ? <StepWithHints text={step} hints={hints} />
+        : <StepContent text={step} />,
+    };
+  });
 
-  // Difficulty badge shown in header (nameRight)
+  // Header right: requires badge + difficulty badge
   const nameRight = (
-    <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
-      {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+    <span className={classNames(styles.headerRight)}>
+      {hasRequires && (
+        <span className={classNames(styles.requiresBadge, doneCount >= needed ? styles.requiresMet : undefined)}>
+          {doneCount}/{c.requires}
+        </span>
+      )}
+      <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
+        {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+      </span>
     </span>
   );
 
-  const meta = (
-    <>
-      {/* Requires row — only show when not all steps are required */}
-      {c.requires != null && c.requires < c.steps.length && (
-        <div className={classNames(styles.metaRow)}>
-          <span className={classNames(fragmentStyles.default)}>
-            Need any{" "}
-            <span className={classNames(styles.requiresCount)}>
-              {c.requires}
-            </span>
-            {" of "}
-            <span className={classNames(styles.requiresCount)}>
-              {c.steps.length}
-            </span>
-            {" — done: "}
-            <span className={classNames(styles.requiresCount, doneCount >= needed ? styles.requiresMet : undefined)}>
-              {doneCount}
-            </span>
-          </span>
-        </div>
+  const meta = hasTips ? (
+    <div className={classNames(styles.metaRow)}>
+      <button
+        className={classNames(styles.tipsToggle)}
+        onClick={() => setShowTips(!showTips)}
+      >
+        {showTips
+          ? <BiSolidInfoCircle className="inlineIcon" />
+          : <BiInfoCircle className="inlineIcon" />}
+        {" "}
+        <span>{showTips ? "Hide hints" : "Show hints"}</span>
+      </button>
+      {showTips && (
+        <ul className={classNames(styles.tipsList)}>
+          {c.tips!.map((tip, i) => (
+            <li key={i} className={classNames(styles.tipItem)}>{tip}</li>
+          ))}
+        </ul>
       )}
-
-      {/* Tips toggle — only shown when tips exist */}
-      {hasTips && (
-        <div className={classNames(styles.metaRow)}>
-          <button
-            className={classNames(styles.tipsToggle)}
-            onClick={() => setShowTips(!showTips)}
-          >
-            {showTips
-              ? <BiSolidInfoCircle className="inlineIcon" />
-              : <BiInfoCircle className="inlineIcon" />}
-            {" "}
-            <span className={classNames(fragmentStyles.quest)}>
-              {showTips ? "Hide hints" : "Show hints"}
-            </span>
-          </button>
-          {showTips && (
-            <ul className={classNames(styles.tipsList)}>
-              {c.tips!.map((tip, i) => (
-                <li key={i} className={classNames(styles.tipItem)}>
-                  <span className={classNames(fragmentStyles.default)}>{tip}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
-    </>
-  );
+    </div>
+  ) : undefined;
 
   return (
     <SectionHolder
