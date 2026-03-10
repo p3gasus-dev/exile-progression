@@ -3,7 +3,8 @@ import {
   challengeDoneCountSelectorFamily,
   challengeCountSelector,
 } from "../../../state/challenge-progress";
-import { CHALLENGES, Challenge, ChallengeDifficulty, ChallengeQuestType } from "../../../data/challenge-list";
+import { Challenge, ChallengeDifficulty, ChallengeQuestType } from "../../../data/challenge-list";
+import { challengeListSelector } from "../../../state/challenge-override";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
 import { configSelector } from "../../../state/config";
@@ -307,12 +308,13 @@ function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHi
 export default function ChallengeTracker() {
   const totalCompleted = useRecoilValue(challengeCountSelector);
   const config = useRecoilValue(configSelector);
+  const challengeList = useRecoilValue(challengeListSelector);
 
   const challenges = config.sortChallengesByDifficulty
-    ? [...CHALLENGES].sort(
+    ? [...challengeList].sort(
         (a, b) => DIFFICULTY_ORDER[a.difficulty] - DIFFICULTY_ORDER[b.difficulty] || a.number - b.number
       )
-    : CHALLENGES;
+    : challengeList;
 
   return (
     <>
@@ -322,12 +324,12 @@ export default function ChallengeTracker() {
         </span>
         <span className={classNames(styles.progressCount)}>
           {totalCompleted}
-          <span className={classNames(styles.progressTotal)}>/{CHALLENGES.length}</span>
+          <span className={classNames(styles.progressTotal)}>/{challengeList.length}</span>
         </span>
         <div className={classNames(styles.progressBar)}>
           <div
             className={classNames(styles.progressFill)}
-            style={{ width: `${(totalCompleted / CHALLENGES.length) * 100}%` }}
+            style={{ width: `${(totalCompleted / challengeList.length) * 100}%` }}
           />
         </div>
       </div>

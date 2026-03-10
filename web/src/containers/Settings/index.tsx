@@ -1,4 +1,5 @@
 import { RouteEditor } from "../../components/RouteEditor";
+import { ChallengeEditor } from "../../components/ChallengeEditor";
 import { routeFilesSelector } from "../../state/route-files";
 import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
 import styles from "./styles.module.css";
@@ -44,6 +45,15 @@ export default function SettingsContainer() {
         onSubmit={(updated) => setVoidstoneRouteFiles(updated)}
         onReset={resetVoidstoneRouteFiles}
       />
+
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Edit Challenges ──────────────────────────────────────────────── */}
+      <SectionHeader title="Edit Challenges" />
+      <p className={classNames(styles.hint)}>
+        Modify the challenge list as JSON. Save to apply. Reset restores built-in defaults.
+      </p>
+      <ChallengeEditor />
 
     </div>
   );
