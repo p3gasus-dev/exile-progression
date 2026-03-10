@@ -3,7 +3,7 @@ import {
   challengeDoneCountSelectorFamily,
   challengeCountSelector,
 } from "../../../state/challenge-progress";
-import { CHALLENGES, Challenge, ChallengeDifficulty } from "../../../data/challenge-list";
+import { CHALLENGES, Challenge, ChallengeDifficulty, ChallengeQuestType } from "../../../data/challenge-list";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
 import { configSelector } from "../../../state/config";
@@ -51,6 +51,20 @@ const DIFFICULTY_ORDER: Record<ChallengeDifficulty, number> = {
   medium: 1,
   hard: 2,
   endgame: 3,
+};
+
+const QUEST_TYPE_LABEL: Record<ChallengeQuestType, string> = {
+  "required":      "Required",
+  "new-content":   "New Content",
+  "currency-sink": "Currency Sink",
+  "grind-heavy":   "Grind Heavy",
+};
+
+const QUEST_TYPE_CLASS: Record<ChallengeQuestType, string> = {
+  "required":      styles.qtRequired,
+  "new-content":   styles.qtNewContent,
+  "currency-sink": styles.qtCurrencySink,
+  "grind-heavy":   styles.qtGrindHeavy,
 };
 
 // Match "Defeat <Boss Name> (Act N)" or "Defeat <Boss Name> (level N+)"
@@ -189,9 +203,10 @@ function StepContent({ text }: { text: string }) {
 function StepWithHints({ text, hints }: { text: string; hints: string[] }) {
   const [showHints, setShowHints] = useState(false);
   return (
-    <div>
-      <div className={classNames(styles.stepContentRow)}>
+    <>
+      <span>
         <StepContent text={text} />
+        {" "}
         <button
           className={classNames(styles.stepHintsToggle)}
           onClick={(e) => { setShowHints((v) => !v); e.stopPropagation(); }}
@@ -201,15 +216,16 @@ function StepWithHints({ text, hints }: { text: string; hints: string[] }) {
             ? <BiSolidInfoCircle className="inlineIcon" />
             : <BiInfoCircle className="inlineIcon" />}
         </button>
-      </div>
+      </span>
       {showHints && (
-        <ul className={classNames(styles.stepHintsList)}>
+        <>
+          <hr />
           {hints.map((hint, i) => (
-            <li key={i} className={classNames(styles.stepHintItem)}>{hint}</li>
+            <span key={i}>{"• "}{hint}</span>
           ))}
-        </ul>
+        </>
       )}
-    </div>
+    </>
   );
 }
 
@@ -233,10 +249,17 @@ function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHi
     };
   });
 
-  // Difficulty badge on the left, requires badge on the right
+  // Difficulty + questType badges on the left, requires badge on the right
   const nameLeft = (
-    <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
-      {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+    <span className={classNames(styles.badgeGroup)}>
+      <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
+        {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+      </span>
+      {c.questType && (
+        <span className={classNames(styles.questBadge, QUEST_TYPE_CLASS[c.questType])}>
+          {QUEST_TYPE_LABEL[c.questType].toUpperCase()}
+        </span>
+      )}
     </span>
   );
 

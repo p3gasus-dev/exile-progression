@@ -14,6 +14,12 @@ export type ChallengeCategory =
 
 export type ChallengeDifficulty = "easy" | "medium" | "hard" | "endgame";
 
+export type ChallengeQuestType =
+  | "required"
+  | "new-content"
+  | "currency-sink"
+  | "grind-heavy";
+
 export interface Challenge {
   id: string;
   number: number;
@@ -24,6 +30,8 @@ export interface Challenge {
   requires?: number;
   category: ChallengeCategory;
   difficulty: ChallengeDifficulty;
+  /** Optional activity classification shown as a colored badge in the header. */
+  questType?: ChallengeQuestType;
   tips?: string[];
   /** Per-step hints keyed by 0-based step index. */
   stepHints?: Record<number, string[]>;

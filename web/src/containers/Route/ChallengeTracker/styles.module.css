@@ -53,10 +53,28 @@
 .diffHard    { color: #e07030; }
 .diffEndgame { color: #c040c0; }
 
+/* ── Badge group (left side of section header) ───────────────── */
+
+.badgeGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-2);
+}
+
 /* ── Difficulty badge ────────────────────────────────────────── */
 
 /* Inherits font-size/weight from section header; only color applied via DIFFICULTY_CLASS */
 .diffBadge {}
+
+/* ── Quest type badges ───────────────────────────────────────── */
+
+/* Inherits font-size/weight from section header */
+.questBadge {}
+
+.qtRequired      { color: #c87842; }
+.qtNewContent    { color: #8060b8; }
+.qtCurrencySink  { color: #c06890; }
+.qtGrindHeavy   { color: #3898a8; }
 
 /* ── Requires badge (done/needed in header) ──────────────────── */
 
@@ -71,43 +89,21 @@
   color: #5db86c;
 }
 
-/* ── Per-step hints ──────────────────────────────────────────── */
-
-.stepContentRow {
-  display: flex;
-  align-items: center;
-  gap: var(--size-2);
-}
+/* ── Per-step hints toggle ───────────────────────────────────── */
 
 .stepHintsToggle {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  flex-shrink: 0;
-  color: var(--on-primary);
+  color: var(--accent-primary);
   opacity: 0.6;
+  vertical-align: middle;
+  padding: 0 var(--size-1);
   line-height: 1;
 }
 
 .stepHintsToggle:hover {
   opacity: 1;
-}
-
-.stepHintsList {
-  list-style: disc;
-  margin: var(--size-1) 0 0 var(--size-4);
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-1);
-}
-
-.stepHintItem {
-  font-size: 0.82rem;
-  color: var(--on-secondary);
-  opacity: 0.7;
-  line-height: 1.4;
 }
 
 /* ── Tips toggle button ──────────────────────────────────────── */
