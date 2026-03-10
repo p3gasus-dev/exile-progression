@@ -149,25 +149,8 @@ function StepContent({ text }: { text: string }) {
   // Currency: orb names, catalysts, scarabs
   const hasCurrency   = /\borbs?\b|\bregal\b|\bchaos\b|\bdivine\b|\bexalted\b|\bsacred\b|\bblessed\b|\bchromatic\b|\bfusing\b|\bjeweller|\bscarab\b|\bcatalyst\b|\bincubator\b|\bfog\b|\bcoins?\b|\bprisms?\b/i.test(text);
 
-  // Color-only mechanics (no dedicated icon)
-  const hasBeyond     = /\bbeyond\b/i.test(text);
-  const hasPossessed  = /\bpossessed\b/i.test(text);
-  const hasUltimatum  = /\bultimatum\b|\btrialmaster\b/i.test(text);
-  const hasHeist      = /\bheist\b|\bblueprints?\b|\bcontracts?\b|\bsmuggler'?s?\s*cache/i.test(text);
-  const hasKingsmarch = /\bkingsmarch\b|\batlas\s+runner/i.test(text);
-  const hasOreDeposit = /\bore\s+deposit/i.test(text);
-  const hasDivCard    = /\bdivination\b|\bdiv(?:ination)?\s+card/i.test(text);
-  // Rare monsters — PoE rare yellow
-  const hasRareMob    = /\bdefeat\s+rare\b|\b4-mod\s+rares?\b/i.test(text);
-  const hasBetrayal   = /\bbetrayal\b|\bsyndicate\b|\bcatarina\b|\bjun\b/i.test(text);
-  const hasDelve      = /\bdelve\b|\bniko\b|\baul\b/i.test(text);
-  const hasBeast      = /\bmenagerie\b|\bbestiary\b|\beinhar\b|\bfarrul\b/i.test(text);
-  const hasIncursion  = /\bincursion\b|\bomnitect\b|\balva\b|\bchronicle\b/i.test(text);
-  const hasSanctum    = /\bsanctum\b|\blycia\b/i.test(text);
-
   // ── Icon assignment (highest priority first) ─────────────────────────────────
   let icon: string | null = null;
-  let colorClass: string | null = null;
 
   if (isCrafting)                              icon = craftingIcon;
   else if (isAscend)                           icon = trialIcon;
@@ -188,22 +171,8 @@ function StepContent({ text }: { text: string }) {
   else if (hasShrine)                          icon = shrineIcon;
   else if (hasEssence)                         icon = essenceIcon;
   else if (hasCurrency)                        icon = currencyIcon;
-  // Color-only fallbacks (no icon file)
-  else if (hasRareMob)                         colorClass = fragmentStyles.rare;
-  else if (hasUltimatum)                       colorClass = fragmentStyles.trial;    // gold
-  else if (hasBeyond)                          colorClass = fragmentStyles.league;   // danger red
-  else if (hasPossessed)                       colorClass = fragmentStyles.portal;   // purple
-  else if (hasHeist)                           colorClass = fragmentStyles.area;     // grey-blue
-  else if (hasKingsmarch || hasOreDeposit)     colorClass = fragmentStyles.trial;    // gold
-  else if (hasDivCard)                         colorClass = fragmentStyles.quest;    // warm gold
-  else if (hasBetrayal)                        colorClass = fragmentStyles.league;   // danger red
-  else if (hasDelve)                           colorClass = fragmentStyles.waypoint; // blue
-  else if (hasBeast)                           colorClass = fragmentStyles.questText;// bright green
-  else if (hasIncursion)                       colorClass = fragmentStyles.trial;    // gold
-  else if (hasSanctum)                         colorClass = fragmentStyles.portal;   // purple
 
-  const baseClass = colorClass ?? fragmentStyles.default;
-  const textNode = renderTierSplit(text, baseClass);
+  const textNode = renderTierSplit(text, fragmentStyles.default);
 
   if (!icon) return textNode;
 
@@ -278,7 +247,7 @@ function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHi
   ) : undefined;
 
   const meta = hasTips ? (
-    <div className={classNames(styles.metaRow)}>
+    <>
       <button
         className={classNames(styles.tipsToggle)}
         onClick={() => setShowTips(!showTips)}
@@ -286,17 +255,16 @@ function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHi
         {showTips
           ? <BiSolidInfoCircle className="inlineIcon" />
           : <BiInfoCircle className="inlineIcon" />}
-        {" "}
-        <span>{showTips ? "Hide hints" : "Show hints"}</span>
       </button>
       {showTips && (
-        <ul className={classNames(styles.tipsList)}>
+        <>
+          <hr />
           {c.tips!.map((tip, i) => (
-            <li key={i} className={classNames(styles.tipItem)}>{tip}</li>
+            <span key={i}>{"• "}{tip}</span>
           ))}
-        </ul>
+        </>
       )}
-    </div>
+    </>
   ) : undefined;
 
   return (

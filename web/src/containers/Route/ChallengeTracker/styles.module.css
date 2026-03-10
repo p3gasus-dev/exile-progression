@@ -55,33 +55,20 @@
 
 /* ── Difficulty badge ────────────────────────────────────────── */
 
-.diffBadge {
-  font-size: 0.75rem;
-  font-weight: var(--font-heavy);
-  letter-spacing: 0.06em;
-}
+/* Inherits font-size/weight from section header; only color applied via DIFFICULTY_CLASS */
+.diffBadge {}
 
 /* ── Requires badge (done/needed in header) ──────────────────── */
 
+/* Inherits font-size/weight from section header */
 .requiresBadge {
-  font-size: 0.75rem;
-  font-weight: var(--font-heavy);
-  color: var(--accent-primary);
-  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 /* ── Requires met (green when threshold reached) ─────────────── */
 
 .requiresMet {
   color: #5db86c;
-}
-
-/* ── Meta row ────────────────────────────────────────────────── */
-
-.metaRow {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-1);
 }
 
 /* ── Per-step hints ──────────────────────────────────────────── */
@@ -129,33 +116,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.85rem;
-  color: var(--on-primary);
-  opacity: 0.8;
+  color: var(--accent-primary);
+  opacity: 0.6;
+  padding: 0 var(--size-1);
+  line-height: 1;
 }
 
 .tipsToggle:hover {
   opacity: 1;
-}
-
-/* ── Tips list ───────────────────────────────────────────────── */
-
-.tipsList {
-  list-style: disc;
-  margin: var(--size-1) 0 0 var(--size-4);
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-1);
-}
-
-.tipItem {
-  font-size: 0.85rem;
-  color: var(--on-secondary);
-  opacity: 0.7;
-  line-height: 1.4;
 }
