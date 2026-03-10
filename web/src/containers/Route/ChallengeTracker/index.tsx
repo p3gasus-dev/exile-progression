@@ -74,7 +74,7 @@ function getTierClass(num: number): string {
 }
 
 /** Split `text` into spans, coloring T#/Tier # tokens with map-tier CSS classes. */
-function renderTierSplit(text: string, baseClass: string): React.ReactNode {
+function renderTierSplit(text: string, baseClass: string): JSX.Element {
   TIER_RE.lastIndex = 0;
   if (!TIER_RE.test(text)) return <span className={baseClass}>{text}</span>;
   TIER_RE.lastIndex = 0;
