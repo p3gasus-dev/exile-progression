@@ -1,5 +1,8 @@
-import { Challenge, CHALLENGES } from "../../data/challenge-list";
-import { challengeOverrideAtom } from "../../state/challenge-override";
+import { CHALLENGES } from "../../data/challenge-list";
+import {
+  challengeTextAtom,
+  challengesToText,
+} from "../../state/challenge-override";
 import { CodeEditor } from "../CodeEditor";
 import { formStyles } from "../../styles";
 import styles from "./styles.module.css";
@@ -9,45 +12,63 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { toast } from "react-toastify";
 
-const JsonGrammar: Grammar = {
-  property: {
-    pattern: /"(?:[^\\"]|\\.)*"(?=\s*:)/,
-    greedy: true,
+// ── League.txt-style syntax grammar ──────────────────────────────────────────
+
+const ChallengeGrammar: Grammar = {
+  // # Challenge Name
+  "challenge-name": {
+    pattern: /^# .+$/m,
     alias: "keyword",
   },
-  string: {
-    pattern: /"(?:[^\\"]|\\.)*"/,
-    greedy: true,
+  // ## Difficulty heading
+  heading: {
+    pattern: /^## .+$/m,
+    alias: "keyword control-flow",
   },
-  number: /-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/,
-  boolean: /\b(?:true|false)\b/,
-  null: { pattern: /\bnull\b/, alias: "keyword control-flow" },
-  punctuation: /[{}[\],]/,
+  // <div ...> and </div>
+  tag: {
+    pattern: /<\/?div[^>]*>|<h2[^>]*>[^<]*<\/h2>/,
+    alias: "variable",
+  },
+  // - [.ggg] step text
+  step: {
+    pattern: /^ - \[\.ggg\] .+$/m,
+    inside: {
+      "step-marker": { pattern: /\[\.ggg\]/, alias: "keyword control-flow" },
+      "step-text": { pattern: /.+/, alias: "property" },
+    },
+  },
+  // \t- [.com] hint text
+  hint: {
+    pattern: /^\t- \[\.com\] .+$/m,
+    inside: {
+      "hint-marker": { pattern: /\[\.com\]/, alias: "comment" },
+      "hint-text": { pattern: /.+/, alias: "string" },
+    },
+  },
 };
 
+// ── Component ─────────────────────────────────────────────────────────────────
+
 export function ChallengeEditor() {
-  const [override, setOverride] = useRecoilState(challengeOverrideAtom);
-  const [text, setText] = useState(() =>
-    JSON.stringify(override ?? CHALLENGES, null, 2)
+  const [savedText, setSavedText] = useRecoilState(challengeTextAtom);
+  const defaultText = challengesToText(CHALLENGES);
+
+  const [workingText, setWorkingText] = useState<string>(
+    savedText ?? defaultText
   );
 
   useEffect(() => {
-    setText(JSON.stringify(override ?? CHALLENGES, null, 2));
-  }, [override]);
+    setWorkingText(savedText ?? defaultText);
+  }, [savedText]);
 
   const handleSave = () => {
-    try {
-      const parsed = JSON.parse(text) as unknown;
-      if (!Array.isArray(parsed)) throw new Error("Expected a JSON array");
-      setOverride(parsed as Challenge[]);
-      toast.success("Challenges saved");
-    } catch (e) {
-      toast.error("Invalid JSON: " + (e as Error).message);
-    }
+    setSavedText(workingText);
+    toast.success("Challenges saved");
   };
 
   const handleReset = () => {
-    setOverride(null);
+    setSavedText(null);
     toast.success("Challenges reset to defaults");
   };
 
@@ -55,15 +76,21 @@ export function ChallengeEditor() {
     <>
       <div className={classNames(formStyles.form, styles.editorForm)}>
         <CodeEditor
-          grammar={JsonGrammar}
-          value={text}
-          onValueChange={setText}
+          grammar={ChallengeGrammar}
+          value={workingText}
+          onValueChange={setWorkingText}
         />
         <div className={classNames(formStyles.groupRight)}>
-          <button className={classNames(formStyles.formButton)} onClick={handleReset}>
+          <button
+            className={classNames(formStyles.formButton)}
+            onClick={handleReset}
+          >
             Reset
           </button>
-          <button className={classNames(formStyles.formButton)} onClick={handleSave}>
+          <button
+            className={classNames(formStyles.formButton)}
+            onClick={handleSave}
+          >
             Save
           </button>
         </div>
