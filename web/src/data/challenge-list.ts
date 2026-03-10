@@ -12,7 +12,7 @@ export type ChallengeCategory =
   | "crafting"
   | "misc";
 
-export type ChallengeDifficulty = "easy" | "medium" | "hard" | "endgame";
+export type ChallengeDifficulty = "very-easy" | "easy" | "medium" | "hard" | "endgame";
 
 export type ChallengeQuestType =
   | "required"
@@ -53,10 +53,9 @@ export const CHALLENGES: Challenge[] = [
       "Use an Orb of Alchemy",
     ],
     category: "crafting",
-    difficulty: "easy",
+    difficulty: "very-easy",
     tips: [
-      "Right-click the orb then right-click any item in your inventory or stash.",
-      "All four orbs drop commonly in Act 1–2 — no specific target needed.",
+      "You right click them, then you right click an item in your inventory. Or your stash. Or a strongbox. The possibilities are highly limited and not at all endless.",
     ],
   },
   {
@@ -69,10 +68,14 @@ export const CHALLENGES: Challenge[] = [
       "Break the Astral Chain in a Mirage",
     ],
     category: "mechanics",
-    difficulty: "easy",
+    difficulty: "very-easy",
+    stepHints: {
+      0: ["Select one of the three options on interacting with the league's NPC"],
+      1: ["Enter the portal created on the above interaction"],
+      2: ["Find a circle of three rare monsters around chains going into the sky and kill them"],
+    },
     tips: [
-      "Basic league mechanic interactions — completable in Act 1.",
-      "Break the Astral Chain by killing the 3 rare monsters in a circle around it.",
+      "Incredibly basic league mechanic interactions you can complete in Act 1.",
     ],
   },
   {
@@ -86,13 +89,13 @@ export const CHALLENGES: Challenge[] = [
       "Vendor recipe: Agate, Turquoise, or Citrine Amulet",
     ],
     category: "crafting",
-    difficulty: "easy",
-    tips: [
-      "Flask: vendor three of the same type of Life or Mana Flask to upgrade to the next tier.",
-      "Hybrid Flask: vendor a Life Flask + Mana Flask + Orb of Fusing.",
-      "Ruby/Topaz/Sapphire Ring: vendor an Iron Ring + any Skill Gem.",
-      "Agate/Turquoise/Citrine Amulet: vendor two of Amber/Lapis/Jade Amulet + Orb of Transmutation.",
-    ],
+    difficulty: "very-easy",
+    stepHints: {
+      0: ["`Three of a single type of Life or Mana Flask` will upgrade into the next tier for this"],
+      1: ["Vendor a `Life Flask`, `Mana Flask` and an `Orb of Fusing`"],
+      2: ["Vendor an `Iron Ring` and `Any Skill Gem`"],
+      3: ["Vendor any two of `Amber Amulet`, `Lapis Amulet` and `Jade Amulet` alongside an `Orb of Transmutation`"],
+    },
   },
   {
     id: "act-adversaries-1",
@@ -106,11 +109,9 @@ export const CHALLENGES: Challenge[] = [
       "Defeat Kitava, the Insatiable (Act 5)",
     ],
     category: "campaign",
-    difficulty: "easy",
+    difficulty: "very-easy",
     tips: [
       "Completely normal compulsory progression.",
-      "Cap resistances as you go — each boss has a primary damage type to prepare for.",
-      "Kitava (Act 5) imposes a −30% resistance penalty on kill.",
     ],
   },
   {
@@ -124,12 +125,13 @@ export const CHALLENGES: Challenge[] = [
       "Complete An Indomitable Spirit (Act 4)",
     ],
     category: "campaign",
-    difficulty: "easy",
-    tips: [
-      "The Way Forward (Act 2): turn in to Eramir in Act 1 for a passive point.",
-      "Through Sacred Ground (Act 2): obtain the Golden Hand.",
-      "An Indomitable Spirit (Act 4): save Deshret's spirit — requires clearing Kaom and Daresso first.",
-    ],
+    difficulty: "very-easy",
+    stepHints: {
+      0: ["`Act 2` passive point quest, forget to go back to Act 1 to turn it in for 3 hours"],
+      1: ["`Act 2` passive point quest, obtain the `Golden Hand`job"],
+      2: ["`Act 3` passive point quest, collect busts"],
+      3: ["`Act 4` passive point quest, save Deshret's spirit"],
+    },
   },
   {
     id: "desecrated-djinn",
@@ -141,10 +143,9 @@ export const CHALLENGES: Challenge[] = [
       "Break the Astral Chain in Mirages (0/15)",
     ],
     category: "mechanics",
-    difficulty: "easy",
+    difficulty: "very-easy",
     tips: [
-      "Basic interaction with the Mirage league mechanic.",
-      "Break Astral Chains by killing the 3 rare monsters surrounding each chain.",
+      "Basic interaction with the league mechanic. You will complete this in 15 mirages because you are required to do the other two steps first for every Mirage completion.",
     ],
   },
   {
@@ -160,11 +161,9 @@ export const CHALLENGES: Challenge[] = [
       "Defeat Kitava, the Insatiable (Act 10)",
     ],
     category: "campaign",
-    difficulty: "easy",
+    difficulty: "very-easy",
     tips: [
       "Completely normal compulsory progression.",
-      "Kitava (Act 10) applies a second −30% resistance penalty — −60% total from campaign.",
-      "Cap all resistances to 75% before entering maps.",
     ],
   },
   {
@@ -181,11 +180,18 @@ export const CHALLENGES: Challenge[] = [
       "Visit Monastery of the Keepers (/monastery)",
     ],
     category: "misc",
-    difficulty: "easy",
+    difficulty: "very-easy",
+    stepHints: {
+      0: ["Unlocked in `Act 3` for ascending"],
+      1: ["Unlocked in `Act 2` through interacting with `Einhar`", "The command `/menagerie` takes you there from safe zones"],
+      2: ["Unlocked in `Act 4` through interacting with `Niko`", "The command `/delve` takes you there from safe zones"],
+      3: ["Unlocked in `Act 10` through interacting with `Divinia`", "The command `/sanctum` takes you there from safe zones"],
+      4: ["Unlocked in the `Epilogue` through interacting with `Johan` in `Kauri Shores`", "The command `/kingsmarch` takes you there from safe zones"],
+      5: ["Unlocked by using a `Rogue's Marker` any time after entering `Act 6`", "The command `/heist` takes you there from safe zones"],
+      6: ["Unlocked by talking to Ailith in Act 6", "The command `/monastery` takes you there from safe zones"],
+    },
     tips: [
-      "Use /menagerie, /delve, /sanctum, /kingsmarch, /heist, /monastery from any safe zone.",
-      "Kingsmarch unlocks in the Epilogue via Johan in Kauri Shores.",
-      "Rogue Harbour unlocks by using a Rogue's Marker any time after entering Act 6.",
+      "Freebie, just normal areas that have shortcuts on waypoints.",
     ],
   },
 
@@ -206,10 +212,43 @@ export const CHALLENGES: Challenge[] = [
     requires: 3,
     category: "mechanics",
     difficulty: "easy",
+    stepHints: {
+      0: [
+        "Atlas points can guarantee at least **1** monster each map",
+        "`Essence Scarab` adds **2** monsters up to a max of **10** while using five",
+        "`Essence Scarab of Calcification` converts **all rare monsters** in a map to be imprisoned",
+      ],
+      1: [
+        "Atlas points can guarantee at least **1** strongbox each map",
+        "`Ambush Scarab` will add **4** to a map up to a max of **12** while using three",
+      ],
+      2: [
+        "Atlas points can guarantee at least **1** shrine a map",
+        "`Domination Scarab` adds **2** shrines to a map up to a max of **8** while using four",
+        "`Domination Scarab of Apparitions` adds **2** Apparition Shrines to a map",
+        "`Domination Scarab of Evolution` adds **1** Evolving Shrine up to a maximum of **2** while using two",
+      ],
+      3: [
+        "Atlas points can add at least **1** Tormented Spirit",
+        "Pairing this with `Rogue Exiles` is sensible as `Exiled Will` causes Rogue Exiles to be possessed",
+        "`Torment Scarab of Possession` grants a fixed 25% chance for each rare in an area to be possessed up to a maximum of 75%",
+        "`Torment Scarab` adds **3** additional Tormented Sprits to an area",
+        "Do not take `Speaker of the Dead` if you want to complete this",
+        "This is an obvious skip because it's awkward compared to the rest",
+      ],
+      4: [
+        "Atlas points can add **1** Rogue Exile and can cause them to appear in pairs or spawn extras with a map boss",
+        "`Anarchy Scarab` adds **4** Rogue Exiles** up to a maximum of **20** while using five",
+        "`Anarchy Scarab of Partnership` is a 50% chance for Rogue Exiles to appear in pairs",
+      ],
+      5: [
+        "A `Beyond Scarab` and the Atlas can all enable Beyond monsters spawning",
+        "Atlas points can lower requirements for spawning monsters and `Endless Tide` makes it so you cannot spawn bosses (bosses stop further beyond monster spawns by default)",
+        "`Beyond Scarab of Haemophilia` and `Beyond Scarab of the Invasion` both make spawning Beyond monsters easier",
+      ],
+    },
     tips: [
-      "Essences, Strongboxes, and Shrines are the most straightforward — pick those three.",
-      "Skip Possessed Monsters — it's awkward (don't spec Speaker of the Dead if going for it).",
-      "Atlas passive points can guarantee at least 1 of each mechanic per map.",
+      "Some of the numbers above for scarabs might be wrong as they were adjusted to make up for the removed map device and I might have missed totals.",
     ],
   },
   {
@@ -231,11 +270,22 @@ export const CHALLENGES: Challenge[] = [
     ],
     requires: 5,
     category: "atlas",
-    difficulty: "easy",
+    difficulty: "very-easy",
+    stepHints: {
+      0: ["You have ot actually chase down the Abyss but you can push a lot of Abysses into a single map"],
+      1: ["Requires reading to avoid bricking encounters, truly not for the faint of heart"],
+      2: ["You will get multiple plots per harvest making this about equal to everything else"],
+      3: ["As many per map as you push onto it"],
+      4: ["Very unobtrusive, simply click the caches as you see them while doing anything else"],
+      5: ["One a map, you can immediately end it because it's just passing through"],
+      6: ["You can get 10 to 13 waves per Ultimatum, this seems balanced around"],
+      7: ["One a map"],
+      8: ["3 or 4 per map"],
+      9: ["As many per map as you push onto it"],
+      10: ["As many per map as you push onto it, one to five deterministically"],
+    },
     tips: [
-      "Normal content completion challenge — pick 5 mechanics you naturally run.",
-      "Mirages add +1 to each mechanic they duplicate inside, speeding up progress.",
-      "Harvest (100) and Ritual (100) give multiple per map; Ultimatum (200) is slowest.",
+      "Normal content completion challenge. Mirages should presumably add '1+' to each mechanic you can duplicate.",
     ],
   },
   {
@@ -251,10 +301,14 @@ export const CHALLENGES: Challenge[] = [
     requires: 2,
     category: "atlas",
     difficulty: "easy",
+    stepHints: {
+      0: ["Tagging all Sulphite nodes in a map"],
+      1: ["Capturing all Beasts in a map"],
+      2: ["Completing all Syndicate Encounters in a map"],
+      3: ["Completing all Incursions in a map"],
+    },
     tips: [
-      "Spec into 2 masters on the Atlas for 100% mission chance, or use their Scarabs.",
-      "Niko (Sulphite nodes) and Einhar (Beasts) missions are the fastest to complete.",
-      "Red maps (T11+) only — no specific tier beyond that.",
+      "Red Maps but no tier requirement beyond that, spec into them on the Atlas and you can get 100% chance or simply use their Scarabs.",
     ],
   },
   {
@@ -267,10 +321,14 @@ export const CHALLENGES: Challenge[] = [
       "Djinn Sigils of Ruzhan (0/50)",
     ],
     category: "mechanics",
-    difficulty: "medium",
+    difficulty: "easy",
+    stepHints: {
+      0: ["Blue choices", "The icon is a Blue Water Jug"],
+      1: ["White Choices", "The icon is a White Dagger"],
+      2: ["Red Choices", "The icon is a Red Sword"],
+    },
     tips: [
-      "New Mirage content — requires roughly 150+ Mirage encounters minimum.",
-      "Sigils are granted via specific Mirage Wishes — prioritise Sigil-granting wishes.",
+      "You will likely find yourself biased towards some of these, they can all appear at all stages of the game so you can simply run whatever content you are comfortable with to get these completed.",
     ],
   },
   {
@@ -281,10 +339,10 @@ export const CHALLENGES: Challenge[] = [
       "Complete a Rare Map of each Tier from T1 to T16",
     ],
     category: "atlas",
-    difficulty: "easy",
+    difficulty: "very-easy",
     tips: [
-      "Run all maps as Rare from T1 onward so you don't need to backfill lower tiers.",
-      "If you skipped low tiers, you may need to buy them from trade — very cheap.",
+      "Do rare maps. I believe in you!",
+      "You might unironically end up needing to buy lower tier maps depending on how you progressed to do this if you didn't run everything rare from Tier 1.",
     ],
   },
   {
@@ -314,11 +372,9 @@ export const CHALLENGES: Challenge[] = [
     ],
     requires: 15,
     category: "crafting",
-    difficulty: "easy",
+    difficulty: "very-easy",
     tips: [
-      "Crafting Bench options also count — easy to complete passively while playing.",
-      "You can skip 4 of the 19 — skip Exalted, Divine, Sacred, and Annulment if scarce.",
-      "Essentially free if you are playing normally and going for challenge rewards.",
+      "It's just consuming normal currency in moderate amounts and doesn't even force Divines or other expensive currencies. This is free if you are going for challenge rewards in general realistically.",
     ],
   },
   {
@@ -331,8 +387,7 @@ export const CHALLENGES: Challenge[] = [
     category: "atlas",
     difficulty: "easy",
     tips: [
-      "This is just normal mapping — Alch and go to hit 80%+ IIQ.",
-      "Destructive Play atlas passive helps. Maps with multiple bosses count each boss.",
+      "This is just literally normal mapping. `Destructive Play` will help as will maps with multiple bosses (unless this is silently set up as 'final' bosses only).",
     ],
   },
   {
@@ -355,11 +410,58 @@ export const CHALLENGES: Challenge[] = [
     requires: 5,
     category: "mechanics",
     difficulty: "medium",
+    stepHints: {
+      0: ["There's a new `Abyss Scarab of Descending` that forces Depths spawns but it might not be cheap"],
+      1: [
+        "You can simply buy these and then it's as simple as playing them normally",
+        "These are just the modifiers that activate as you blow things up",
+      ],
+      2: [
+        "Crop Rotation can get you Tier 4s relatively even if it's not completely consistent",
+        "The `Harvest Scarab of Cornucopia` exists and allows you to force at least one Tier 4 monster to spawn",
+      ],
+      3: [
+        "Can be done in a four or five-way fairly easily as long as your build is decent at clearing, simply get the emblems",
+        "Buying in to a five-way rota will obviously complete this for you while also levelling you but is a lot more than simply buying the emblems if your character can handle it",
+        "This might sound hard if you are unfamiliar with the content, but it is legitimately not even a single full row of rewards and it does not take a notable build to reach this amount",
+      ],
+      4: [
+        "Requires engaging with Heist as all the blueprint will require that you have levelled up your Rogues to be taken",
+        "[Very simple to search for on the trade website](https://www.pathofexile.com/trade/search/Mercenaries/lVlbq2psV), simply look for area level of 81 and set the heist section to include four revealed wings",
+        "The in game async trading search should presumably also cover this.",
+      ],
+      5: [
+        "Simply waves, doesn't need you to complete them",
+        "I would avoid attrition grinding if you can't do at least 10 waves and do something else instead as you will ultimately just be wasting money otherwise",
+      ],
+      6: ["This is a full set of 10 or more waves depending on your atlas tree, not too bad but a lot of builds will struggle with T14 and full ten waves"],
+      7: [
+        "`Clear Oil`, `Sepia Oil` and `Amber Oil` can `Slow Monsters`, `Increase Tower Damage` and `Make Towers Cheaper` respectively",
+        "`Blighted` maps allow for up to three of any one type of oil while `Blight Ravaged` allow for up to three of three types of oil",
+        "You can mix and match oils, you don't need to use only one type",
+        "Ring anoint for Meteor Burning Ground and Chilling Towers Freeze Enemies",
+        "`Silver Oil` and `Opalescent Oil` for `Your Chilling Towers freeze enemies for 0.2 seconds while they are affected by chilling beams`",
+        "`Violet Oil` and `Indigo  Oil` for `Your Meteor Towers create Burning Ground for 3 seconds on Hit`",
+        "You can also go with `Azure Oil` and `Sepia Oil` to get `Your Empowering Towers have 25% increased Effect` as a cheaper alternative to the freezing anoint (not recommended if you want to try Blight Ravaged without exceptionally high DPS)",
+        "Leave Seismic, Empowering and Chilling Towers at Level 3, use them in choke points and to stop things reaching the pump in general",
+        "Minions should go to Scout Towers, Fire should go to Meteor Towers",
+        "Build multiple damage types in each lane to cover immunities and try to build towers around actual lane chokepoints",
+        "Avoid immune to stun, chance to avoid elemental ailments and cannot be slowed below base speed as modifiers",
+        "Blight Ravaged is a lot harder but can still be managed with just those two ring anoints if you don't get a really, really bad layout",
+      ],
+      8: [
+        "Use them on completed rituals to fill them up",
+        "Use filled ones as a map fragment when opening a portal to add the monsters to rituals",
+        "This is a fairly big undertaking compared to some of the others, you cannot fill vessels from rituals that used vessels making this a lot more than 20 in most cases",
+      ],
+      9: [
+        "Basic kingsmarch interaction, map runners are purely a gold sink you want highest level possible for",
+        "It is rare maps only so you can transmute and regal maps for highest clear chances and even annul them if you're feeling crazy",
+      ],
+      10: ["Stack unstable breaches, disable hives and run the `Breach Scarab of the Marashal` and you can do this in two to three maps"],
+    },
     tips: [
-      "Abyssal Depths, T4 Harvest Seeds, and Blighted/Blight-Ravaged Maps are the easiest picks.",
-      "Blight strategy: Clear Oil (slow) + ring anoints for freeze/burn towers. Avoid immune-to-stun and cannot-be-slowed mods.",
-      "Skip Simulacrum (60 waves) and 4-wing Blueprints unless your build is strong.",
-      "Ritual+Vessel (10) requires significant Splinter farming to fill vessels — a big undertaking.",
+      "A copy of last league with a token breach addition.",
     ],
   },
   {
@@ -383,8 +485,7 @@ export const CHALLENGES: Challenge[] = [
     category: "mechanics",
     difficulty: "medium",
     tips: [
-      "Block all non-target content on the Atlas to concentrate Mirages on your chosen 4 mechanics.",
-      "Mirages spawn next to other league content — stack the mechanics you're farming.",
+      "Mirages spawn next to other league content, to target farm you should use the Atlas Tree Points and Scarabs for your mechanic of choice and consider blocking anything you've already completed.",
     ],
   },
 
@@ -403,10 +504,11 @@ export const CHALLENGES: Challenge[] = [
     ],
     category: "campaign",
     difficulty: "easy",
+    stepHints: {
+      4: ["Refer to the `Seized Strength` challenge for info on all the locations"],
+    },
     tips: [
-      "Check poelab.com for the daily layout and Izaro mechanics.",
-      "Bloodline Class: see Seized Strength (#28) for all boss locations.",
-      "Eternal Lab requires an Offering to the Goddess (drops from Trials in T6+ maps).",
+      "Normal progression, this is just getting all of your ascendancy points and doing a boss with a Bloodline attached.",
     ],
   },
   {
@@ -423,9 +525,7 @@ export const CHALLENGES: Challenge[] = [
     category: "crafting",
     difficulty: "medium",
     tips: [
-      "Faustus at Kingsmarch gives free div card draws — use him to progress this.",
-      "Currency card turn-ins (20) are easiest — buy cheap currency div cards from trade.",
-      "Skip the Six-Linked Item (2) turn-in unless you find those cards naturally.",
+      "Faustus makes this easy enough. I'll add some basic card recommendations later. It's three of four so you can skip one.",
     ],
   },
   {
@@ -440,12 +540,35 @@ export const CHALLENGES: Challenge[] = [
     ],
     category: "crafting",
     difficulty: "easy",
-    tips: [
-      "Unique: vendor three non-corrupted copies of any unique for a fresh rerolled copy.",
-      "Orb of Fusing: vendor any six-linked item.",
-      "Regal Orb: vendor a full rare set lv75+ (unidentified), or three identical rares at 20% quality.",
-      "Influenced item: vendor an influenced amulet (not Onyx) + one gem of each colour (not white).",
-    ],
+    stepHints: {
+      0: [
+        "You can vendor three of any non-corrupted Unique Item in order to get a fresh copy back with new rolls",
+        "There is a [PoeWiki listing for all of these](https://www.poewiki.net/wiki/Vendor_recipe_system#Unique_items) which includes other options",
+      ],
+      1: ["Vendor a `six-link item`"],
+      2: [
+        "Vendor a full set of rare items either IDed or otherwise with a minimum level of 75",
+        "1x `Helmet`",
+        "1x `Body Armour`",
+        "1x `Gloves`",
+        "1x `Boots`",
+        "1x `Two Handed Weapon` or 2x `One Handed Weapon`",
+        "1x `Amulet`",
+        "1x `Belt`",
+        "2x `Rings`",
+        "Vendor three rares with identical names at 20% quality or higher",
+        "The search site allows direct name searches and async exists so it's probably easier than a normal recipe on trade",
+      ],
+      3: [
+        "Vendor an influenced amulet (not an onyx) and a gem of each colour (not white)",
+        "Vendor an influenced Iron Ring and any colour gem",
+        "Vendor any Normal Rarity Influenced Boots with an Augmentation Orb and a Quicksilver Flask",
+        "Vendor any Normal Rarity Influenced Weapon, Rustic Sash and a Whetstone",
+        "Only the weapon needs to be influenced, adds Increased Physical Damage to weapon types which can have the mod",
+        "Vendor any Normal Rarity Influenced Weapon, Chain Belt and a Whetstone",
+        "Only the weapon needs to be influenced, adds Increased Spell Damage to weapon types which can have the mod",
+      ],
+    },
   },
   {
     id: "lethal-leaders",
@@ -464,11 +587,30 @@ export const CHALLENGES: Challenge[] = [
     requires: 6,
     category: "boss",
     difficulty: "medium",
+    stepHints: {
+      0: ["Running a set of `Mortal Fragments` will always meet the level requirement"],
+      1: [
+        "Requires use of one of the Harvest offerings which all buff the labyrinth rather a lot with each having additional buffs for certain things",
+        "`Dedication to the Goddess` which buffs `Traps` heavily",
+        "`Tribute to the Goddess` which buffs `Monsters` heavily",
+        "`Gift to the Goddess` which buffs `Izaro` heavily",
+      ],
+      2: [
+        "Run Abyss in T14s or higher and get an Abyssal Depths",
+        "`Kurgal, the Blackblooded` the lich found in Delve does not count towards this challenge",
+      ],
+      3: ["You can simply buy a `Chronicle of Atzoatl` with the `Temple Apex` unlocked at level 80 or higher for this"],
+      4: ["Heist content"],
+      5: ["Beyond bosses, fairly easy to have happen by just using a beyond tree"],
+      6: ["Expedition Logbook bosses, you can just buy Logbooks which force these"],
+      7: [
+        "`The Black Knight` can appear in any map that has ore spawn on it in place of an ore node, simply spam maps with them at a high level",
+        "`Admiral Valerius` is a random encounter that can happen to any deployed shipment in Kingsmarch",
+        "`Sasan` is a random encounter that can happen to any deployed mappers in Kingsmarch",
+      ],
+    },
     tips: [
-      "Uber Atziri (Mortal Fragments), Abyssal Lich (T14+ Depths), Omnitect (Chronicle of Atzoatl) are most accessible.",
-      "K'tash/Ghorr/Beidat: use a Beyond atlas tree — fairly easy to trigger.",
-      "Izaro: use any Harvest offering (Dedication/Tribute/Gift to the Goddess) — each buffs the lab differently.",
-      "Skip Heist (Vox Twins) and Kingsmarch (RNG-reliant) if not already engaging with them.",
+      "This is a direct copy of last league's. If you don't run Heist they are a very obvious skip and Kingsmarch is much more RNG reliant than the others making that a good second option for skipping.",
     ],
   },
   {
@@ -491,10 +633,22 @@ export const CHALLENGES: Challenge[] = [
     requires: 7,
     category: "mechanics",
     difficulty: "medium",
+    stepHints: {
+      0: ["Moderate"],
+      1: ["Moderate"],
+      2: ["Moderate"],
+      3: ["Cheap"],
+      4: ["Cheap"],
+      5: ["Somewhat expensive"],
+      6: ["Moderate"],
+      7: ["Cheap"],
+      8: ["Cheap"],
+      9: ["Honoured are cheap"],
+      10: ["Moderate"],
+    },
     tips: [
-      "New Mirage content — quantities hint at rarity, actual drop rates unknown until league starts.",
-      "Coins and Volatile Vaal Orbs drop from Mirages — complete these naturally.",
-      "Catalysts (20) can be bought from trade if Mirage drops are insufficient.",
+      "This is the new content, the quantities might give some idea of rarity but we'll see. It's likely this ends up as a currency sink but it's only 7 of 11 at least.",
+      "The prices of the Coins has gone up because they are not actually super common, they might come back down as the league progresses.",
     ],
   },
   {
@@ -521,12 +675,15 @@ export const CHALLENGES: Challenge[] = [
       "Complete Doryani's Machinarium",
     ],
     category: "atlas",
-    difficulty: "hard",
+    difficulty: "medium",
+    stepHints: {
+      10: ["Vendor `Agnerod North`, `Agnerod East`, `Agnerod South` and `Agnerod West` to get this map back"],
+      16: ["You probably want to try and find a group to split the cost for this"],
+    },
     tips: [
-      "Buy most unique maps from trade — they rarely drop naturally. No scouting reports this league.",
-      "The Vinktar Square: vendor Agnerod North + East + South + West to receive the map.",
-      "Doryani's Machinarium: find a group to split the cost — expensive to solo.",
-      "You must be able to see the map on the Atlas to open it even if you have the item.",
+      "This is all the maps and there's no more scouting reports which means this one is a bit of a stinker compared to the last few leagues. Maybe Kirac can sell Doryani's Machinarium but I wouldn't hold my breath.",
+      "Of note is that Unique Maps need you to be able to see them on the Atlas to open them even if you have the map item, [the full atlas can be found on PoEDB](https://poedb.tw/us/Atlas_of_Worlds) to help with locating the maps.",
+      "On the bright side, they didn't make anyone do Hall of Grandmasters.",
     ],
   },
   {
@@ -565,9 +722,7 @@ export const CHALLENGES: Challenge[] = [
     category: "atlas",
     difficulty: "medium",
     tips: [
-      "Max 5 progress per map — ~48 maps per scarab type at maximum slots.",
-      "Pick scarab types you already have in stock or run naturally.",
-      "Completable passively if you run multiple mechanics throughout the league.",
+      "Assuming maximum slots, you can gain 5 progress towards this per map ran. This ends up around 48 maps baseline if you are not wasting any and you can reasonably be expected to get it passively if you run multiple mechanics across the league.",
     ],
   },
   {
@@ -583,11 +738,29 @@ export const CHALLENGES: Challenge[] = [
     requires: 3,
     category: "crafting",
     difficulty: "medium",
+    stepHints: {
+      0: [
+        "Slam Vaal Orbs on Lv20 or 20% quality gems",
+        "Use the Lapidary Lens for better odds (Alva Temples)",
+      ],
+      1: [
+        "Two manually qualitied to 20% gems, this is just a currency sink",
+        "You can vendor any single `20% quality gem` or set of games with `40% quality total` to get a GCP back",
+        "Heist is a solid source of these",
+      ],
+      2: [
+        "This is across every gear piece, you can reach the 300% without links (unless you are utilising something like Empower or Enhance) or anything resembling a real set, simply get gear that would temporarily boost the quality up and you'll get the credit.",
+        "Fifteen 20% quality gems, not quite a full roster",
+        "You can combine with the above to take some of the pressure off",
+        "Quality of Socketed Gems is found in the Armoury Map now and can count as 6-8% per gem",
+        "`Enhance` in a six link is +80% quality with Level 3 and +120% for Level 4",
+        "`Ashes of the Stars` is +20-30% quality for all gems which will instantly finish the challenge if you simply have at least gems socketed in general",
+        "Going for Facetor's Lens usage is probably easier if you aren't running fully quality gems for whatever reason",
+      ],
+      3: ["A lot of experience, you can use Facetor's Lenses to add a chunk of experience to a gem"],
+    },
     tips: [
-      "Corrupt to lv21/23%: Vaal Orb a lv20 or 20% quality gem. Use Lapidary Lens (Alva temples) for better odds.",
-      "300% quality: Ashes of the Stars (+20-30% per gem) instantly finishes this with enough gems socketed.",
-      "GCP (40): vendor any 20% quality gem, or gems totalling 40% quality, to get one GCP back.",
-      "Armoury Map mod adds +6-8% quality per gem and counts toward the 300% total.",
+      "Pretty standard currency sink and item puzzle that they've used before.",
     ],
   },
   {
@@ -605,11 +778,30 @@ export const CHALLENGES: Challenge[] = [
     requires: 4,
     category: "mechanics",
     difficulty: "medium",
+    stepHints: {
+      0: ["You can force breach bosses using the Atlas and you can force Delirium using Scarabs or the Atlas"],
+      1: ["`Abyss Scarab of Edifice` can force a Stygian Spire to spawn and you can pair this with any forced Shrines from Atlas or Scarabs"],
+      2: [
+        "`Essence Scarab of Calcification` paired with `Torment Scarab of Possession` makes getting this straight forward, if expensively",
+        "`Torment Scarabs` can force extra tormented spirits in general as can the Atlas",
+      ],
+      3: [
+        "`Scarab of Radiant Storms` spawns tempests",
+        "`Blightspawn` on the Atlas Tree forces a blight lane to be all bosses",
+      ],
+      4: [
+        "Luck based, stacking beyond and delirium at the same time probably gets you the best hopes",
+        "You can use a Delirium Orb to force delirium for the entire map",
+        "`Delirium Scarab of Neuroses` forces boss spawns, you can spam them in maps with 100% harvest chance and just rush to the harvest grove to see if there's a boss present",
+      ],
+      5: [
+        "This is literal, you need it to get Possessed while in the ritual itself",
+        "There is a ritual that spawns Tormented Spirits and Scarabs for more in the wild",
+        "`Shore` was removed this league so you can't abuse that this time around",
+      ],
+    },
     tips: [
-      "Blight Boss + Tempest: Scarab of Radiant Storms + Blightspawn atlas node (forces all-boss lane).",
-      "Breach Marshal + Delirium: force both with Atlas passives and Delirium Scarabs.",
-      "Delirium Boss in Sacred Grove: Delirium Scarab of Neuroses forces boss spawns — run in Harvest maps.",
-      "Skip Unique Map Boss Possessed in Ritual — Shore map removed this league, making it harder.",
+      "Skipping the two Possessed ones is likely the best choice but only the Unique Map Boss one is really bad",
     ],
   },
 
@@ -644,9 +836,30 @@ export const CHALLENGES: Challenge[] = [
     requires: 13,
     category: "mechanics",
     difficulty: "easy",
+    stepHints: {
+      0: ["Breaking the Astral Chain in the Mirage Area will reward a cache of Stacked Decks."],
+      1: ["Breaking the Astral Chain in the Mirage Area will reward a cache of Maps."],
+      2: ["100% more Divination Cards found in the Mirage Area."],
+      3: ["Breaking the Astral Chain in the Mirage Area will reward a cache of Currency."],
+      4: ["Skill and Support Gems found in Mirage Area will have a random amount of Quality."],
+      5: ["Players in Mirage Area find 80% more Gold from slain Enemies."],
+      6: ["100% more Maps found in the Mirage Area."],
+      7: ["An additional Bronze Jewel Cache will appear in the Mirage Area.", "An additional Silver Jewel Cache will appear in the Mirage Area.", "An additional Golden Jewel Cache will appear in the Mirage Area."],
+      8: ["Players in Mirage Area gain 50% increased Experience."],
+      9: ["Mirage Area will contain an additional fountain of wealth."],
+      10: ["Enemies in the Mirage Area have a 4% chance to release a Golden Volatile on death."],
+      11: ["Mirage Area will contain 12 additional packs of difficult and rewarding monsters."],
+      12: ["Map Boss of the Mirage Area will be accompanied by Ridan, of the Afarud."],
+      13: ["80% more Scarabs found in the Mirage Area."],
+      14: ["Breaking the Astral Chain in the Mirage Area will reward a cache of Scarabs."],
+      15: ["Breaking the Astral Chain in the Mirage Area will reward a Unique Map."],
+      16: ["Map Boss of the Mirage Area will be accompanied by a Pinnacle Atlas Boss from The Feared."],
+      17: ["80% increased Rarity of items found in the Mirage Area."],
+      18: ["Jewellery found in Mirage Area will instead drop as Jewels.", "Breaking the Astral Chain in the Mirage Area will reward Rare Jewellery."],
+      19: ["100% more Currency found in the Mirage Area."],
+    },
     tips: [
-      "You don't even need to enter or complete the Mirage — just select the wish.",
-      "13 of 20 means you can skip 7 — pick the wishes most useful for your build.",
+      "This is very trivial, simply select differing mirage wishes whenever you see them. You don't even need to go in or complete the mirage.",
     ],
   },
   {
@@ -669,10 +882,44 @@ export const CHALLENGES: Challenge[] = [
     requires: 7,
     category: "boss",
     difficulty: "medium",
+    stepHints: {
+      0: [
+        "For the `Chaos Bloodline`, defeat `The Trialmaster` in any map of Area Level 81 or higher through Ultimatums",
+        "Can be forced using an `Ultimatum Scarab of Dueling`",
+      ],
+      1: ["For the `Nameless Bloodline`, defeat `The King in the Mists` using `An Audience With The King` in the map device"],
+      2: ["For the `Oshabi Bloodline`, defeat `Oshabi, Avatar of the Grove` using a `Sacred Blossom` in the map device"],
+      3: ["For the `Catarina Bloodline`, defeat `Catarina, Master of Undeath` by using a `Syndicate Medallion`"],
+      4: [
+        "For the `Aul Bloodline`, defeat `Aul` in Delve at a depth of 130 or deeper",
+        "The deeper you are the higher your chances",
+        "You can presumably buy a taxi for this",
+      ],
+      5: [
+        "For the `Olroth Bloodline`, defeat `Olroth, Origin of the Fall` in an `Expedition Logbook` with `Knights of the Sun` at Area Level 81 or higher",
+        "Logbooks can force bosses, you should get one of those if you aren't farming expedition and want this.",
+      ],
+      6: [
+        "For the `Lycia Bloodline`, defeat `Lycia, Herald of the Scourge` in the `Forbidden Sanctum`",
+        "This is just completing a `Forbidden Tome`, doesn't seem to immediately have an area level requirement.",
+      ],
+      7: ["For the `Farrul Bloodline`, defeat `Farrul, First of the Plains` in the Menagerie by using a `Farric Tiger Alpha` to open a portal to his fight"],
+      8: [
+        "For the `Delirious Bloodline` by completing a `Simulacrum`",
+        "This is all 15 waves, this is actually rather hard for the vast majority of builds. You might want a carry.",
+      ],
+      9: [
+        "For the `Breachlord Bloodline`, defeat `It That Was Tul` and `It That Was Esh` in a breach fortress",
+        "`Hivebrain Gland` forces this encounter to spawn.",
+      ],
+      10: [
+        "The new Mirage boss",
+        "Availability has yet to be determined, there are no new fragments so this might be rarer than some of the others",
+      ],
+    },
     tips: [
-      "Oshabi, Catarina, Farrul, and King in the Mists are the most accessible.",
-      "Trialmaster: force with Ultimatum Scarab of Dueling. Aul: buy a taxi to Delve depth 130+.",
-      "Skip Simulacrum (all 15 waves — very hard for most builds) and Lycia unless experienced with Sanctum.",
+      "Engage with the recent bloodlines mechanic, nothing special and you can very much choose your own poison.",
+      "You can buy carries for this but most of the bosses aren't too bad. Simulacrum and Lycia are obvious skip choices as they are very specific content with specific build requirements (Lycia less so but it's still Sanctum).",
     ],
   },
   {
@@ -696,9 +943,10 @@ export const CHALLENGES: Challenge[] = [
     category: "atlas",
     difficulty: "medium",
     tips: [
-      "Astrolabes drop from Memory Chain bosses and everywhere after completing Zana's three chains.",
-      "~120 total T14+ maps across 4 regions — very mild once you reach endgame.",
-      "Pick 4 regions near each other on the Atlas to minimise travel.",
+      "Astrolabes drop from the Memory Chain bosses and everywhere on the Atlas after completing Zana's three memory chains.",
+      "This is simply completing Tier 14 or higher maps which makes it very mild realistically and comes out at 120 maps total.",
+      "Astrolabe drop rates are no where close to being accessible right now so you should be prepared to currency dump to get this done.",
+      "As of day three, the supply is in the low tens for most of them. The cost of this could easily shoot upwards.",
     ],
   },
   {
@@ -711,8 +959,8 @@ export const CHALLENGES: Challenge[] = [
     category: "atlas",
     difficulty: "medium",
     tips: [
-      "~500 maps from zero; full Atlas completion knocks out about half passively.",
-      "No IIQ or rarity requirement — run normal rarity maps if needed to grind it out.",
+      "This is just 500 maps from a nil state. If you are doing full atlas completion you will have knocked out at least a fifth of this before you have to even think about it.",
+      "No quantity or rarity reqs means you can just blast it out with normal rarity maps too. Mindless but easy.",
     ],
   },
   {
@@ -725,8 +973,8 @@ export const CHALLENGES: Challenge[] = [
     category: "atlas",
     difficulty: "medium",
     tips: [
-      "T16.5s (Originator maps) are the new endgame grind — worst mods removed.",
-      "Under 50 moderately rolled maps — happens naturally as the core farming loop.",
+      "T16.5s are (intended to be) the new de facto endgame grind and have had the worst mods removed, 2,500% item quantity is under 50 moderately rolled maps.",
+      "As there's no actual requirements, this can become 'easy' if you simply run very basic maps, you'll just take longer.",
     ],
   },
   {
@@ -737,11 +985,11 @@ export const CHALLENGES: Challenge[] = [
       "Break 150 Astral Chains in Mirages of Rare T14+ Maps with at least 100% Item Quantity",
     ],
     category: "mechanics",
-    difficulty: "medium",
+    difficulty: "easy",
     tips: [
-      "Break Astral Chains by killing the 3 rare monsters in a circle around the chain.",
-      "T14+ Rare maps with 100%+ IIQ (Alch+Chaos) are the baseline — happens naturally.",
-      "Rares can wander off — kill them quickly before they stray from the chain.",
+      "This is simply engaging with the new Mirage mechanic in any capacity after hitting Tier 14 on decently juiced maps.",
+      "Breaking Astral Chains is simply killing the three rare monsters in a circle around a large chain. They can wander off which is awkward but it's just 'kill rares'.",
+      "In most cases, you will get an empty box from doing this task, enjoy!",
     ],
   },
   {
@@ -755,10 +1003,14 @@ export const CHALLENGES: Challenge[] = [
     requires: 1,
     category: "atlas",
     difficulty: "medium",
+    stepHints: {
+      0: [
+        "`Destructive Play` might count",
+        "`Elderslayer` rotas should count as two putting this at 50 maps which has good synergy with the GGG challenge",
+      ],
+    },
     tips: [
-      "Eldritch Altars (200) are faster — multiple spawn per map.",
-      "Elderslayer rotas count as two bosses each, putting Witnessed Bosses at ~50 maps.",
-      "Requires Astrolabe-affected maps — get Astrolabes from Memory Chain bosses.",
+      "Astrolabe synergistic farming challenge. Altars you can get a lot of per map so despite the higher number it is probably better than maven witnessing.",
     ],
   },
   {
@@ -776,8 +1028,8 @@ export const CHALLENGES: Challenge[] = [
     category: "mechanics",
     difficulty: "medium",
     tips: [
-      "New content — at minimum ~25 full sets of Astrolabe maps required.",
-      "Pick Currency, Fragment, and Map — most useful and likely most common reward types.",
+      "This looks like at minimum 25 full sets of astrolabe maps, this might end up rather grind heavy but we'll see as the league starts.",
+      "This is functionally a currency dump. Each quadrant has multiple outcomes which seem to be biased, Uniques will probably be easiest to accomplish.",
     ],
   },
   {
@@ -795,12 +1047,48 @@ export const CHALLENGES: Challenge[] = [
       "Complete The Twisted (4 Elder Guardian Maps, 4+ mods)",
     ],
     category: "boss",
-    difficulty: "hard",
+    difficulty: "medium",
+    stepHints: {
+      0: ["The Eater of Worlds"],
+      1: ["The Searing Exarch"],
+      2: ["Al-Hezmin, the Hunter", "Baran, the Crusader", "Drox, the Warlord", "Veritania, the Redeemer"],
+      3: [
+        "The Shaper",
+        "The Elder",
+        "Cortex",
+        "Sirus",
+        "Set of `Elderslayer Crests`",
+        "Incarnation of Dread",
+        "`Echo of Reverence` boss",
+        "Itemised memories exist now so this should be less dreadful",
+        "GGG did not in fact deploy this change, so it is still dreadful",
+        "I assume it isn't on purpose as they have entries in the currency tab and on the currency exchange",
+      ],
+      4: [
+        "`Rewritten Distant Memory`",
+        "`Augmented Distant Memory`",
+        "`Altered Distant Memory`",
+        "`Twisted Distant Memory`",
+        "Very good gold returns for time investment, decent chance of `Cortex` and a very low chance of jackpot rings",
+      ],
+      5: [
+        "`Lair of the Hydra Map`",
+        "`Maze of the Minotaur Map`",
+        "`Forge of the Phoenix Map`",
+        "`Pit of the Chimera Map`",
+        "Can be rather annoying",
+        "Historically, shaper sets mostly cover the cost of the run and Mavens generated will be pure profit",
+      ],
+      6: [
+        "`The Neglected Flame` in Courtyard of Wasting",
+        "`The Cardinal of Fear` in Chambers of Impurity",
+        "`The Deceitful God` in Theatre of Lies",
+        "This is an invitation containing all of the penultimate memory bosses, they are pretty bad to farm but you only need to do it once",
+        "Itemised memories should make this much more viable on trade leagues",
+      ],
+    },
     tips: [
-      "4 modifiers only — no IIQ required, so roll for easy/cheap mods.",
-      "The Formed (Shaper Guardian maps) historically covers run costs with Mavens generated.",
-      "The Twisted: Blessed Orb rerolls which Elder Guardian a map has — reroll bad ones.",
-      "The Feared includes Cortex/Sirus/Incarnation of Dread — itemised memories make this more viable on trade.",
+      "Normal invitation challenge, nothing remarkable and doesn't need a notable build since it's just four mods with no quantity so you can roll until you get a baby invitation.",
     ],
   },
 
@@ -819,11 +1107,11 @@ export const CHALLENGES: Challenge[] = [
     ],
     requires: 4,
     category: "atlas",
-    difficulty: "medium",
+    difficulty: "hard",
     tips: [
-      "T17s (rebranded Nightmare maps) should be easier than previous leagues.",
-      "Use a Scarab of Stability to prevent portals being consumed on disconnect.",
-      "Roll maps to avoid the worst mods — 175% IIQ is achievable with moderate rolling.",
+      "The rebranded T17s, this should be easier than previous leagues. They are still basically the same thing despite being downgraded to Tier 16s.",
+      "Using a `Scarab of Stability` can allow for a lot of extra breathing room as it stops portals being consumed.",
+      "The `Scarab of Bisection` has been retired and there's now the `Scarab of the Sinistral` and `Scarab of the Dextral` which disable Suffixes and buffs Prefixes (or vice versa). It might be viable for this if you roll carefully but is fiddly as you would need to manually work out quantity.",
     ],
   },
   {
@@ -840,9 +1128,8 @@ export const CHALLENGES: Challenge[] = [
     category: "boss",
     difficulty: "hard",
     tips: [
-      "New Mirage boss — rarity and difficulty unknown at league start.",
-      "Pick the 3 avoidance conditions that match your build's mobility and defences.",
-      "Higher DPS = less time to make mistakes. Burst the boss down quickly.",
+      "It's a conditional run of the new boss accessed via using `The Black Barya` on the Atlas. The drop seems fairly rare and the fight has a chase unique which means the pricing is unlikely to be reasonable.",
+      "As is generally the case, the higher your DPS the lower your time to make mistakes is.",
     ],
   },
   {
@@ -853,11 +1140,9 @@ export const CHALLENGES: Challenge[] = [
       "Defeat Map Bosses in 75 T16 Rare Maps with Atlas Astrolabe and at least 150% Item Quantity",
     ],
     category: "atlas",
-    difficulty: "medium",
+    difficulty: "hard",
     tips: [
-      "This is just the new core endgame mapping loop after getting Voidstones.",
-      "150%+ IIQ: Alch the map and target high-quantity mods.",
-      "Combine with Magnificent Memories (#31) for efficiency — both need T16 maps.",
+      "Astrolabes are disgustingly scarce compared to what I expected and you will average maybe one per two hundred maps. You are likely to spend several divines finishing this up with current prices. Considering the requirement is also a pretty juiced map, this might end up rough.",
     ],
   },
   {
@@ -880,9 +1165,9 @@ export const CHALLENGES: Challenge[] = [
     category: "boss",
     difficulty: "hard",
     tips: [
-      "The Shaper and Cortex are the most reasonable to self-complete.",
-      "All pinnacle fights have persistent arena DoT — high DPS is crucial to limit exposure time.",
-      "Buy carries for the Incarnation bosses (Dread/Fear/Neglect) if your build isn't a boss killer.",
+      "This is four of the seven uber boss variants, if you have a boss killer this should be fine, otherwise you can buy the clears.",
+      "Shaper and Cortex are the most reasonable to self-complete with the others varying wildly by your build.",
+      "All of the fights have lingering damage over time that lasts the entire fight which makes high DPS crucial if you want to have leeway in your execution. The longer the fight the worse the arena and the more likely you are to fail.",
     ],
   },
   {
@@ -899,12 +1184,31 @@ export const CHALLENGES: Challenge[] = [
     ],
     requires: 4,
     category: "misc",
-    difficulty: "endgame",
+    difficulty: "medium",
+    stepHints: {
+      0: [
+        "Buying Five Way runs",
+        "Coward's Trial",
+        "`Omen of Amelioration` stops you losing all your XP on dying, but only once per area",
+        "Something to keep in mind is that this is triggered *regardless of if you can actually lose XP in an area* do not take one into an invitation or uber boss, you will still lose your Omen despite no XP loss being possible",
+        "`Abyss` with a basic tree that grabs all nodes except Depths is decent and fairly safe for consistent XP per map",
+        "`Breach` stacking unstable breaches is likely pretty decent but time will tell",
+        "Rest in peace breachstones and beachheads",
+      ],
+      1: [
+        "Running `Gift to the Goddess` is six uses of the font which would make this eight runs total.",
+        "Getting `Darkshrines` can allow for an additional usage of the font.",
+      ],
+      2: [
+        "It's 1,000 maps using scarabs. You probably already know if you are going to get this",
+        "T16.5s are still T16s",
+      ],
+      3: ["Not terribly hard, Maven rotas are always profit and this is simply running around 13 of those from a nil state."],
+      4: ["Rather easy realistically, Beasts, Essences, Breach and Nemesis can speed this up a lot"],
+      5: ["Not sure how hard this will end up, but yo ucan presumably run fully miraged maps to force this."],
+    },
     tips: [
-      "Divine Font (50): run Gift to the Goddess for 6 font uses per run — ~8 runs total.",
-      "T16 with Scarabs (1000) and 4-Mod Rares (250): happens naturally over the league.",
-      "Skip Level 100 unless committed — XP loss above 95 is brutal.",
-      "Omen of Amelioration stops XP loss once per area — do NOT use in invitations/uber bosses where XP loss can't happen anyway.",
+      "As is seemingly tradition now, this is actually very easy.",
     ],
   },
 ];

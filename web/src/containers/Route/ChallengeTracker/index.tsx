@@ -34,13 +34,15 @@ import shrineIcon     from "../../../components/FragmentStep/Fragment/images/shr
 import essenceIcon    from "../../../components/FragmentStep/Fragment/images/essence.webp";
 
 const DIFFICULTY_LABEL: Record<ChallengeDifficulty, string> = {
+  "very-easy": "Very Easy",
   easy: "Easy",
-  medium: "Medium",
+  medium: "Normal",
   hard: "Hard",
   endgame: "Endgame",
 };
 
 const DIFFICULTY_CLASS: Record<ChallengeDifficulty, string> = {
+  "very-easy": styles.diffVeryEasy,
   easy: styles.diffEasy,
   medium: styles.diffMedium,
   hard: styles.diffHard,
@@ -48,10 +50,11 @@ const DIFFICULTY_CLASS: Record<ChallengeDifficulty, string> = {
 };
 
 const DIFFICULTY_ORDER: Record<ChallengeDifficulty, number> = {
-  easy: 0,
-  medium: 1,
-  hard: 2,
-  endgame: 3,
+  "very-easy": 0,
+  easy: 1,
+  medium: 2,
+  hard: 3,
+  endgame: 4,
 };
 
 const QUEST_TYPE_LABEL: Record<ChallengeQuestType, string> = {
@@ -232,8 +235,7 @@ function StepWithHints({ text, hints }: { text: string; hints: string[] }) {
 
 // ── Per-challenge section ─────────────────────────────────────────────────────
 
-function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHints: boolean }) {
-  const [showTips, setShowTips] = useState(defaultShowHints);
+function ChallengeSection({ c }: { c: Challenge }) {
   const doneCount = useRecoilValue(challengeDoneCountSelectorFamily(c.id));
   const needed = c.requires ?? c.steps.length;
   const hasTips = c.tips && c.tips.length > 0;
@@ -272,22 +274,10 @@ function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHi
 
   const meta = hasTips ? (
     <>
-      <button
-        className={classNames(styles.tipsToggle)}
-        onClick={() => setShowTips(!showTips)}
-      >
-        {showTips
-          ? <BiSolidInfoCircle className="inlineIcon" />
-          : <BiInfoCircle className="inlineIcon" />}
-      </button>
-      {showTips && (
-        <>
-          <hr />
-          {c.tips!.map((tip, i) => (
-            <span key={i}>{"• "}{tip}</span>
-          ))}
-        </>
-      )}
+      <hr />
+      {c.tips!.map((tip, i) => (
+        <span key={i}>{"• "}{tip}</span>
+      ))}
     </>
   ) : undefined;
 
@@ -335,7 +325,7 @@ export default function ChallengeTracker() {
       </div>
 
       {challenges.map((c) => (
-        <ChallengeSection key={c.id} c={c} defaultShowHints={config.showChallengeHints} />
+        <ChallengeSection key={c.id} c={c} />
       ))}
     </>
   );

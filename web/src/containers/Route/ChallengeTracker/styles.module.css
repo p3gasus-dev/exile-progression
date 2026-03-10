@@ -48,6 +48,7 @@
 
 /* ── Difficulty colours ──────────────────────────────────────── */
 
+.diffVeryEasy { color: #7ad4e0; }
 .diffEasy    { color: #5db86c; }
 .diffMedium  { color: #e0c040; }
 .diffHard    { color: #e07030; }
@@ -106,18 +107,4 @@
   opacity: 1;
 }
 
-/* ── Tips toggle button ──────────────────────────────────────── */
 
-.tipsToggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--accent-primary);
-  opacity: 0.6;
-  padding: 0 var(--size-1);
-  line-height: 1;
-}
-
-.tipsToggle:hover {
-  opacity: 1;
-}

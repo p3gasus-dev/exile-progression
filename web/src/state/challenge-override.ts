@@ -8,6 +8,7 @@ const CHALLENGE_TEXT_VERSION = 1;
 // ── Difficulty helpers ────────────────────────────────────────────────────────
 
 const TEXT_TO_DIFFICULTY: Record<string, ChallengeDifficulty> = {
+  "very-easy": "very-easy",
   easy: "easy",
   medium: "medium",
   hard: "hard",
@@ -78,8 +79,8 @@ export function textToChallenges(text: string): Challenge[] {
       const line = lines[i];
       const trimmed = line.trimEnd();
 
-      // #easy / #medium / #hard / #endgame
-      const diffMatch = /^#(easy|medium|hard|endgame)$/.exec(trimmed);
+      // #very-easy / #easy / #medium / #hard / #endgame
+      const diffMatch = /^#(very-easy|easy|medium|hard|endgame)$/.exec(trimmed);
       if (diffMatch) {
         difficulty = TEXT_TO_DIFFICULTY[diffMatch[1]];
         continue;

@@ -27,9 +27,9 @@ const ChallengeGrammar: Grammar = {
       variable: /.+/,
     },
   },
-  // #easy / #medium / #hard / #endgame / #req N / #tip ...
+  // #very-easy / #easy / #medium / #hard / #endgame / #req N / #tip ...
   directive: {
-    pattern: /^#(easy|medium|hard|endgame|req|tip)\b.*/m,
+    pattern: /^#(very-easy|easy|medium|hard|endgame|req|tip)\b.*/m,
     inside: {
       "keyword control-flow": /^#\w+/,
       property: /.+/,
@@ -91,6 +91,7 @@ function HelpPage() {
       </div>
       <hr />
       <div>
+        <span className="token keyword control-flow">#very-easy</span>{" / "}
         <span className="token keyword control-flow">#easy</span>{" / "}
         <span className="token keyword control-flow">#medium</span>{" / "}
         <span className="token keyword control-flow">#hard</span>{" / "}
