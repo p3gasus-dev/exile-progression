@@ -53,14 +53,6 @@
 .diffHard    { color: #e07030; }
 .diffEndgame { color: #c040c0; }
 
-/* ── Header right (difficulty + requires badges) ─────────────── */
-
-.headerRight {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--size-2);
-}
-
 /* ── Difficulty badge ────────────────────────────────────────── */
 
 .diffBadge {

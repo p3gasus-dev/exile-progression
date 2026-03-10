@@ -264,19 +264,18 @@ function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHi
     };
   });
 
-  // Header right: requires badge + difficulty badge
-  const nameRight = (
-    <span className={classNames(styles.headerRight)}>
-      {hasRequires && (
-        <span className={classNames(styles.requiresBadge, doneCount >= needed ? styles.requiresMet : undefined)}>
-          {doneCount}/{c.requires}
-        </span>
-      )}
-      <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
-        {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
-      </span>
+  // Difficulty badge on the left, requires badge on the right
+  const nameLeft = (
+    <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
+      {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
     </span>
   );
+
+  const nameRight = hasRequires ? (
+    <span className={classNames(styles.requiresBadge, doneCount >= needed ? styles.requiresMet : undefined)}>
+      {doneCount}/{c.requires}
+    </span>
+  ) : undefined;
 
   const meta = hasTips ? (
     <div className={classNames(styles.metaRow)}>
@@ -304,6 +303,7 @@ function ChallengeSection({ c, defaultShowHints }: { c: Challenge; defaultShowHi
     <SectionHolder
       key={c.id}
       name={`${c.number}. ${c.name}`}
+      nameLeft={nameLeft}
       nameRight={nameRight}
       items={taskItems}
       meta={meta}

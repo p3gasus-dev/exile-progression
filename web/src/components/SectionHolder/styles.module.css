@@ -22,6 +22,11 @@
   gap: var(--size-2);
 }
 
+.nameLeft {
+  display: inline-flex;
+  align-items: center;
+}
+
 .nameRight {
   display: inline-flex;
   align-items: center;
