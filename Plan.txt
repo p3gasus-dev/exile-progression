@@ -16,7 +16,7 @@ LAYOUT:
 ALWAYS:
 	review changes
 	update settings pages accordingly
-	update plan, readme, format accordingly
+	update plan, readme, and wiki accordingly
 
 TODO:
 
