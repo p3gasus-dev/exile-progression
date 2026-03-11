@@ -48,10 +48,10 @@
 
 /* ── Difficulty colours ──────────────────────────────────────── */
 
-.diffVeryEasy { color: #7ad4e0; }
-.diffEasy    { color: #5db86c; }
-.diffMedium  { color: #e0c040; }
-.diffHard    { color: #e07030; }
+.diffVeryEasy { color: #00DA00; }
+.diffEasy    { color: #56C256; }
+.diffMedium  { color: #A5B2C2; }
+.diffHard    { color: #D96865; }
 .diffEndgame { color: #c040c0; }
 
 /* ── Badge group (left side of section header) ───────────────── */
@@ -73,9 +73,9 @@
 .questBadge {}
 
 .qtRequired      { color: #c87842; }
-.qtNewContent    { color: #8060b8; }
-.qtCurrencySink  { color: #c06890; }
-.qtGrindHeavy   { color: #3898a8; }
+.qtNewContent    { color: #8970D2; }
+.qtCurrencySink  { color: #D270AA; }
+.qtGrindHeavy    { color: #00C6D8; }
 
 /* ── Requires badge (done/needed in header) ──────────────────── */
 
@@ -87,7 +87,7 @@
 /* ── Requires met (green when threshold reached) ─────────────── */
 
 .requiresMet {
-  color: #5db86c;
+  color: #56C256;
 }
 
 /* ── Per-step hints toggle ───────────────────────────────────── */
