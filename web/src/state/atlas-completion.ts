@@ -36,60 +36,95 @@ export const ATLAS_GUIDE: AtlasGuidePhase[] = [
         detail: "Prioritise the generic quantity cluster before specialising.",
       },
       {
-        id: "kirac-missions",
-        label: "Complete all Kirac missions each time they reset",
-        detail: "Each completion grants a free bonus Atlas Passive point.",
-      },
-      {
-        id: "favourite-2",
-        label: "Set 2 Favourite Maps (dense T5–T7 layouts)",
-        detail: "Crimson Temple, Crimson Township, or Underground River are solid picks.",
-      },
-      {
         id: "white-coverage",
         label: "Complete 10+ different white map types",
         detail: "Unlocks atlas passive points and map bonus objectives.",
       },
+      {
+        id: "astrolabe-intro",
+        label: "Apply your first Arcane Astrolabe to an Atlas quadrant",
+        detail: "Astrolabes add a content type to all maps in that region. Clear influenced maps to escalate rewards.",
+      },
+      {
+        id: "shrines",
+        label: "Spec into the Shrine wheel for movement speed and survivability",
+        detail: "Guaranteed shrine per map; grab duration and effect nodes.",
+      },
     ],
   },
   {
-    phase: "Phase 2 — Yellow Maps & First Voidstones",
+    phase: "Phase 2 — Yellow Maps & Eldritch Voidstone",
     steps: [
       {
         id: "yellow-coverage",
         label: "Complete 10+ different yellow map types (T6–T10)",
       },
       {
-        id: "first-boss",
-        label: "Defeat Eater of Worlds or Searing Exarch — earn 1st Voidstone",
-        detail: "Spec several passives into the chosen boss tree first.",
+        id: "eater-kill",
+        label: "Defeat Eater of Worlds",
+        detail: "Enable Eldritch influence, run influenced T1–T15 maps until Screaming Invitation drops.",
       },
       {
-        id: "second-boss",
-        label: "Defeat the other early pinnacle boss — earn 2nd Voidstone",
+        id: "exarch-kill",
+        label: "Defeat Searing Exarch",
+        detail: "Enable Searing Exarch influence, farm Incandescent Invitation from T13–T15 maps.",
+      },
+      {
+        id: "eldritch-voidstone",
+        label: "Take the Eldritch Voidstone — requires BOTH Eater and Exarch kills",
+        detail: "Eldritch Altars now have 25% chance for an extra modifier from the other influence type.",
       },
       {
         id: "passive-30",
-        label: "Reach 30 Atlas Passive points; spec both early boss trees",
-        detail: "Running both early bosses grants double passive books.",
-      },
-      {
-        id: "favourite-4",
-        label: "Unlock and set all 4 Favourite Map slots",
+        label: "Reach 30 Atlas Passive points; spec both Eldritch boss trees",
       },
     ],
   },
   {
-    phase: "Phase 3 — Red Maps & The Maven",
+    phase: "Phase 3 — Red Maps & Originator Voidstone",
     steps: [
       {
         id: "red-coverage",
         label: "Complete 10+ different red maps (T11–T15)",
       },
       {
-        id: "t16-complete",
-        label: "Complete a Tier 16 map",
-        detail: "Use Sextants and Scarabs for your first T16 to ensure completion.",
+        id: "reverent-fragments",
+        label: "Collect 5 Reverent Fragments from Eldritch boss drops",
+        detail: "Screaming and Incandescent Invitations both yield Reverent Fragments.",
+      },
+      {
+        id: "incarnation-kill",
+        label: "Defeat Incarnation of Dread — earn Originator Voidstone",
+        detail: "Use 5 Reverent Fragments. Survive rose phases at 75% / 50% / 25% HP.",
+      },
+      {
+        id: "bonus-objectives",
+        label: "Complete bonus objectives in 10+ different maps",
+        detail: "Grants additional Atlas passive points.",
+      },
+    ],
+  },
+  {
+    phase: "Phase 4 — Uber Elder, Maven & Full Completion",
+    steps: [
+      {
+        id: "shaper-guardians",
+        label: "Defeat all 4 Shaper Guardians (Minotaur, Phoenix, Hydra, Chimera)",
+        detail: "Farm T14+ maps for the 4 Shaper Guardian maps.",
+      },
+      {
+        id: "shaper-kill",
+        label: "Defeat The Shaper",
+      },
+      {
+        id: "elder-guardians",
+        label: "Defeat all 4 Elder Guardians",
+        detail: "Elder Guardians spawn as extra bosses in T14–T16 maps.",
+      },
+      {
+        id: "uber-elder-kill",
+        label: "Defeat Uber Elder — earn Decayed Voidstone",
+        detail: "Combine Shaper + Elder fragments. Both bosses fight simultaneously.",
       },
       {
         id: "witness-bosses",
@@ -98,41 +133,22 @@ export const ATLAS_GUIDE: AtlasGuidePhase[] = [
       },
       {
         id: "maven-kill",
-        label: "Defeat The Maven — earn 3rd Voidstone",
-      },
-      {
-        id: "bonus-objectives",
-        label: "Complete bonus objectives in 10+ different maps",
-        detail: "Completing bonus objectives on the Atlas grants passive points.",
-      },
-    ],
-  },
-  {
-    phase: "Phase 4 — Uber Elder & Full Completion",
-    steps: [
-      {
-        id: "elder-kill",
-        label: "Defeat The Uber Elder — earn 4th Voidstone",
-        detail: "Requires activating both Shaper and Elder influence on the Atlas.",
+        label: "Defeat The Maven — earn Ceremonial Voidstone",
+        detail: "Maven-witnessed bosses can now drop Maven Chisels.",
       },
       {
         id: "all-voidstones",
-        label: "Socket all 4 Voidstones into the Map Device",
-        detail: "All maps now drop at +4 tiers, maximising juice.",
+        label: "Socket all 4 Voidstones — maps drop at maximum tier",
       },
       {
-        id: "map-types-20",
-        label: "Complete 20+ different map types for full atlas coverage",
-      },
-      {
-        id: "sextants",
-        label: "Apply Sextants to all socketed Voidstones for maximum returns",
-        detail: "Awakened Sextants on Voidstones give the most value.",
+        id: "astrolabes-full",
+        label: "Apply Astrolabes to all Atlas quadrants for maximum content density",
+        detail: "Escalate Astrolabe modifiers by clearing influenced maps in each region.",
       },
       {
         id: "passives-full",
         label: "Fully allocate all available Atlas Passive points",
-        detail: "Respect passives to match your chosen strategy once objectives are done.",
+        detail: "Respec passives to match your chosen farming strategy.",
       },
     ],
   },

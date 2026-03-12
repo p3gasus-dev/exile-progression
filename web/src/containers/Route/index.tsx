@@ -26,8 +26,9 @@ import { useRecoilCallback, useRecoilValue } from "recoil";
 
 
 const ChallengeTracker = lazy(() => import("./ChallengeTracker"));
+const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 
-type RouteTab = "acts" | "challenges";
+type RouteTab = "acts" | "voidstone1" | "voidstone2" | "voidstone3" | "voidstone4" | "challenges";
 
 // ─── Step highlight detection ──────────────────────────────────────────────────
 
@@ -185,8 +186,12 @@ export default function RouteContainer() {
 
   const tabs: TabEntry[] = [
     { id: "acts", label: "ACT 1–10" },
+    { id: "voidstone1", label: "VOIDSTONE 1" },
+    { id: "voidstone2", label: "VOIDSTONE 2" },
+    { id: "voidstone3", label: "VOIDSTONE 3" },
+    { id: "voidstone4", label: "VOIDSTONE 4" },
     ...(config.showChallenges
-      ? [{ id: "challenges" as RouteTab, label: "CHALLENGES 1-40" }]
+      ? [{ id: "challenges" as RouteTab, label: "CHALLENGES" }]
       : []),
   ];
 
@@ -204,6 +209,10 @@ export default function RouteContainer() {
       <div className={classNames(styles.routeContent)}>
         <Suspense fallback={<Loading />}>
           {visibleTab === "acts" && <ActRoute />}
+          {visibleTab === "voidstone1" && <VoidstoneRoute vsIndex={0} />}
+          {visibleTab === "voidstone2" && <VoidstoneRoute vsIndex={1} />}
+          {visibleTab === "voidstone3" && <VoidstoneRoute vsIndex={2} />}
+          {visibleTab === "voidstone4" && <VoidstoneRoute vsIndex={3} />}
           {visibleTab === "challenges" && <ChallengeTracker />}
         </Suspense>
       </div>

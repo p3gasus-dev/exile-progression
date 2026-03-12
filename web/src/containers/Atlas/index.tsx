@@ -1,20 +1,15 @@
+import {
+  ATLAS_GUIDE,
+  atlasCompletionProgressSelectorFamily,
+  useClearAtlasCompletion,
+} from "../../state/atlas-completion";
 import { atlasConfigSelector, AtlasConfig } from "../../state/atlas-config";
 import { SplitRow } from "../../components/SplitRow";
 import { LabTracker } from "./LabTracker";
-import { Loading } from "../../components/Loading";
-import VoidstoneRoute from "../Route/VoidstoneRoute";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { interactiveStyles } from "../../styles";
 import { useRecoilState } from "recoil";
-import { Suspense, useState } from "react";
-
-const VOIDSTONE_LABELS = [
-  "VOIDSTONE 1",
-  "VOIDSTONE 2",
-  "VOIDSTONE 3",
-  "VOIDSTONE 4",
-] as const;
+import { MdCheck } from "react-icons/md";
 
 function Label({ children }: { children: React.ReactNode }) {
   return <div className={classNames(styles.label)}>{children}</div>;
@@ -24,9 +19,60 @@ function Value({ children }: { children: React.ReactNode }) {
   return <div className={classNames(styles.value)}>{children}</div>;
 }
 
+// ── Completion guide ──────────────────────────────────────────────────────────
+
+function GuideStep({ id, label, detail }: { id: string; label: string; detail?: string }) {
+  const [done, setDone] = useRecoilState(atlasCompletionProgressSelectorFamily(id));
+
+  return (
+    <li
+      className={classNames(styles.guideStep, done && styles.guideStepDone)}
+      onClick={() => setDone(!done)}
+    >
+      <div className={classNames(styles.guideCheck)}>{done && <MdCheck />}</div>
+      <div className={classNames(styles.guideStepContent)}>
+        <span className={classNames(styles.guideStepLabel)}>{label}</span>
+        {detail && <span className={classNames(styles.guideStepDetail)}>{detail}</span>}
+      </div>
+    </li>
+  );
+}
+
+function CompletionGuide() {
+  const clearAll = useClearAtlasCompletion();
+
+  return (
+    <div className={classNames(styles.container)}>
+      <div className={classNames(styles.guideHeader)}>
+        <div className={classNames(styles.sectionHeader)}>Atlas Progression</div>
+        <button
+          className={classNames(styles.guideResetBtn)}
+          onClick={clearAll}
+          title="Reset all progress"
+        >
+          Reset
+        </button>
+      </div>
+      <div className={classNames(styles.guideList)}>
+        {ATLAS_GUIDE.map((phase) => (
+          <details key={phase.phase} className={classNames(styles.guidePhase)} open>
+            <summary className={classNames(styles.guidePhaseName)}>{phase.phase}</summary>
+            <ul className={classNames(styles.guideStepList)}>
+              {phase.steps.map((step) => (
+                <GuideStep key={step.id} {...step} />
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Main Atlas container ──────────────────────────────────────────────────────
+
 export default function AtlasContainer() {
   const [config, setConfig] = useRecoilState(atlasConfigSelector);
-  const [activeTab, setActiveTab] = useState(0);
 
   function update(partial: Partial<AtlasConfig>) {
     setConfig({ ...config, ...partial });
@@ -34,29 +80,8 @@ export default function AtlasContainer() {
 
   return (
     <>
-      {/* ── Tab bar ────────────────────────────────────────────────────── */}
-      <div className={classNames(styles.tabBar)}>
-        {VOIDSTONE_LABELS.map((label, i) => (
-          <button
-            key={i}
-            className={classNames(styles.tabButton, {
-              [styles.tabActive]: activeTab === i,
-              [interactiveStyles.activePrimary]: activeTab === i,
-              [interactiveStyles.activeSecondary]: activeTab !== i,
-            })}
-            onClick={() => setActiveTab(i)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-
-      {/* ── Route content ─────────────────────────────────────────────── */}
-      <div className={classNames(styles.routeContent)}>
-        <Suspense fallback={<Loading />}>
-          <VoidstoneRoute vsIndex={activeTab} />
-        </Suspense>
-      </div>
+      {/* ── Atlas completion guide ─────────────────────────────────────── */}
+      <CompletionGuide />
 
       {/* ── Labyrinth Tracker (optional) ──────────────────────────────── */}
       {config.showLabTracker && <LabTracker />}

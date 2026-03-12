@@ -1,13 +1,12 @@
 #section Early Atlas
 Talk to {quest_text|Kirac} in Oriath to unlock the Atlas
-Run {map_white|T1-T5} maps — complete Kirac's quest chain
+Complete early maps — work outward from the center of the Atlas
 Speak with {league|The Envoy} when it appears to unlock Eldritch Influence
-Unlock {league|Eater of Worlds} and {league|Searing Exarch} on your Map Device via Kirac
+Enable {league|Eater of Worlds} or {league|Searing Exarch} influence via the Atlas UI
 {area|Labyrinth_Airlock}
 {ascend|eternal}
     #sub Requires level 68 and {quest_text|Offering to the Goddess}
     #sub Obtain Offering by completing a Trial of Ascendancy in a {map_yellow|T6+} map
-Get {crafting|EndGame_Labyrinth_boss_3}
 
 #section Eater of Worlds Progression
 Enable {league|Eater of Worlds} influence when opening maps
@@ -20,4 +19,18 @@ Farm {map_red|T13-T15} influenced maps until {quest_text|Screaming Invitation} d
 Alch {quest_text|Screaming Invitation} to Rare
 ➞ {arena|The Absence of Symmetry and Harmony}
 Kill {kill|The Eater of Worlds}
-Take the {quest_text|Grasping Voidstone} and socket it into your Atlas Map Device
+
+#section Searing Exarch Progression
+Enable {league|Searing Exarch} influence when opening maps
+Run {map_white|T1-T4} influenced maps — complete biome objectives
+Run {map_yellow|T5-T8} influenced maps — complete biome objectives
+Run {map_red|T9-T12} influenced maps — complete biome objectives
+Farm {map_red|T13-T15} influenced maps until {quest_text|Incandescent Invitation} drops
+
+#section The Searing Exarch
+Alch {quest_text|Incandescent Invitation} to Rare
+    #sub Hold until the fireball phase ends to skip it
+➞ {arena|The Searing Exarch's Domain}
+Kill {kill|The Searing Exarch}
+Take the {quest_text|Eldritch Voidstone} and socket it into your Atlas
+    #sub Requires defeating BOTH Eater of Worlds and Searing Exarch

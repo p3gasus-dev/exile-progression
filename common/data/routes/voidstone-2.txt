@@ -1,14 +1,14 @@
-#section Searing Exarch Progression
-Enable {league|Searing Exarch} influence when opening maps
-Run {map_white|T1-T4} influenced maps — complete biome objectives
-Run {map_yellow|T5-T8} influenced maps — complete biome objectives
-Run {map_red|T9-T12} influenced maps — complete biome objectives
-Farm {map_red|T13-T15} influenced maps until {quest_text|Incandescent Invitation} drops
+#section Originator Approach
+Collect {quest_text|Reverent Fragments} by defeating Eldritch bosses in {map_red|T13+} maps
+    #sub Screaming and Incandescent Invitations both drop Reverent Fragments
+Gather 5 {quest_text|Reverent Fragments} for the Incarnation encounter
 
-#section The Searing Exarch
-Alch {quest_text|Incandescent Invitation} to Rare
-Place {quest_text|Incandescent Invitation} in your Map Device
-    #sub Hold until the fireball phase ends to skip it
-➞ {arena|The Searing Exarch's Domain}
-Kill {kill|The Searing Exarch}
-Take the {quest_text|Omniscient Voidstone} and socket it into your Atlas Map Device
+#section The Incarnation of Dread
+Use 5 {quest_text|Reverent Fragments} at your Map Device
+➞ {arena|The Originator's Domain}
+Kill {kill|The Incarnation of Dread}
+    #sub At 75% / 50% / 25% HP, enter rose phases — collect and deliver coloured roses
+    #sub Manage portals and debuffs during each rose phase
+    #sub Kill adds quickly to prevent overwhelm between phases
+Take the {quest_text|Originator Voidstone} and socket it into your Atlas
+    #sub Unlocks Exceptional Support Gems from Atlas boss drops
