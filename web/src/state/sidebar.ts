@@ -9,6 +9,12 @@ export const sidebarExpandedAtom = atom<boolean>({
   default: true,
 });
 
+/** Whether the tree viewer is in wide (expanded) mode, overlapping route content. */
+export const treeExpandedAtom = atom<boolean>({
+  key: "treeExpanded",
+  default: false,
+});
+
 /**
  * True when the sidebar has content to show (build imported with gem links,
  * skill tree, or search strings). Used by the Route container to conditionally

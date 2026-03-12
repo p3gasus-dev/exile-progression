@@ -1,7 +1,7 @@
 import { gemLinksSelector } from "../../state/gem-links";
 import { searchStringsSelector } from "../../state/search-strings";
 import { urlTreesSelector } from "../../state/tree/url-tree";
-import { sidebarExpandedAtom } from "../../state/sidebar";
+import { sidebarExpandedAtom, treeExpandedAtom } from "../../state/sidebar";
 import { interactiveStyles } from "../../styles";
 import { GemLinkViewer } from "../GemLinkViewer";
 import { SkillTreeViewer } from "../SkillTreeViewer";
@@ -17,6 +17,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 
 export function Sidebar() {
   const [expand, setExpand] = useRecoilState(sidebarExpandedAtom);
+  const isTreeExpanded = useRecoilValue(treeExpandedAtom);
   const [activeTab, setActiveTab] = React.useState<number>(0);
 
   const sections = useSections();
@@ -29,7 +30,7 @@ export function Sidebar() {
     <div className={classNames(styles.sidebar)}>
       {/* ── Regex text boxes — above the planner ── */}
       {expand && (
-        <div className={classNames(styles.searchSection)}>
+        <div className={classNames(styles.searchSection, isTreeExpanded && styles.searchSectionExpanded)}>
           {hasSearch
             ? searchStrings!.map((s, i) => (
                 <input
@@ -62,7 +63,7 @@ export function Sidebar() {
       {expand && sections.length > 0 && (
         <>
           <hr />
-          <div className={classNames(styles.contents, styles.expand)}>
+          <div className={classNames(styles.contents, styles.expand, isTreeExpanded && styles.contentsExpanded)}>
             {React.Children.toArray(
               sections.map((v, i) => (
                 <>

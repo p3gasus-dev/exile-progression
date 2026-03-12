@@ -15,7 +15,9 @@ import classNames from "classnames";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
+import { MdOpenInFull, MdCloseFullscreen } from "react-icons/md";
+import { treeExpandedAtom } from "../../state/sidebar";
+import { useRecoilState } from "recoil";
 
 interface SkillTreeViewerProps {
   urlTrees: UrlTree.Data[];
@@ -32,28 +34,11 @@ interface RenderData {
 
 export function SkillTreeViewer({ urlTrees }: SkillTreeViewerProps) {
   const svgDivRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<HTMLDivElement>(null);
   const [curIndex, setCurIndex] = useState<number>(0);
   const [renderData, setRenderData] = useState<RenderData>();
   const [styleId] = useState(() => randomId(6));
   const [tooltipNodeId, setTooltipNodeId] = useState<string | null>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  useEffect(() => {
-    function onFullscreenChange() {
-      setIsFullscreen(document.fullscreenElement !== null);
-    }
-    document.addEventListener("fullscreenchange", onFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
-  }, []);
-
-  function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-      viewerRef.current?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  }
+  const [isExpanded, setIsExpanded] = useRecoilState(treeExpandedAtom);
 
   useEffect(() => {
     async function fn() {
@@ -149,7 +134,7 @@ export function SkillTreeViewer({ urlTrees }: SkillTreeViewerProps) {
   return (
     <>
       {renderData && (
-        <div ref={viewerRef} className={classNames(styles.viewer, isFullscreen && styles.viewerFullscreen)}>
+        <div className={classNames(styles.viewer)}>
           {tooltipNodeId && (
             <NodeTooltip
               skillTree={renderData.skillTree}
@@ -192,11 +177,11 @@ export function SkillTreeViewer({ urlTrees }: SkillTreeViewerProps) {
               <HiChevronRight />
             </button>
             <button
-              className={classNames(formStyles.formButton, styles.button, styles.buttonFullscreen)}
-              onClick={toggleFullscreen}
-              title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+              className={classNames(formStyles.formButton, styles.button, styles.buttonExpand)}
+              onClick={() => setIsExpanded(!isExpanded)}
+              title={isExpanded ? "Collapse tree" : "Expand tree"}
             >
-              {isFullscreen ? <MdFullscreenExit /> : <MdFullscreen />}
+              {isExpanded ? <MdCloseFullscreen /> : <MdOpenInFull />}
             </button>
           </div>
         </div>

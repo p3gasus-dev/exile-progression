@@ -101,6 +101,15 @@
   font-style: italic;
 }
 
+/* ── Tree expanded: double the sidebar width to the left ──────────────── */
+.contentsExpanded {
+  width: 28.5rem;
+}
+
+.searchSectionExpanded {
+  width: 28.5rem;
+}
+
 /* ── Mobile — hide sidebar below 640px ─────────────────────────────────── */
 @media (max-width: 640px) {
   .sidebar {
