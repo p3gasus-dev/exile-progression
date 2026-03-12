@@ -16,6 +16,9 @@
 .selectListItem {
   padding: 0 var(--size-2);
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .selected {
