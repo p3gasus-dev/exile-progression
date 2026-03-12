@@ -20,7 +20,7 @@ export const voidstoneFileRouteSelector = selectorFamily({
         import("../../../common/data"),
         import("../../../common/route-processing"),
       ]);
-    const src = Data.RouteSourceLookup[VOIDSTONE_ROUTE_KEYS[index]];
+    const src = await Data.RouteSourceLookup[VOIDSTONE_ROUTE_KEYS[index]];
     const routeFiles = getRouteFiles([src]);
     return parseRoute(routeFiles, initializeRouteState());
   },

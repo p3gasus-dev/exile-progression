@@ -18,7 +18,9 @@ async function loadDefaultVoidstoneRouteFiles() {
     import("../../../common/route-processing"),
   ]);
 
-  const routeSources = VOIDSTONE_KEYS.map((k) => Data.RouteSourceLookup[k]);
+  const routeSources = await Promise.all(
+    VOIDSTONE_KEYS.map((k) => Data.RouteSourceLookup[k])
+  );
 
   return getRouteFiles(routeSources);
 }
