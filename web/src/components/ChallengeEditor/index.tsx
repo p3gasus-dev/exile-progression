@@ -70,7 +70,7 @@ function splitIntoBlocks(text: string): ChallengeBlock[] {
     const m = /^#section (\d+)\.\s+(.+)$/m.exec(block);
     const num = m ? parseInt(m[1], 10) : 0;
     const name = m ? m[2].trim() : "Unknown";
-    return { label: `${num}. ${name}`, contents: block.trimEnd() };
+    return { label: `Challenge ${num}`, contents: block.trimEnd() };
   });
 }
 
