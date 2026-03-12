@@ -9,13 +9,13 @@ import { useRecoilState } from "recoil";
 
 interface SectionHolderProps {
   name: string;
-  nameLeft?: React.ReactNode;
+  nameBelow?: React.ReactNode;
   nameRight?: React.ReactNode;
   items: TaskListProps["items"];
   meta?: React.ReactNode;
 }
 
-export function SectionHolder({ name, nameLeft, nameRight, items, meta }: SectionHolderProps) {
+export function SectionHolder({ name, nameBelow, nameRight, items, meta }: SectionHolderProps) {
   const sectionId = `section-${name.replace(/\s+/g, "_")}`;
   const [collapsed, setCollapsed] = useRecoilState(
     sectionCollapseSelectorFamily(sectionId)
@@ -50,9 +50,11 @@ export function SectionHolder({ name, nameLeft, nameRight, items, meta }: Sectio
         >
           {icon}
           <div className={classNames(styles.sectionName)}>
-            {nameLeft && <span className={classNames(styles.nameLeft)}>{nameLeft}</span>}
-            {name}
-            {nameRight && <span className={classNames(styles.nameRight)}>{nameRight}</span>}
+            <div className={classNames(styles.sectionNameMain)}>
+              {name}
+              {nameRight && <span className={classNames(styles.nameRight)}>{nameRight}</span>}
+            </div>
+            {nameBelow && <div className={classNames(styles.nameBelow)}>{nameBelow}</div>}
           </div>
           {icon}
         </button>

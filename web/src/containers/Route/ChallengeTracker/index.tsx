@@ -252,8 +252,8 @@ function ChallengeSection({ c }: { c: Challenge }) {
     };
   });
 
-  // Difficulty + questType badges on the left, requires badge on the right
-  const nameLeft = (
+  // Difficulty + questType badges below the name
+  const nameBelow = (
     <span className={classNames(styles.badgeGroup)}>
       <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
         {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
@@ -285,7 +285,7 @@ function ChallengeSection({ c }: { c: Challenge }) {
     <SectionHolder
       key={c.id}
       name={`${c.number}. ${c.name}`}
-      nameLeft={nameLeft}
+      nameBelow={nameBelow}
       nameRight={nameRight}
       items={taskItems}
       meta={meta}
