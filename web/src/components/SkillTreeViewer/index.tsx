@@ -15,6 +15,7 @@ import classNames from "classnames";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
 interface SkillTreeViewerProps {
   urlTrees: UrlTree.Data[];
@@ -31,10 +32,28 @@ interface RenderData {
 
 export function SkillTreeViewer({ urlTrees }: SkillTreeViewerProps) {
   const svgDivRef = useRef<HTMLDivElement>(null);
+  const viewerRef = useRef<HTMLDivElement>(null);
   const [curIndex, setCurIndex] = useState<number>(0);
   const [renderData, setRenderData] = useState<RenderData>();
   const [styleId] = useState(() => randomId(6));
   const [tooltipNodeId, setTooltipNodeId] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    function onFullscreenChange() {
+      setIsFullscreen(document.fullscreenElement !== null);
+    }
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+  }, []);
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      viewerRef.current?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
 
   useEffect(() => {
     async function fn() {
@@ -130,7 +149,7 @@ export function SkillTreeViewer({ urlTrees }: SkillTreeViewerProps) {
   return (
     <>
       {renderData && (
-        <div className={classNames(styles.viewer)}>
+        <div ref={viewerRef} className={classNames(styles.viewer, isFullscreen && styles.viewerFullscreen)}>
           {tooltipNodeId && (
             <NodeTooltip
               skillTree={renderData.skillTree}
@@ -171,6 +190,13 @@ export function SkillTreeViewer({ urlTrees }: SkillTreeViewerProps) {
               }}
             >
               <HiChevronRight />
+            </button>
+            <button
+              className={classNames(formStyles.formButton, styles.button, styles.buttonFullscreen)}
+              onClick={toggleFullscreen}
+              title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+            >
+              {isFullscreen ? <MdFullscreenExit /> : <MdFullscreen />}
             </button>
           </div>
         </div>

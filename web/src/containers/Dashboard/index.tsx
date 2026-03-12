@@ -4,15 +4,11 @@ import {
   challengeProgressSummarySelector,
 } from "../../state/progress-summary";
 import { leagueSelector } from "../../state/league";
-import { uniqueItemsSelector } from "../../state/unique-items";
 import { buildDataSelector } from "../../state/build-data";
 import { buildSettingsSelector } from "../../state/build-settings";
-import { getAcquisitionSource, getDivCardOnlyItems } from "../../data/unique-drop-sources";
-import { DivCardBadge } from "../../components/UniqueItemBadge";
 import { MAJOR_GODS, MINOR_GODS } from "../../data/pantheon-data";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { FaStar } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
 
 // ── Progress bar ──────────────────────────────────────────────────────────────
@@ -107,119 +103,6 @@ function ChallengeProgress() {
   );
 }
 
-// ── Unique Items panel ────────────────────────────────────────────────────────
-
-function UniqueItems() {
-  const items = useRecoilValue(uniqueItemsSelector);
-  const buildUniqueNames = items.map((i) => i.name);
-  const divCardOnlyNames = getDivCardOnlyItems(buildUniqueNames);
-
-  if (items.length === 0) {
-    return (
-      <section className={classNames(styles.panel)}>
-        <SectionHeader title="Unique Items" />
-        <p className={classNames(styles.emptyHint)}>
-          Import a build in the Build tab to see unique items and where to
-          acquire them.
-        </p>
-      </section>
-    );
-  }
-
-  return (
-    <section className={classNames(styles.panel)}>
-      <SectionHeader title="Unique Items" />
-      <ul className={classNames(styles.itemList)}>
-        {items.map((item) => {
-          const source = getAcquisitionSource(item.name);
-          const tier = source?.tier ?? (
-            source?.sourceType === "pinnacle" ? 4 :
-            source?.sourceType === "guardian" ? 3 :
-            source?.sourceType === "league"   ? 2 : 1
-          );
-          const showTier = !source?.globalDrop && !source?.divCardOnly &&
-            (source?.bosses?.length || source?.areas?.length);
-          return (
-            <li key={item.name} className={classNames(styles.itemRow)}>
-              <div className={classNames(styles.itemInfo)}>
-                <span className={classNames(styles.itemName)}>
-                  <FaStar className={classNames(styles.uniqueIcon)} />
-                  {item.name}
-                </span>
-                <span className={classNames(styles.itemBase)}>{item.base}</span>
-              </div>
-              <div className={classNames(styles.itemSource)}>
-                {showTier && (
-                  <span
-                    className={classNames(styles.tierBadge, styles[`tier${tier}`])}
-                    title={source?.restriction ?? `Content tier ${tier}`}
-                  >
-                    T{tier}
-                  </span>
-                )}
-                {source?.divCardOnly ? (
-                  <span
-                    className={classNames(styles.sourceDiv)}
-                    title={source.notes}
-                  >
-                    {source.divCard}
-                  </span>
-                ) : source?.globalDrop || (!source?.bosses?.length && !source?.areas?.length) ? (
-                  <span className={classNames(styles.sourceGlobal)}>
-                    Global Drop
-                  </span>
-                ) : (
-                  <div
-                    className={classNames(styles.sourceMulti)}
-                    title={source?.notes}
-                  >
-                    {source?.bosses?.map((boss) => (
-                      <span
-                        key={boss}
-                        className={classNames(
-                          styles.sourceChip,
-                          source.sourceType === "pinnacle" && styles.sourcePinnacle,
-                          source.sourceType === "guardian" && styles.sourceGuardian,
-                          source.sourceType === "league"   && styles.sourceLeague,
-                          !source.sourceType               && styles.sourceBoss,
-                        )}
-                      >
-                        {boss}
-                      </span>
-                    ))}
-                    {source?.areas?.map((area) => (
-                      <span
-                        key={area}
-                        className={classNames(
-                          styles.sourceChip,
-                          source.sourceType === "league"   && styles.sourceLeague,
-                          source.sourceType === "guardian" && styles.sourceGuardian,
-                          !source.sourceType               && styles.sourceBoss,
-                        )}
-                      >
-                        {area}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-
-      {divCardOnlyNames.length > 0 && (
-        <div className={classNames(styles.divCardCallout)}>
-          <span className={classNames(styles.divCardLabel)}>
-            Div card trades needed:
-          </span>
-          <DivCardBadge items={divCardOnlyNames} />
-        </div>
-      )}
-    </section>
-  );
-}
-
 // ── Misc panel ────────────────────────────────────────────────────────────────
 
 function Misc() {
@@ -284,7 +167,6 @@ export default function DashboardContainer() {
         <ChallengeProgress />
       </div>
       <div className={classNames(styles.rightCol)}>
-        <UniqueItems />
         <Misc />
       </div>
     </div>

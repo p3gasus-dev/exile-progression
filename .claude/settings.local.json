@@ -72,7 +72,10 @@
       "Bash(FILE=\"c:/Users/pegasus/Documents/GitHub/exile-progression/exile-progression/web/src/data/challenge-list.ts\")",
       "Read(//c/Users/pegasus/Documents/GitHub/exile-progression/exile-progression/**)",
       "Read(//mingw64/**)",
-      "Bash(cmd.exe /c \"cd /d c:\\\\Users\\\\pegasus\\\\Documents\\\\GitHub\\\\exile-progression\\\\exile-progression\\\\web && npx tsc --noEmit 2>&1\")"
+      "Bash(cmd.exe /c \"cd /d c:\\\\Users\\\\pegasus\\\\Documents\\\\GitHub\\\\exile-progression\\\\exile-progression\\\\web && npx tsc --noEmit 2>&1\")",
+      "Bash(curl -sI \"https://craniumviolence.github.io/\")",
+      "Bash(curl -s \"https://craniumviolence.github.io/\")",
+      "Bash(curl -s \"https://craniumviolence.github.io/css/style.css\")"
     ],
     "additionalDirectories": [
       "\\tmp"

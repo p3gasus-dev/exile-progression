@@ -166,27 +166,6 @@ export default function AtlasContainer() {
           <SplitRow
             left={
               <div>
-                <Label>Show Unique Drops</Label>
-                <div className={classNames(styles.desc)}>Show unique item drops on voidstone route steps.</div>
-              </div>
-            }
-            right={
-              <Value>
-                <input
-                  type="checkbox"
-                  checked={config.showUniqueDrops}
-                  onChange={(e) =>
-                    update({ showUniqueDrops: e.target.checked })
-                  }
-                  aria-label="Show unique drops on atlas route"
-                />
-              </Value>
-            }
-          />
-
-          <SplitRow
-            left={
-              <div>
                 <Label>Show Voidstone Route</Label>
                 <div className={classNames(styles.desc)}>Show the Voidstone 1–4 tab in the Route screen.</div>
               </div>

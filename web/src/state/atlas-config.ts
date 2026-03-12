@@ -17,11 +17,6 @@ export interface AtlasConfig {
   voidstoneOrder: [number, number, number, number];
 
   /**
-   * Whether to show unique item drop badges on atlas route steps.
-   */
-  showUniqueDrops: boolean;
-
-  /**
    * Whether to show the Voidstone 1-4 route tab in Route.
    */
   showVoidstoneRoute: boolean;
@@ -37,7 +32,6 @@ const ATLAS_CONFIG_VERSION = 0;
 const DEFAULT_ATLAS_CONFIG: AtlasConfig = {
   runBothEarlyBosses: false,
   voidstoneOrder: [0, 1, 2, 3],
-  showUniqueDrops: true,
   showVoidstoneRoute: true,
   showLabTracker: false,
 };

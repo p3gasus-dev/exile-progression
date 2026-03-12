@@ -36,3 +36,17 @@
   height: var(--line-height);
   flex: 1;
 }
+
+.buttonFullscreen {
+  flex: 0;
+  padding: 0 var(--size-2);
+}
+
+/* Fullscreen mode: viewer fills the entire screen */
+.viewerFullscreen {
+  background-color: var(--primary);
+}
+
+.viewerFullscreen .viewport {
+  height: calc(100vh - 4rem);
+}
