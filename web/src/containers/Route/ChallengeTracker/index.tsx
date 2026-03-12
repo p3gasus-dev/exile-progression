@@ -252,25 +252,24 @@ function ChallengeSection({ c }: { c: Challenge }) {
     };
   });
 
-  // Difficulty + questType badges below the name
+  // Quest type, difficulty, and requires badges — all on second row
   const nameBelow = (
     <span className={classNames(styles.badgeGroup)}>
-      <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
-        {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
-      </span>
       {c.questType && (
         <span className={classNames(styles.questBadge, QUEST_TYPE_CLASS[c.questType])}>
           {QUEST_TYPE_LABEL[c.questType].toUpperCase()}
         </span>
       )}
+      <span className={classNames(styles.diffBadge, DIFFICULTY_CLASS[c.difficulty])}>
+        {DIFFICULTY_LABEL[c.difficulty].toUpperCase()}
+      </span>
+      {hasRequires && (
+        <span className={classNames(styles.requiresBadge, doneCount >= needed ? styles.requiresMet : undefined)}>
+          {doneCount}/{c.requires}
+        </span>
+      )}
     </span>
   );
-
-  const nameRight = hasRequires ? (
-    <span className={classNames(styles.requiresBadge, doneCount >= needed ? styles.requiresMet : undefined)}>
-      {doneCount}/{c.requires}
-    </span>
-  ) : undefined;
 
   const meta = hasTips ? (
     <>
@@ -286,7 +285,6 @@ function ChallengeSection({ c }: { c: Challenge }) {
       key={c.id}
       name={`${c.number}. ${c.name}`}
       nameBelow={nameBelow}
-      nameRight={nameRight}
       items={taskItems}
       meta={meta}
     />
