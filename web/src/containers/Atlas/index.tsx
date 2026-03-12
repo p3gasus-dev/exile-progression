@@ -1,19 +1,20 @@
 import { atlasConfigSelector, AtlasConfig } from "../../state/atlas-config";
 import { SplitRow } from "../../components/SplitRow";
 import { LabTracker } from "./LabTracker";
+import { Loading } from "../../components/Loading";
+import VoidstoneRoute from "../Route/VoidstoneRoute";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdDragIndicator } from "react-icons/md";
+import { interactiveStyles } from "../../styles";
 import { useRecoilState } from "recoil";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
-function SectionHeader({ title }: { title: string }) {
-  return <h2 className={classNames(styles.sectionHeader)}>{title}</h2>;
-}
-
-function Hint({ children }: { children: React.ReactNode }) {
-  return <p className={classNames(styles.hint)}>{children}</p>;
-}
+const VOIDSTONE_LABELS = [
+  "VOIDSTONE 1",
+  "VOIDSTONE 2",
+  "VOIDSTONE 3",
+  "VOIDSTONE 4",
+] as const;
 
 function Label({ children }: { children: React.ReactNode }) {
   return <div className={classNames(styles.label)}>{children}</div>;
@@ -23,194 +24,66 @@ function Value({ children }: { children: React.ReactNode }) {
   return <div className={classNames(styles.value)}>{children}</div>;
 }
 
-const VOIDSTONES = [
-  { boss: "The Eater of Worlds", reward: "Grasping Voidstone" },
-  { boss: "The Searing Exarch",  reward: "Omniscient Voidstone" },
-  { boss: "The Maven",           reward: "Ceremonial Voidstone" },
-  { boss: "The Uber Elder",      reward: "Decayed Voidstone" },
-];
-
 export default function AtlasContainer() {
   const [config, setConfig] = useRecoilState(atlasConfigSelector);
+  const [activeTab, setActiveTab] = useState(0);
 
   function update(partial: Partial<AtlasConfig>) {
     setConfig({ ...config, ...partial });
   }
 
-  const order: [number, number, number, number] =
-    config.voidstoneOrder ?? [0, 1, 2, 3];
-
-  const [dragFrom, setDragFrom] = useState<number | null>(null);
-  const [dragOver, setDragOver] = useState<number | null>(null);
-
-  function moveVoidstone(from: number, to: number) {
-    const next = [...order] as [number, number, number, number];
-    [next[from], next[to]] = [next[to], next[from]];
-    update({ voidstoneOrder: next });
-  }
-
-  function reorderVoidstones(from: number, to: number) {
-    if (from === to) return;
-    const next = [...order] as [number, number, number, number];
-    const [item] = next.splice(from, 1);
-    next.splice(to, 0, item);
-    update({ voidstoneOrder: next });
-  }
-
   return (
     <>
-      <div className={classNames(styles.container)}>
+      {/* ── Tab bar ────────────────────────────────────────────────────── */}
+      <div className={classNames(styles.tabBar)}>
+        {VOIDSTONE_LABELS.map((label, i) => (
+          <button
+            key={i}
+            className={classNames(styles.tabButton, {
+              [styles.tabActive]: activeTab === i,
+              [interactiveStyles.activePrimary]: activeTab === i,
+              [interactiveStyles.activeSecondary]: activeTab !== i,
+            })}
+            onClick={() => setActiveTab(i)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
 
-        {/* ── Voidstone Order ───────────────────────────────────────────── */}
-        <SectionHeader title="Voidstone Order" />
-        <Hint>
-          Drag or use the arrows to set the order you plan to complete each
-          voidstone. The recommended order is Eater → Exarch → Maven → Uber
-          Elder. This changes the order in the Route → Atlas tab.
-        </Hint>
-
-        <div className={classNames(styles.voidstoneList)}>
-          {order.map((vsIdx, pos) => {
-            const { boss, reward } = VOIDSTONES[vsIdx];
-            const isDragging = dragFrom === pos;
-            const isOver = dragOver === pos;
-            return (
-              <div
-                key={vsIdx}
-                className={classNames(
-                  styles.voidstoneRow,
-                  isDragging && styles.voidstoneRowDragging,
-                  isOver && !isDragging && styles.voidstoneRowOver,
-                )}
-                draggable
-                onDragStart={(e) => {
-                  setDragFrom(pos);
-                  e.dataTransfer.effectAllowed = "move";
-                }}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  e.dataTransfer.dropEffect = "move";
-                  if (dragOver !== pos) setDragOver(pos);
-                }}
-                onDragLeave={() => setDragOver(null)}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  if (dragFrom !== null) reorderVoidstones(dragFrom, pos);
-                  setDragFrom(null);
-                  setDragOver(null);
-                }}
-                onDragEnd={() => {
-                  setDragFrom(null);
-                  setDragOver(null);
-                }}
-              >
-                <MdDragIndicator className={classNames(styles.voidstoneDragHandle)} />
-                <span className={classNames(styles.voidstoneNum)}>{pos + 1}</span>
-                <span className={classNames(styles.voidstoneBoss)}>{boss}</span>
-                <span className={classNames(styles.voidstoneReward)}>{reward}</span>
-                <div className={classNames(styles.voidstoneArrows)}>
-                  <button
-                    className={classNames(styles.voidstoneArrowBtn)}
-                    disabled={pos === 0}
-                    onClick={() => moveVoidstone(pos, pos - 1)}
-                    title="Move up"
-                    type="button"
-                  >
-                    <MdKeyboardArrowUp size={14} />
-                  </button>
-                  <button
-                    className={classNames(styles.voidstoneArrowBtn)}
-                    disabled={pos === order.length - 1}
-                    onClick={() => moveVoidstone(pos, pos + 1)}
-                    title="Move down"
-                    type="button"
-                  >
-                    <MdKeyboardArrowDown size={14} />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <hr className={classNames(styles.divider)} />
-
-        {/* ── Atlas Settings ────────────────────────────────────────────── */}
-        <SectionHeader title="Atlas Settings" />
-        <p className={classNames(styles.hint)}>
-          Controls what appears on this page and in the Route tab.
-        </p>
-
-        <div className={classNames(styles.form)}>
-          <SplitRow
-            left={
-              <div>
-                <Label>Run Both Early Bosses</Label>
-                <div className={classNames(styles.desc)}>Run Eater and Exarch before your first voidstone.</div>
-              </div>
-            }
-            right={
-              <Value>
-                <input
-                  type="checkbox"
-                  checked={config.runBothEarlyBosses}
-                  onChange={(e) =>
-                    update({ runBothEarlyBosses: e.target.checked })
-                  }
-                  aria-label="Run both early bosses"
-                />
-              </Value>
-            }
-          />
-
-          <SplitRow
-            left={
-              <div>
-                <Label>Show Voidstone Route</Label>
-                <div className={classNames(styles.desc)}>Show the Voidstone 1–4 tab in the Route screen.</div>
-              </div>
-            }
-            right={
-              <Value>
-                <input
-                  type="checkbox"
-                  checked={config.showVoidstoneRoute}
-                  onChange={(e) =>
-                    update({ showVoidstoneRoute: e.target.checked })
-                  }
-                  aria-label="Show voidstone route tab"
-                />
-              </Value>
-            }
-          />
-
-          <SplitRow
-            left={
-              <div>
-                <Label>Show Lab Tracker</Label>
-                <div className={classNames(styles.desc)}>Show a labyrinth completion tracker on this page.</div>
-              </div>
-            }
-            right={
-              <Value>
-                <input
-                  type="checkbox"
-                  checked={config.showLabTracker}
-                  onChange={(e) =>
-                    update({ showLabTracker: e.target.checked })
-                  }
-                  aria-label="Show labyrinth tracker"
-                />
-              </Value>
-            }
-          />
-
-        </div>
-
+      {/* ── Route content ─────────────────────────────────────────────── */}
+      <div className={classNames(styles.routeContent)}>
+        <Suspense fallback={<Loading />}>
+          <VoidstoneRoute vsIndex={activeTab} />
+        </Suspense>
       </div>
 
       {/* ── Labyrinth Tracker (optional) ──────────────────────────────── */}
       {config.showLabTracker && <LabTracker />}
+
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Settings ──────────────────────────────────────────────────── */}
+      <div className={classNames(styles.container)}>
+        <SplitRow
+          left={
+            <div>
+              <Label>Show Lab Tracker</Label>
+              <div className={classNames(styles.desc)}>Show a labyrinth completion tracker on this page.</div>
+            </div>
+          }
+          right={
+            <Value>
+              <input
+                type="checkbox"
+                checked={config.showLabTracker}
+                onChange={(e) => update({ showLabTracker: e.target.checked })}
+                aria-label="Show labyrinth tracker"
+              />
+            </Value>
+          }
+        />
+      </div>
     </>
   );
 }

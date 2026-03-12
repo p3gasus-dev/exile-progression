@@ -2,7 +2,7 @@ import { FragmentStep } from "../../../components/FragmentStep";
 import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
 import { voidstoneProgressSelectorFamily } from "../../../state/voidstone-progress";
-import { voidstoneRouteSelector } from "../../../state/voidstone-route";
+import { voidstoneFileRouteSelector } from "../../../state/voidstone-file-route";
 import { configSelector } from "../../../state/config";
 import { BOSS_CHALLENGE_MAP, RouteChallengeRef } from "../../../data/challenge-list";
 import { BOSS_STEP_HINTS } from "../../../data/stat-targets";
@@ -26,8 +26,13 @@ function getBossNamesFromStep(
     .map((p) => p.value);
 }
 
-export default function VoidstoneRoute() {
-  const route = useRecoilValue(voidstoneRouteSelector);
+interface VoidstoneRouteProps {
+  /** Which voidstone file to render (0 = voidstone-1, …, 3 = voidstone-4) */
+  vsIndex: number;
+}
+
+export default function VoidstoneRoute({ vsIndex }: VoidstoneRouteProps) {
+  const route = useRecoilValue(voidstoneFileRouteSelector(vsIndex));
   const config = useRecoilValue(configSelector);
 
   // Auto-complete challenges when a pinnacle kill step is checked off
@@ -68,12 +73,11 @@ export default function VoidstoneRoute() {
       );
 
       const challengeIds = stepChallenges.map((c) => c.id);
+      const progressKey = `vs${vsIndex}:${sectionIndex},${stepIndex}`;
 
       taskItems.push({
         key: stepIndex,
-        isCompletedState: voidstoneProgressSelectorFamily(
-          `${sectionIndex},${stepIndex}`
-        ),
+        isCompletedState: voidstoneProgressSelectorFamily(progressKey),
         highlight: isPinnacleKill ? "pinnacle" : isAscend ? "ascend" : undefined,
         onToggle: challengeIds.length > 0
           ? (complete) => { if (complete) completeChallenges(challengeIds); }

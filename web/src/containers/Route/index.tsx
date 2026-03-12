@@ -16,7 +16,6 @@ import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
 import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
 import { configSelector } from "../../state/config";
-import { atlasConfigSelector } from "../../state/atlas-config";
 import { sidebarVisibleSelector, sidebarExpandedAtom } from "../../state/sidebar";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
@@ -26,10 +25,9 @@ import { Loading } from "../../components/Loading";
 import { useRecoilCallback, useRecoilValue } from "recoil";
 
 
-const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 const ChallengeTracker = lazy(() => import("./ChallengeTracker"));
 
-type RouteTab = "acts" | "atlas" | "challenges";
+type RouteTab = "acts" | "challenges";
 
 // ─── Step highlight detection ──────────────────────────────────────────────────
 
@@ -181,16 +179,12 @@ function TabBar({ tabs, active, onChange }: TabBarProps) {
 
 export default function RouteContainer() {
   const config = useRecoilValue(configSelector);
-  const atlasConfig = useRecoilValue(atlasConfigSelector);
   const sidebarVisible = useRecoilValue(sidebarVisibleSelector);
   const sidebarExpanded = useRecoilValue(sidebarExpandedAtom);
   const [activeTab, setActiveTab] = useState<RouteTab>("acts");
 
   const tabs: TabEntry[] = [
     { id: "acts", label: "ACT 1–10" },
-    ...(atlasConfig.showVoidstoneRoute
-      ? [{ id: "atlas" as RouteTab, label: "VOIDSTONE 1-4" }]
-      : []),
     ...(config.showChallenges
       ? [{ id: "challenges" as RouteTab, label: "CHALLENGES 1-40" }]
       : []),
@@ -210,7 +204,6 @@ export default function RouteContainer() {
       <div className={classNames(styles.routeContent)}>
         <Suspense fallback={<Loading />}>
           {visibleTab === "acts" && <ActRoute />}
-          {visibleTab === "atlas" && <VoidstoneRoute />}
           {visibleTab === "challenges" && <ChallengeTracker />}
         </Suspense>
       </div>

@@ -1,5 +1,4 @@
 import { persistentStorageEffect } from ".";
-import { atlasConfigSelector } from "./atlas-config";
 import { RouteData } from "../../../common/route-processing/types";
 import { NO_MIGRATORS, getPersistent } from "../utility";
 import { DefaultValue, atom, selector } from "recoil";
@@ -13,17 +12,13 @@ const VOIDSTONE_KEYS = [
   "./routes/voidstone-4.txt",
 ] as const;
 
-async function loadDefaultVoidstoneRouteFiles(
-  order: readonly number[] = [0, 1, 2, 3]
-) {
+async function loadDefaultVoidstoneRouteFiles() {
   const [{ Data }, { getRouteFiles }] = await Promise.all([
     import("../../../common/data"),
     import("../../../common/route-processing"),
   ]);
 
-  const routeSources = await Promise.all(
-    order.map((i) => Data.RouteSourceLookup[VOIDSTONE_KEYS[i]])
-  );
+  const routeSources = VOIDSTONE_KEYS.map((k) => Data.RouteSourceLookup[k]);
 
   return getRouteFiles(routeSources);
 }
@@ -45,8 +40,7 @@ export const voidstoneRouteFilesSelector = selector<RouteData.RouteFile[]>({
   get: ({ get }) => {
     const saved = get(voidstoneRouteFilesAtom);
     if (saved) return saved;
-    const { voidstoneOrder } = get(atlasConfigSelector);
-    return loadDefaultVoidstoneRouteFiles(voidstoneOrder ?? [0, 1, 2, 3]);
+    return loadDefaultVoidstoneRouteFiles();
   },
   set: ({ set }, newValue) => {
     if (newValue instanceof DefaultValue) set(voidstoneRouteFilesAtom, null);

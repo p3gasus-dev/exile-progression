@@ -6,7 +6,7 @@
  */
 
 import { routeSelector } from "./route";
-import { voidstoneRouteSelector } from "./voidstone-route";
+import { voidstoneFileRouteSelector } from "./voidstone-file-route";
 import { routeProgressKeys, routeProgressSelectorFamily } from "./route-progress";
 import { voidstoneProgressSelectorFamily } from "./voidstone-progress";
 import { challengeCountSelector } from "./challenge-progress";
@@ -101,18 +101,23 @@ export const routeSectionProgressSelector = selector<SectionProgress[]>({
 export const voidstoneSectionProgressSelector = selector<SectionProgress[]>({
   key: "voidstoneSectionProgressSelector",
   get: async ({ get }) => {
-    const route = await get(voidstoneRouteSelector);
-    return route.map((section, si) => {
-      let total = 0;
-      let completed = 0;
-      for (let ti = 0; ti < section.steps.length; ti++) {
-        const step = section.steps[ti];
-        if (step.type !== "fragment_step") continue;
-        total++;
-        if (get(voidstoneProgressSelectorFamily(`${si},${ti}`))) completed++;
+    const result: SectionProgress[] = [];
+    for (let vsIndex = 0; vsIndex < 4; vsIndex++) {
+      const route = await get(voidstoneFileRouteSelector(vsIndex));
+      for (let si = 0; si < route.length; si++) {
+        const section = route[si];
+        let total = 0;
+        let completed = 0;
+        for (let ti = 0; ti < section.steps.length; ti++) {
+          const step = section.steps[ti];
+          if (step.type !== "fragment_step") continue;
+          total++;
+          if (get(voidstoneProgressSelectorFamily(`vs${vsIndex}:${si},${ti}`))) completed++;
+        }
+        result.push({ name: section.name, completed, total });
       }
-      return { name: section.name, completed, total };
-    });
+    }
+    return result;
   },
 });
 
@@ -126,32 +131,30 @@ export const voidstoneSectionProgressSelector = selector<SectionProgress[]>({
 export const voidstoneProgressSummarySelector = selector({
   key: "voidstoneProgressSummarySelector",
   get: async ({ get }) => {
-    const route = await get(voidstoneRouteSelector);
+    let completed = 0;
 
-    const killKeys: string[] = [];
+    for (let vsIndex = 0; vsIndex < 4; vsIndex++) {
+      const route = await get(voidstoneFileRouteSelector(vsIndex));
+      for (let si = 0; si < route.length; si++) {
+        const section = route[si];
+        for (let ti = 0; ti < section.steps.length; ti++) {
+          const step = section.steps[ti];
+          if (step.type !== "fragment_step") continue;
 
-    for (let sectionIndex = 0; sectionIndex < route.length; sectionIndex++) {
-      const section = route[sectionIndex];
-      for (let stepIndex = 0; stepIndex < section.steps.length; stepIndex++) {
-        const step = section.steps[stepIndex];
-        if (step.type !== "fragment_step") continue;
-
-        // A step is a "voidstone kill step" if it contains exactly one kill fragment
-        const hasKill = step.parts.some(
-          (p) => typeof p !== "string" && p.type === "kill"
-        );
-        if (hasKill) {
-          killKeys.push(`${sectionIndex},${stepIndex}`);
+          const hasKill = step.parts.some(
+            (p) => typeof p !== "string" && p.type === "kill"
+          );
+          if (
+            hasKill &&
+            get(voidstoneProgressSelectorFamily(`vs${vsIndex}:${si},${ti}`))
+          ) {
+            completed++;
+          }
         }
       }
     }
 
     const total = 4; // there are always exactly 4 voidstone bosses
-    let completed = 0;
-    for (const key of killKeys) {
-      if (get(voidstoneProgressSelectorFamily(key))) completed++;
-    }
-    // Cap at 4 in case route files somehow contain more kill steps
     return { total, completed: Math.min(completed, total) };
   },
 });
