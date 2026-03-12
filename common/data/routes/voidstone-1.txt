@@ -3,7 +3,7 @@ Talk to {quest_text|Kirac} in Oriath to unlock the Atlas
 Run {map_white|T1-T5} maps — complete Kirac's quest chain
 Speak with {league|The Envoy} when it appears to unlock Eldritch Influence
 Unlock {league|Eater of Worlds} and {league|Searing Exarch} on your Map Device via Kirac
-{waypoint|Labyrinth_Airlock} #Aspirants' Plaza
+{area|Labyrinth_Airlock}
 {ascend|eternal}
     #sub Requires level 68 and {quest_text|Offering to the Goddess}
     #sub Obtain Offering by completing a Trial of Ascendancy in a {map_yellow|T6+} map

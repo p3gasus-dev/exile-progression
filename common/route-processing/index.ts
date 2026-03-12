@@ -229,14 +229,6 @@ export function parseRoute(
     }
   }
 
-  for (const key in Data.Areas) {
-    const area = Data.Areas[key];
-    if (area.crafting_recipes.length > 0 && !state.craftingAreas.has(area.id))
-      logger.warn(
-        `missing crafting area ${area.id}, ${area.crafting_recipes.join(", ")}`
-      );
-  }
-
   logger.drain(console);
 
   return route;
