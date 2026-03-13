@@ -209,8 +209,8 @@ export default function RouteContainer() {
   const [activeTab, setActiveTab] = useState<RouteTab>("acts");
 
   const tabs: TabEntry[] = [
-    { id: "acts", label: "ACT 1–10" },
-    { id: "voidstone", label: "VOIDSTONE" },
+    { id: "acts", label: "ACT 1-10" },
+    { id: "voidstone", label: "VOIDSTONE 1-4" },
     ...(config.showChallenges
       ? [{ id: "challenges" as RouteTab, label: "CHALLENGES 1-40" }]
       : []),
