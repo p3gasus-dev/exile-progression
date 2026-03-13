@@ -3,7 +3,7 @@ import { SectionHolder } from "../../../components/SectionHolder";
 import { TaskListProps } from "../../../components/TaskList";
 import { voidstoneProgressSelectorFamily } from "../../../state/voidstone-progress";
 import { voidstoneFileRouteSelector } from "../../../state/voidstone-file-route";
-import { configSelector } from "../../../state/config";
+import { atlasConfigSelector } from "../../../state/atlas-config";
 import { BOSS_CHALLENGE_MAP, RouteChallengeRef } from "../../../data/challenge-list";
 import { BOSS_STEP_HINTS } from "../../../data/stat-targets";
 import { StatHintChips } from "../../../components/StatHintChips";
@@ -33,7 +33,7 @@ interface VoidstoneRouteProps {
 
 export default function VoidstoneRoute({ vsIndex }: VoidstoneRouteProps) {
   const route = useRecoilValue(voidstoneFileRouteSelector(vsIndex));
-  const config = useRecoilValue(configSelector);
+  const atlasConfig = useRecoilValue(atlasConfigSelector);
 
   // Auto-complete challenges when a pinnacle kill step is checked off
   const completeChallenges = useRecoilCallback(
@@ -85,7 +85,7 @@ export default function VoidstoneRoute({ vsIndex }: VoidstoneRouteProps) {
         children: (
           <>
             <FragmentStep step={step} />
-            {config.showStatHints && stepBossHints.length > 0 && (
+            {atlasConfig.showVoidstoneHints && stepBossHints.length > 0 && (
               <StatHintChips hints={stepBossHints} />
             )}
           </>

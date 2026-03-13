@@ -3,15 +3,19 @@ import { NO_MIGRATORS, getPersistent } from "../utility";
 import { DefaultValue, atom, selector } from "recoil";
 
 export interface AtlasConfig {
-  /**
-   * Whether to show the Labyrinth Tracker section.
-   */
+  /** Preferred order to tackle voidstone bosses (indices 0–3). */
+  voidstoneOrder: number[];
+  /** Show boss stat/resistance hints in the Voidstone route steps. */
+  showVoidstoneHints: boolean;
+  /** Whether to show the Labyrinth Tracker section. */
   showLabTracker: boolean;
 }
 
 const ATLAS_CONFIG_VERSION = 0;
 
 const DEFAULT_ATLAS_CONFIG: AtlasConfig = {
+  voidstoneOrder: [0, 1, 2, 3],
+  showVoidstoneHints: true,
   showLabTracker: false,
 };
 

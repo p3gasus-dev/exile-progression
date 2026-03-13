@@ -17,6 +17,7 @@ import { routeProgressSelectorFamily } from "../../state/route-progress";
 import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
 import { configSelector } from "../../state/config";
 import { sidebarVisibleSelector, sidebarExpandedAtom } from "../../state/sidebar";
+import { atlasConfigSelector } from "../../state/atlas-config";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -30,25 +31,26 @@ const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 
 type RouteTab = "acts" | "voidstone" | "challenges";
 
-const VS_LABELS = ["VOIDSTONE 1", "VOIDSTONE 2", "VOIDSTONE 3", "VOIDSTONE 4"] as const;
-
 function VoidstoneSection() {
-  const [vsIndex, setVsIndex] = useState(0);
+  const atlasConfig = useRecoilValue(atlasConfigSelector);
+  const order = atlasConfig.voidstoneOrder;
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <>
       <div className={classNames(styles.subTabBar)}>
-        {VS_LABELS.map((label, i) => (
+        {order.map((_, i) => (
           <button
             key={i}
-            className={classNames(styles.subTabButton, vsIndex === i && styles.subTabActive)}
-            onClick={() => setVsIndex(i)}
+            className={classNames(styles.subTabButton, activeTab === i && styles.subTabActive)}
+            onClick={() => setActiveTab(i)}
           >
-            {label}
+            VOIDSTONE {i + 1}
           </button>
         ))}
       </div>
       <Suspense fallback={<Loading />}>
-        <VoidstoneRoute vsIndex={vsIndex} />
+        <VoidstoneRoute vsIndex={order[activeTab]} />
       </Suspense>
     </>
   );
