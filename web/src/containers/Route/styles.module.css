@@ -27,6 +27,38 @@
   /* No padding — outer wrapper handles sidebar offset */
 }
 
+/* ── Voidstone sub-tab bar ──────────────────────────────────────────────── */
+.subTabBar {
+  display: flex;
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--actbar-height));
+  z-index: 2;
+  background-color: var(--secondary);
+  border-bottom: var(--border-width) solid var(--accent-secondary);
+}
+
+.subTabButton {
+  flex: 1;
+  padding: var(--size-1) var(--size-2);
+  font-weight: var(--font-heavy);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--on-secondary);
+  opacity: 0.6;
+  border-bottom: 2px solid transparent;
+  transition: opacity 0.1s ease, border-color 0.1s ease;
+}
+
+.subTabButton:hover {
+  opacity: 1;
+}
+
+.subTabActive {
+  opacity: 1;
+  border-bottom-color: gold;
+}
+
 /* Outer wrapper — applied to the div containing TabBar + routeContent */
 .withSidebar {
   padding-right: 15rem;

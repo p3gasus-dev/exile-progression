@@ -28,7 +28,31 @@ import { useRecoilCallback, useRecoilValue } from "recoil";
 const ChallengeTracker = lazy(() => import("./ChallengeTracker"));
 const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 
-type RouteTab = "acts" | "voidstone1" | "voidstone2" | "voidstone3" | "voidstone4" | "challenges";
+type RouteTab = "acts" | "voidstone" | "challenges";
+
+const VS_LABELS = ["VOIDSTONE 1", "VOIDSTONE 2", "VOIDSTONE 3", "VOIDSTONE 4"] as const;
+
+function VoidstoneSection() {
+  const [vsIndex, setVsIndex] = useState(0);
+  return (
+    <>
+      <div className={classNames(styles.subTabBar)}>
+        {VS_LABELS.map((label, i) => (
+          <button
+            key={i}
+            className={classNames(styles.subTabButton, vsIndex === i && styles.subTabActive)}
+            onClick={() => setVsIndex(i)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <Suspense fallback={<Loading />}>
+        <VoidstoneRoute vsIndex={vsIndex} />
+      </Suspense>
+    </>
+  );
+}
 
 // ─── Step highlight detection ──────────────────────────────────────────────────
 
@@ -186,12 +210,9 @@ export default function RouteContainer() {
 
   const tabs: TabEntry[] = [
     { id: "acts", label: "ACT 1–10" },
-    { id: "voidstone1", label: "VOIDSTONE 1" },
-    { id: "voidstone2", label: "VOIDSTONE 2" },
-    { id: "voidstone3", label: "VOIDSTONE 3" },
-    { id: "voidstone4", label: "VOIDSTONE 4" },
+    { id: "voidstone", label: "VOIDSTONE" },
     ...(config.showChallenges
-      ? [{ id: "challenges" as RouteTab, label: "CHALLENGES" }]
+      ? [{ id: "challenges" as RouteTab, label: "CHALLENGES 1-40" }]
       : []),
   ];
 
@@ -209,10 +230,7 @@ export default function RouteContainer() {
       <div className={classNames(styles.routeContent)}>
         <Suspense fallback={<Loading />}>
           {visibleTab === "acts" && <ActRoute />}
-          {visibleTab === "voidstone1" && <VoidstoneRoute vsIndex={0} />}
-          {visibleTab === "voidstone2" && <VoidstoneRoute vsIndex={1} />}
-          {visibleTab === "voidstone3" && <VoidstoneRoute vsIndex={2} />}
-          {visibleTab === "voidstone4" && <VoidstoneRoute vsIndex={3} />}
+          {visibleTab === "voidstone" && <VoidstoneSection />}
           {visibleTab === "challenges" && <ChallengeTracker />}
         </Suspense>
       </div>
