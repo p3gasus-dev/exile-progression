@@ -1,5 +1,7 @@
 .selectList {
+  width: fit-content;
   min-width: 4.5rem;
+  flex-shrink: 0;
   height: fit-content;
   max-height: 100%;
   display: flex;
@@ -10,12 +12,14 @@
   border-color: var(--accent-primary);
   border-radius: var(--border-radius);
   /* padding: var(--size-2); */
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
 .selectListItem {
   padding: var(--size-1) var(--size-2);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .selected {

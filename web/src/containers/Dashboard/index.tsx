@@ -7,8 +7,11 @@ import { leagueSelector } from "../../state/league";
 import { buildDataSelector } from "../../state/build-data";
 import { buildSettingsSelector } from "../../state/build-settings";
 import { MAJOR_GODS, MINOR_GODS } from "../../data/pantheon-data";
+import { urlTreesSelector } from "../../state/tree/url-tree";
+import { SkillTreeViewer } from "../../components/SkillTreeViewer";
 import styles from "./styles.module.css";
 import classNames from "classnames";
+import { Suspense } from "react";
 import { useRecoilValue } from "recoil";
 
 // ── Progress bar ──────────────────────────────────────────────────────────────
@@ -130,20 +133,22 @@ function Misc() {
       {(majorGod || minorGod) && (
         <div className={classNames(styles.subSection)}>
           <h3 className={classNames(styles.subSectionTitle)}>Pantheon</h3>
-          {majorGod && (
-            <div className={classNames(styles.pantheonRow)}>
-              <span className={classNames(styles.pantheonLabel)}>Major</span>
-              <span className={classNames(styles.pantheonName)}>{majorGod.name}</span>
-              <span className={classNames(styles.pantheonEffect)}>{majorGod.effect}</span>
-            </div>
-          )}
-          {minorGod && (
-            <div className={classNames(styles.pantheonRow)}>
-              <span className={classNames(styles.pantheonLabel)}>Minor</span>
-              <span className={classNames(styles.pantheonName)}>{minorGod.name}</span>
-              <span className={classNames(styles.pantheonEffect)}>{minorGod.effect}</span>
-            </div>
-          )}
+          <div className={classNames(styles.pantheonCards)}>
+            {majorGod && (
+              <div className={classNames(styles.pantheonCard)}>
+                <span className={classNames(styles.pantheonType)}>Major</span>
+                <span className={classNames(styles.pantheonName)}>{majorGod.name}</span>
+                <span className={classNames(styles.pantheonEffect)}>{majorGod.effect}</span>
+              </div>
+            )}
+            {minorGod && (
+              <div className={classNames(styles.pantheonCard)}>
+                <span className={classNames(styles.pantheonType)}>Minor</span>
+                <span className={classNames(styles.pantheonName)}>{minorGod.name}</span>
+                <span className={classNames(styles.pantheonEffect)}>{minorGod.effect}</span>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -152,6 +157,20 @@ function Misc() {
           Set Pantheon in the Build tab.
         </p>
       )}
+    </section>
+  );
+}
+
+// ── Skill Tree panel ──────────────────────────────────────────────────────────
+
+function DashboardSkillTree() {
+  const { urlTrees } = useRecoilValue(urlTreesSelector);
+  if (urlTrees.length === 0) return null;
+
+  return (
+    <section className={classNames(styles.panel, styles.treePanel)}>
+      <SectionHeader title="Skill Tree" />
+      <SkillTreeViewer urlTrees={urlTrees} />
     </section>
   );
 }
@@ -169,6 +188,9 @@ export default function DashboardContainer() {
       <div className={classNames(styles.rightCol)}>
         <Misc />
       </div>
+      <Suspense fallback={null}>
+        <DashboardSkillTree />
+      </Suspense>
     </div>
   );
 }
