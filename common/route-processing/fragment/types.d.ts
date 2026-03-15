@@ -132,6 +132,7 @@ export namespace Fragments {
   export interface CopyFragment {
     type: "copy";
     text: string;
+    side: "head" | "tail";
   }
 
   export interface MapWhiteFragment {
