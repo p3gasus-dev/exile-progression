@@ -1,6 +1,6 @@
 .workspace {
   display: flex;
-  height: 10rem;
+  min-height: 10rem;
   flex-grow: 1;
   gap: var(--size-2);
 }
