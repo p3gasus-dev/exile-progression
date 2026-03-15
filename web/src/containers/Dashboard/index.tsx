@@ -14,6 +14,12 @@ import classNames from "classnames";
 import { Suspense } from "react";
 import { useRecoilValue } from "recoil";
 
+// ── Shared ─────────────────────────────────────────────────────────────────────
+
+function Divider() {
+  return <hr className={classNames(styles.divider)} />;
+}
+
 // ── Progress bar ──────────────────────────────────────────────────────────────
 
 interface ProgressBarProps {
@@ -49,129 +55,131 @@ function SectionHeader({ title }: { title: string }) {
   return <h2 className={classNames(styles.sectionHeader)}>{title}</h2>;
 }
 
-// ── ACT 1–10 panel ────────────────────────────────────────────────────────────
+// ── ACT 1–10 ──────────────────────────────────────────────────────────────────
 
 function ActProgress() {
   const sections = useRecoilValue(routeSectionProgressSelector);
   const league = useRecoilValue(leagueSelector);
 
   return (
-    <section className={classNames(styles.panel)}>
-      <div className={classNames(styles.panelHeading)}>
+    <div>
+      <div className={classNames(styles.sectionHeadingRow)}>
         <SectionHeader title="ACT 1–10" />
         <span className={classNames(styles.leagueBadge)}>{league}</span>
       </div>
       <div className={classNames(styles.progressList)}>
-        <div className={classNames(styles.subProgressList)}>
-          {sections.map((s) => (
-            <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
-          ))}
-        </div>
+        {sections.map((s) => (
+          <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
 
-// ── Voidstones panel ──────────────────────────────────────────────────────────
+// ── Voidstones ────────────────────────────────────────────────────────────────
 
 function VoidstoneProgress() {
   const sections = useRecoilValue(voidstoneSectionProgressSelector);
 
   return (
-    <section className={classNames(styles.panel)}>
+    <div>
       <SectionHeader title="Voidstones" />
       <div className={classNames(styles.progressList)}>
-        <div className={classNames(styles.subProgressList)}>
-          {sections.map((s) => (
-            <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
-          ))}
-        </div>
+        {sections.map((s) => (
+          <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
 
-// ── Challenges panel ──────────────────────────────────────────────────────────
+// ── Challenges ────────────────────────────────────────────────────────────────
 
 function ChallengeProgress() {
   const summary = useRecoilValue(challengeProgressSummarySelector);
 
   return (
-    <section className={classNames(styles.panel)}>
+    <div>
       <SectionHeader title="Challenges" />
       <div className={classNames(styles.progressList)}>
         <ProgressBar label="Challenges" completed={summary.completed} total={summary.total} />
       </div>
-    </section>
+    </div>
   );
 }
 
-// ── Misc panel ────────────────────────────────────────────────────────────────
+// ── Character ─────────────────────────────────────────────────────────────────
 
-function Misc() {
+function Character() {
   const buildData = useRecoilValue(buildDataSelector);
+
+  return (
+    <div>
+      <SectionHeader title="Character" />
+      <div className={classNames(styles.infoList)}>
+        <div className={classNames(styles.infoRow)}>
+          <span className={classNames(styles.infoLabel)}>Class</span>
+          <span>{buildData.characterClass === "None" ? "—" : buildData.characterClass}</span>
+        </div>
+        <div className={classNames(styles.infoRow)}>
+          <span className={classNames(styles.infoLabel)}>Bandit</span>
+          <span>{buildData.bandit === "None" ? "Kill All" : buildData.bandit}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Pantheon ──────────────────────────────────────────────────────────────────
+
+function Pantheon() {
   const settings = useRecoilValue(buildSettingsSelector);
 
   const majorGod = MAJOR_GODS.find((g) => g.id === settings.pantheonMajor);
   const minorGod = MINOR_GODS.find((g) => g.id === settings.pantheonMinor);
 
+  if (!majorGod && !minorGod) return null;
+
   return (
-    <section className={classNames(styles.panel)}>
-      <SectionHeader title="Misc" />
-
-      <div className={classNames(styles.miscList)}>
-        <div className={classNames(styles.miscRow)}>
-          <span>Class</span>
-          <span>{buildData.characterClass === "None" ? "—" : buildData.characterClass}</span>
-        </div>
-        <div className={classNames(styles.miscRow)}>
-          <span>Bandit</span>
-          <span>{buildData.bandit === "None" ? "Kill All" : buildData.bandit}</span>
-        </div>
-      </div>
-
-      {(majorGod || minorGod) && (
-        <div className={classNames(styles.subSection)}>
-          <h3 className={classNames(styles.subSectionTitle)}>Pantheon</h3>
-          <div className={classNames(styles.pantheonCards)}>
-            {majorGod && (
-              <div className={classNames(styles.pantheonCard)}>
-                <span className={classNames(styles.pantheonType)}>Major</span>
-                <span className={classNames(styles.pantheonName)}>{majorGod.name}</span>
-                <span className={classNames(styles.pantheonEffect)}>{majorGod.effect}</span>
-              </div>
-            )}
-            {minorGod && (
-              <div className={classNames(styles.pantheonCard)}>
-                <span className={classNames(styles.pantheonType)}>Minor</span>
-                <span className={classNames(styles.pantheonName)}>{minorGod.name}</span>
-                <span className={classNames(styles.pantheonEffect)}>{minorGod.effect}</span>
-              </div>
-            )}
+    <>
+      <Divider />
+      <SectionHeader title="Pantheon" />
+      <div className={classNames(styles.infoList)}>
+        {majorGod && (
+          <div className={classNames(styles.pantheonEntry)}>
+            <div className={classNames(styles.infoRow)}>
+              <span className={classNames(styles.infoLabel)}>Major</span>
+              <span>{majorGod.name}</span>
+            </div>
+            <p className={classNames(styles.godEffect)}>{majorGod.effect}</p>
           </div>
-        </div>
-      )}
-
-      {!majorGod && !minorGod && (
-        <p className={classNames(styles.emptyHint)}>
-          Set Pantheon in the Build tab.
-        </p>
-      )}
-    </section>
+        )}
+        {minorGod && (
+          <div className={classNames(styles.pantheonEntry)}>
+            <div className={classNames(styles.infoRow)}>
+              <span className={classNames(styles.infoLabel)}>Minor</span>
+              <span>{minorGod.name}</span>
+            </div>
+            <p className={classNames(styles.godEffect)}>{minorGod.effect}</p>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
-// ── Skill Tree panel ──────────────────────────────────────────────────────────
+// ── Skill Tree ────────────────────────────────────────────────────────────────
 
 function DashboardSkillTree() {
   const { urlTrees } = useRecoilValue(urlTreesSelector);
   if (urlTrees.length === 0) return null;
 
   return (
-    <section className={classNames(styles.panel, styles.treePanel)}>
+    <>
+      <Divider />
       <SectionHeader title="Skill Tree" />
       <SkillTreeViewer urlTrees={urlTrees} />
-    </section>
+    </>
   );
 }
 
@@ -180,13 +188,16 @@ function DashboardSkillTree() {
 export default function DashboardContainer() {
   return (
     <div className={classNames(styles.dashboard)}>
-      <div className={classNames(styles.leftCol)}>
+      <div className={classNames(styles.col)}>
         <ActProgress />
+        <Divider />
         <VoidstoneProgress />
+        <Divider />
         <ChallengeProgress />
       </div>
-      <div className={classNames(styles.rightCol)}>
-        <Misc />
+      <div className={classNames(styles.col)}>
+        <Character />
+        <Pantheon />
         <Suspense fallback={null}>
           <DashboardSkillTree />
         </Suspense>
