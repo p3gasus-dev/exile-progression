@@ -1,4 +1,4 @@
-#section VOIDSTONE 4
+#section Voidstone 4
 Enable {league|Maven} witnessing when opening maps
 Witness 3 {map_yellow|T6+} map bosses with Maven
 ➞ {arena|Maven's Crucible} (area level 73) — defeat all 3 bosses

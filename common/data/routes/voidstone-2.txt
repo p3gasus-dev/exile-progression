@@ -1,4 +1,4 @@
-#section VOIDSTONE 2
+#section Voidstone 2
 Find {generic|Eagon Caeserius} at a {quest_text|Memory Tear} in a {map_red|T14+} map
 Talk to {generic|Eagon Caeserius} in your Hideout
 Use the {quest_text|Memory Tear} to begin {quest_text|Threads of the Originator}

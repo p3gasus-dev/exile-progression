@@ -1,4 +1,4 @@
-#section VOIDSTONE 3
+#section Voidstone 3
 Farm {map_red|T14+} maps for the 4 {quest_text|Shaper Guardian} maps
 ➞ {arena|Maze of the Minotaur}, kill {kill|The Shaper's Guardian (Minotaur)}
 ➞ {arena|Forge of the Phoenix}, kill {kill|The Shaper's Guardian (Phoenix)}

@@ -1,4 +1,4 @@
-#section VOIDSTONE 1
+#section Voidstone 1
 Talk to {generic|Helena} in Karui Shores
 Talk to {generic|Commander Kirac} in the War Room
 Run a {map_white|T1} map from Kirac — complete the boss
