@@ -17,7 +17,6 @@ import { routeProgressSelectorFamily } from "../../state/route-progress";
 import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
 import { configSelector } from "../../state/config";
 import { sidebarVisibleSelector, sidebarExpandedAtom } from "../../state/sidebar";
-import { atlasConfigSelector } from "../../state/atlas-config";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -32,27 +31,13 @@ const VoidstoneRoute = lazy(() => import("./VoidstoneRoute"));
 type RouteTab = "acts" | "voidstone" | "challenges";
 
 function VoidstoneSection() {
-  const atlasConfig = useRecoilValue(atlasConfigSelector);
-  const order = atlasConfig.voidstoneOrder;
-  const [activeTab, setActiveTab] = useState(0);
-
   return (
-    <>
-      <div className={classNames(styles.subTabBar)}>
-        {order.map((_, i) => (
-          <button
-            key={i}
-            className={classNames(styles.subTabButton, activeTab === i && styles.subTabActive)}
-            onClick={() => setActiveTab(i)}
-          >
-            VOIDSTONE {i + 1}
-          </button>
-        ))}
-      </div>
-      <Suspense fallback={<Loading />}>
-        <VoidstoneRoute vsIndex={order[activeTab]} />
-      </Suspense>
-    </>
+    <Suspense fallback={<Loading />}>
+      <VoidstoneRoute vsIndex={0} />
+      <VoidstoneRoute vsIndex={1} />
+      <VoidstoneRoute vsIndex={2} />
+      <VoidstoneRoute vsIndex={3} />
+    </Suspense>
   );
 }
 
