@@ -3,7 +3,7 @@ import { RouteData } from "../../../common/route-processing/types";
 import { NO_MIGRATORS, getPersistent } from "../utility";
 import { DefaultValue, atom, selector } from "recoil";
 
-const VOIDSTONE_ROUTE_VERSION = 1;
+const VOIDSTONE_ROUTE_VERSION = 2;
 
 const VOIDSTONE_KEYS = [
   "./routes/voidstone-1.txt",
