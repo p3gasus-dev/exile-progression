@@ -1,0 +1,39 @@
+const e=`#section Voidstone 1
+Talk to {generic|Helena} in Karui Shores
+Talk to {generic|Commander Kirac} in the War Room
+Run a {map_white|T1} map from Kirac — complete the boss
+Hand in {quest_text|A Call to Arms} to {generic|Commander Kirac}
+{waypoint|Labyrinth_Airlock}
+{ascend|eternal}
+    #sub Requires level 68 and {quest_text|Offering to the Goddess}
+    #sub Obtain Offering from a Trial of Ascendancy in a {map_yellow|T6+} map
+Find {generic|The Envoy} in a {map_yellow|T6+} map
+    #sub Begins {quest_text|The Maven} and {quest_text|The Atlas of Worlds} quests
+Place {quest_text|Maven's Beacon} in your Map Device
+Enable {league|Eater of Worlds} influence, run maps and find {generic|The Envoy}
+    #sub Receive {quest_text|Flesh Compass} (Eater influence)
+Enable {league|Searing Exarch} influence, run maps and find {generic|The Envoy}
+    #sub Receive {quest_text|Luminous Astrolabe} (Exarch influence)
+Place {quest_text|Flesh Compass} and {quest_text|Luminous Astrolabe} in your Map Device
+Hand in {quest_text|The Atlas of Worlds} to {generic|Commander Kirac}
+Enable {league|Eater of Worlds} influence when opening maps
+Run {map_yellow|T9-T11} Eater-influenced maps
+    #sub T11 boss drops {quest_text|Writhing Invitation}
+➞ {arena|Seething Chyme}, kill {kill|The Infinite Hunger}
+    #sub Enter via {quest_text|Writhing Invitation} in Map Device
+Run {map_red|T12-T15} influenced maps until {quest_text|Screaming Invitation} drops
+Alch {quest_text|Screaming Invitation} to Rare
+➞ {arena|The Absence of Symmetry and Harmony}, kill {kill|The Eater of Worlds}
+Hand in {quest_text|The Eater of Worlds} to {generic|Commander Kirac}
+Enable {league|Searing Exarch} influence when opening maps
+Run {map_yellow|T9-T11} Exarch-influenced maps
+    #sub T11 boss drops {quest_text|Polaric Invitation}
+➞ {arena|The Searing Exarch's Domain}, kill {kill|The Black Star}
+    #sub Enter via {quest_text|Polaric Invitation} in Map Device
+Run {map_red|T12-T15} influenced maps until {quest_text|Incandescent Invitation} drops
+Alch {quest_text|Incandescent Invitation} to Rare
+    #sub Hold until the fireball phase ends to skip it
+➞ {arena|The Searing Exarch's Domain}, kill {kill|The Searing Exarch}
+Hand in {quest_text|The Searing Exarch} to {generic|Commander Kirac}
+Take the {quest_text|Eldritch Voidstone} — requires BOTH Eater and Exarch kills
+`;export{e as default};

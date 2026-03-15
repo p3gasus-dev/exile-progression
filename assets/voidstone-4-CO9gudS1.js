@@ -1,0 +1,15 @@
+const e=`#section Voidstone 4
+Enable {league|Maven} witnessing when opening maps
+Witness 3 {map_yellow|T6+} map bosses with Maven
+➞ {arena|Maven's Crucible} (area level 73) — defeat all 3 bosses
+    #sub Collect {quest_text|Crescent Splinters} from each Crucible run
+Witness 4 {map_yellow|T8+} bosses, complete {arena|Maven's Crucible} (area level 75)
+Witness 5 {map_red|T10+} bosses, complete {arena|Maven's Crucible} (area level 78)
+Witness 6 {map_red|T12+} bosses, complete {arena|Maven's Crucible} (area level 80)
+Witness 10 {map_red|T14+} bosses, complete {arena|Maven's Crucible} (area level 83)
+    #sub Collect 10 {quest_text|Crescent Splinters} total to form {quest_text|Maven's Writ}
+Alch {quest_text|Maven's Writ} to Rare
+➞ {arena|The Maven's Realm}, kill {kill|The Maven}
+Take the {quest_text|Ceremonial Voidstone} and socket it into your Atlas
+    #sub All 4 Voidstones socketed — maps drop at maximum tier
+`;export{e as default};
