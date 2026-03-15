@@ -187,10 +187,10 @@ export default function DashboardContainer() {
       </div>
       <div className={classNames(styles.rightCol)}>
         <Misc />
+        <Suspense fallback={null}>
+          <DashboardSkillTree />
+        </Suspense>
       </div>
-      <Suspense fallback={null}>
-        <DashboardSkillTree />
-      </Suspense>
     </div>
   );
 }
