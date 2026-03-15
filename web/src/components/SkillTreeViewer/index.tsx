@@ -15,7 +15,7 @@ import classNames from "classnames";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import { MdOpenInFull, MdCloseFullscreen } from "react-icons/md";
+import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import { treeExpandedAtom } from "../../state/sidebar";
 import { useRecoilState } from "recoil";
 
@@ -181,7 +181,7 @@ export function SkillTreeViewer({ urlTrees }: SkillTreeViewerProps) {
               onClick={() => setIsExpanded(!isExpanded)}
               title={isExpanded ? "Collapse tree" : "Expand tree"}
             >
-              {isExpanded ? <MdCloseFullscreen /> : <MdOpenInFull />}
+              {isExpanded ? <MdFullscreenExit /> : <MdFullscreen />}
             </button>
           </div>
         </div>
