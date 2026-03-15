@@ -11,7 +11,7 @@ import { urlTreesSelector } from "../../state/tree/url-tree";
 import { SkillTreeViewer } from "../../components/SkillTreeViewer";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import { useRecoilValue } from "recoil";
 
 // ── Shared ─────────────────────────────────────────────────────────────────────
@@ -51,8 +51,13 @@ function ProgressBar({ label, completed, total }: ProgressBarProps) {
 
 // ── Section header ────────────────────────────────────────────────────────────
 
-function SectionHeader({ title }: { title: string }) {
-  return <h2 className={classNames(styles.sectionHeader)}>{title}</h2>;
+function SectionHeader({ title, right }: { title: string; right?: ReactNode }) {
+  return (
+    <div className={classNames(styles.sectionHeader)}>
+      <span>{title}</span>
+      {right && <span>{right}</span>}
+    </div>
+  );
 }
 
 // ── ACT 1–10 ──────────────────────────────────────────────────────────────────
@@ -63,10 +68,7 @@ function ActProgress() {
 
   return (
     <div>
-      <div className={classNames(styles.sectionHeadingRow)}>
-        <SectionHeader title="ACT 1–10" />
-        <span className={classNames(styles.leagueBadge)}>{league}</span>
-      </div>
+      <SectionHeader title="ACT 1–10" right={<span className={classNames(styles.leagueBadge)}>{league}</span>} />
       <div className={classNames(styles.progressList)}>
         {sections.map((s) => (
           <ProgressBar key={s.name} label={s.name} completed={s.completed} total={s.total} />
@@ -147,7 +149,7 @@ function Pantheon() {
       <div className={classNames(styles.infoList)}>
         {majorGod && (
           <div className={classNames(styles.pantheonEntry)}>
-            <div className={classNames(styles.infoRow)}>
+            <div className={classNames(styles.pantheonEntryHeader)}>
               <span className={classNames(styles.infoLabel)}>Major</span>
               <span>{majorGod.name}</span>
             </div>
@@ -156,7 +158,7 @@ function Pantheon() {
         )}
         {minorGod && (
           <div className={classNames(styles.pantheonEntry)}>
-            <div className={classNames(styles.infoRow)}>
+            <div className={classNames(styles.pantheonEntryHeader)}>
               <span className={classNames(styles.infoLabel)}>Minor</span>
               <span>{minorGod.name}</span>
             </div>
