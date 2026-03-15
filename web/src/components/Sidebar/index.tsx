@@ -24,8 +24,6 @@ export function Sidebar() {
   const searchStrings = useRecoilValue(searchStringsSelector);
   const hasSearch = searchStrings !== null && searchStrings.length > 0;
 
-  if (sections.length === 0 && !hasSearch) return <></>;
-
   return (
     <div className={classNames(styles.sidebar)}>
       {/* ── Regex text boxes — above the planner ── */}

@@ -16,7 +16,6 @@ import { routeSelector } from "../../state/route";
 import { routeProgressSelectorFamily } from "../../state/route-progress";
 import { challengeProgressSelectorFamily } from "../../state/challenge-progress";
 import { configSelector } from "../../state/config";
-import { sidebarVisibleSelector, sidebarExpandedAtom } from "../../state/sidebar";
 import { interactiveStyles } from "../../styles";
 import styles from "./styles.module.css";
 import classNames from "classnames";
@@ -191,8 +190,6 @@ function TabBar({ tabs, active, onChange }: TabBarProps) {
 
 export default function RouteContainer() {
   const config = useRecoilValue(configSelector);
-  const sidebarVisible = useRecoilValue(sidebarVisibleSelector);
-  const sidebarExpanded = useRecoilValue(sidebarExpandedAtom);
   const [activeTab, setActiveTab] = useState<RouteTab>("acts");
 
   const tabs: TabEntry[] = [
@@ -206,12 +203,8 @@ export default function RouteContainer() {
   const validTabs = tabs.map((t) => t.id);
   const visibleTab = validTabs.includes(activeTab) ? activeTab : "acts";
 
-  const sidebarClass = sidebarVisible
-    ? sidebarExpanded ? styles.withSidebar : styles.withCollapsedSidebar
-    : undefined;
-
   return (
-    <div className={classNames(sidebarClass)}>
+    <div>
       <TabBar tabs={tabs} active={visibleTab} onChange={setActiveTab} />
       <Sidebar />
       <div className={classNames(styles.routeContent)}>
