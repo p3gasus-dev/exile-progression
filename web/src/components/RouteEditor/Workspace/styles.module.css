@@ -5,6 +5,12 @@
   gap: var(--size-2);
 }
 
+@media (max-width: 540px) {
+  .workspace {
+    flex-direction: column;
+  }
+}
+
 .editor {
   flex-grow: 1;
   overflow-y: scroll;

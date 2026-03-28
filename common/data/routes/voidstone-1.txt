@@ -3,7 +3,7 @@ Talk to {generic|Helena} in Karui Shores
 Talk to {generic|Commander Kirac} in the War Room
 Run a {map_white|T1} map from Kirac — complete the boss
 Hand in {quest_text|A Call to Arms} to {generic|Commander Kirac}
-{waypoint|Labyrinth_Airlock}
+{area|Labyrinth_Airlock}
 {ascend|eternal}
     #sub Requires level 68 and {quest_text|Offering to the Goddess}
     #sub Obtain Offering from a Trial of Ascendancy in a {map_yellow|T6+} map
