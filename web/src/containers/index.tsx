@@ -24,11 +24,6 @@ const CampaignContainer = withBlank(lazy(() => import("./Campaign")));
 const AtlasContainer = withBlank(lazy(() => import("./Atlas")));
 const ChallengesContainer = withBlank(lazy(() => import("./Challenges")));
 const BuildContainer = withBlank(lazy(() => import("./Build")));
-const SettingsContainer = withBlank(lazy(() => import("./Settings")));
-
-// Legacy: EditRoute is now part of Settings, but keep the old path so
-// any existing bookmarks or links still work.
-const EditRouteContainer = withBlank(lazy(() => import("./EditRoute")));
 
 // ── App ───────────────────────────────────────────────────────────────────────
 
@@ -105,27 +100,6 @@ export function App() {
               }
             />
 
-            {/* SETTINGS — edit route, 3rd-party export, GitHub */}
-            <Route
-              path="/settings"
-              element={
-                <Page
-                  title="Exile Progression - Settings"
-                  component={<SettingsContainer />}
-                />
-              }
-            />
-
-            {/* LEGACY — /edit-route kept for backwards compatibility */}
-            <Route
-              path="/edit-route"
-              element={
-                <Page
-                  title="Exile Progression - Edit Route"
-                  component={<EditRouteContainer />}
-                />
-              }
-            />
           </Routes>
         </ErrorBoundary>
       </Suspense>

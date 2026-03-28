@@ -14,7 +14,6 @@ import {
   FaMap,
   FaSlidersH,
   FaTachometerAlt,
-  FaTools,
   FaTrophy,
   FaUndoAlt,
 } from "react-icons/fa";
@@ -129,14 +128,6 @@ export function Navbar({}: NavbarProps) {
               icon={<FaSlidersH className="inlineIcon" />}
               onClick={() => go("/build")}
             />
-            <NavbarItem
-              label="Settings"
-              expand={navExpand}
-              active={isActive("/settings")}
-              icon={<FaTools className="inlineIcon" />}
-              onClick={() => go("/settings")}
-            />
-
             {/* ── Utility items (expand-only) ─────────── */}
             <NavbarItem
               label="Reset Progress"

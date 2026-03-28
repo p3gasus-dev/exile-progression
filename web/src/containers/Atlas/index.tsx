@@ -1,9 +1,11 @@
 import { atlasConfigSelector, AtlasConfig } from "../../state/atlas-config";
 import { SplitRow } from "../../components/SplitRow";
 import { LabTracker } from "./LabTracker";
+import { RouteEditor } from "../../components/RouteEditor";
+import { voidstoneRouteFilesSelector } from "../../state/voidstone-route-files";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { HiChevronUp, HiChevronDown } from "react-icons/hi";
 
 const VOIDSTONE_INFO = [
@@ -70,6 +72,8 @@ function VoidstoneOrderList({ order, onChange }: VoidstoneOrderProps) {
 
 export default function AtlasContainer() {
   const [config, setConfig] = useRecoilState(atlasConfigSelector);
+  const [voidstoneRouteFiles, setVoidstoneRouteFiles] = useRecoilState(voidstoneRouteFilesSelector);
+  const resetVoidstoneRouteFiles = useResetRecoilState(voidstoneRouteFilesSelector);
 
   function update(partial: Partial<AtlasConfig>) {
     setConfig({ ...config, ...partial });
@@ -143,6 +147,19 @@ export default function AtlasContainer() {
       </div>
       {config.showLabTracker && <LabTracker />}
 
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Edit Voidstone Route ─────────────────────────────────────── */}
+      <SectionHeader title="Edit Voidstone Route" />
+      <p className={classNames(styles.hint)}>
+        Modify the Voidstone 1–4 route source files. Changes persist across sessions.
+        Ctrl+S / ⌘S saves while the editor is focused.
+      </p>
+      <RouteEditor
+        routeFiles={voidstoneRouteFiles}
+        onSubmit={(updated) => setVoidstoneRouteFiles(updated)}
+        onReset={resetVoidstoneRouteFiles}
+      />
     </div>
   );
 }

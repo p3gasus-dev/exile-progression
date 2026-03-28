@@ -1,5 +1,6 @@
 import { configSelector } from "../../state/config";
 import { SplitRow } from "../../components/SplitRow";
+import { ChallengeEditor } from "../../components/ChallengeEditor";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useRecoilState } from "recoil";
@@ -75,6 +76,15 @@ export default function ChallengesContainer() {
           }
         />
       </div>
+
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Edit Challenges ──────────────────────────────────────────── */}
+      <SectionHeader title="Edit Challenges" />
+      <p className={classNames(styles.hint)}>
+        Modify the challenge list as JSON. Save to apply. Reset restores built-in defaults.
+      </p>
+      <ChallengeEditor />
 
     </div>
   );

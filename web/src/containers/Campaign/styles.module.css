@@ -1,7 +1,5 @@
 .container {
   padding: var(--size-3);
-  max-width: 600px;
-  margin: 0 auto;
 }
 
 .sectionHeader {

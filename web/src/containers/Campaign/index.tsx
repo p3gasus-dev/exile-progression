@@ -1,10 +1,12 @@
 import { SplitRow } from "../../components/SplitRow";
 import { ConfigForm } from "../../components/ConfigForm";
+import { RouteEditor } from "../../components/RouteEditor";
 import { buildDataSelector } from "../../state/build-data";
 import { configSelector } from "../../state/config";
+import { routeFilesSelector } from "../../state/route-files";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 
 function SectionHeader({ title }: { title: string }) {
   return <h2 className={classNames(styles.sectionHeader)}>{title}</h2>;
@@ -13,6 +15,8 @@ function SectionHeader({ title }: { title: string }) {
 export default function CampaignContainer() {
   const [buildData, setBuildData] = useRecoilState(buildDataSelector);
   const [config, setConfig] = useRecoilState(configSelector);
+  const [routeFiles, setRouteFiles] = useRecoilState(routeFilesSelector);
+  const resetRouteFiles = useResetRecoilState(routeFilesSelector);
 
   return (
     <div className={classNames(styles.container)}>
@@ -76,6 +80,20 @@ export default function CampaignContainer() {
       <ConfigForm
         config={config}
         onSubmit={(updated) => setConfig(updated)}
+      />
+
+      <hr className={classNames(styles.divider)} />
+
+      {/* ── Edit Route ──────────────────────────────────────────────── */}
+      <SectionHeader title="Edit Route" />
+      <p className={classNames(styles.hint)}>
+        Modify the ACT 1–10 route source files. Changes persist across sessions.
+        Ctrl+S / ⌘S saves while the editor is focused.
+      </p>
+      <RouteEditor
+        routeFiles={routeFiles}
+        onSubmit={(updated) => setRouteFiles(updated)}
+        onReset={resetRouteFiles}
       />
     </div>
   );
