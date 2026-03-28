@@ -102,7 +102,6 @@ function ChallengeProgress() {
 
   return (
     <div>
-      <SectionHeader title="Challenges" />
       <div className={classNames(styles.progressList)}>
         <ProgressBar label="Challenges" completed={summary.completed} total={summary.total} />
       </div>
