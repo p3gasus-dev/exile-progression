@@ -14,15 +14,18 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { TbHierarchy } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 export function Sidebar() {
   const [expand, setExpand] = useRecoilState(sidebarExpandedAtom);
   const isTreeExpanded = useRecoilValue(treeExpandedAtom);
   const [activeTab, setActiveTab] = React.useState<number>(0);
+  const navigate = useNavigate();
 
   const sections = useSections();
   const searchStrings = useRecoilValue(searchStringsSelector);
   const hasSearch = searchStrings !== null && searchStrings.length > 0;
+  const hasBuild = sections.length > 0 || hasSearch;
 
   return (
     <div className={classNames(styles.sidebar)}>
@@ -56,6 +59,19 @@ export function Sidebar() {
         onActiveTab={setActiveTab}
         onToggleExpand={setExpand}
       />
+
+      {/* ── No build imported prompt ── */}
+      {expand && !hasBuild && (
+        <div className={classNames(styles.noBuild)}>
+          <p className={classNames(styles.noBuildText)}>No build imported.</p>
+          <button
+            className={classNames(styles.noBuildLink, interactiveStyles.activeSecondary)}
+            onClick={() => navigate("/build")}
+          >
+            Import a build →
+          </button>
+        </div>
+      )}
 
       {/* ── Tree / Gems tabbed content ── */}
       {expand && sections.length > 0 && (
