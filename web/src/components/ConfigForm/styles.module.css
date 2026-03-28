@@ -1,6 +1,7 @@
 .form {
   padding: var(--size-2);
   max-width: 600px;
+  margin: 0 auto;
 }
 
 .label {
