@@ -1,0 +1,19 @@
+const e=`#section Voidstone 2
+Find {generic|Eagon Caeserius} at a {quest_text|Memory Tear} in a {map_red|T14+} map
+Talk to {generic|Eagon Caeserius} in your Hideout
+Use the {quest_text|Memory Tear} to begin {quest_text|Threads of the Originator}
+➞ {arena|Courtyard of Wasting}, complete {quest_text|Memory of Loneliness}
+Kill {kill|The Neglected Flame}
+Complete {quest_text|Memory of Trauma} in Courtyard of Wasting
+Kill {kill|The Cardinal of Fear}
+➞ {arena|Theatre of Lies}, complete {quest_text|Memory of Reverence}
+Kill {kill|The Deceitful God}
+Kill {kill|Incarnation of Neglect}
+Kill {kill|Incarnation of Fear}
+Kill {kill|Incarnation of Dread}
+    #sub At 75% / 50% / 25% HP, enter rose phases — collect and deliver coloured roses
+    #sub Manage portals and debuffs during each rose phase
+    #sub Kill adds quickly to prevent overwhelm between phases
+Take the {quest_text|Originator Voidstone} and socket it into your Atlas
+    #sub Unlocks Exceptional Support Gems from Atlas boss drops
+`;export{e as default};

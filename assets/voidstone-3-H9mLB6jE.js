@@ -1,0 +1,20 @@
+const e=`#section Voidstone 3
+Farm {map_red|T14+} maps for the 4 {quest_text|Shaper Guardian} maps
+➞ {arena|Maze of the Minotaur}, kill {kill|The Shaper's Guardian (Minotaur)}
+➞ {arena|Forge of the Phoenix}, kill {kill|The Shaper's Guardian (Phoenix)}
+➞ {arena|Lair of the Hydra}, kill {kill|The Shaper's Guardian (Hydra)}
+➞ {arena|Pit of the Chimera}, kill {kill|The Shaper's Guardian (Chimera)}
+Use all 4 {quest_text|Shaper Guardian Fragments} at your Map Device
+➞ {arena|The Shaper's Realm}, kill {kill|The Shaper}
+{league|Elder Guardians} spawn as extra bosses in {map_red|T14-T16} maps
+Kill {kill|The Elder Guardian (Purifier)}
+Kill {kill|The Elder Guardian (Constrictor)}
+Kill {kill|The Elder Guardian (Enslaver)}
+Kill {kill|The Elder Guardian (Eradicator)}
+Use all 4 {quest_text|Elder Guardian Fragments} at your Map Device
+➞ {arena|The Elder's Realm}, kill {kill|The Elder}
+Combine 2 {quest_text|Shaper Fragments} + 2 {quest_text|Elder Fragments} at your Map Device
+    #sub Elder and Shaper fight simultaneously
+➞ {arena|The Shaper's Realm}, kill {kill|The Uber Elder}
+Take the {quest_text|Decayed Voidstone} and socket it into your Atlas
+`;export{e as default};

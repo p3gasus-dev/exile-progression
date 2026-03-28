@@ -1,0 +1,1 @@
+import{S as s,T as n}from"./index-9_IqF_3X.js";const _="_form_e5dk2_1",m="_formRow_e5dk2_8",u="_groupLeft_e5dk2_19",p="_groupRight_e5dk2_26",c="_formInput_e5dk2_33",g="_formButton_e5dk2_45",R={form:_,formRow:m,groupLeft:u,groupRight:p,formInput:c,formButton:g};function a(o,r){return({onSet:f})=>{f((t,i,e)=>{e||t==null?s(o):n(o,r,t)})}}export{R as f,a as p};
