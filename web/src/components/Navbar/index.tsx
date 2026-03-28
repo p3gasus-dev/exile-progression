@@ -1,6 +1,8 @@
 import { useClearGemProgress } from "../../state/gem-progress";
 import { useClearRouteProgress } from "../../state/route-progress";
 import { useClearCollapseProgress } from "../../state/section-collapse";
+import { useClearVoidstoneProgress } from "../../state/voidstone-progress";
+import { useClearChallengeStepProgress } from "../../state/challenge-progress";
 import { borderListStyles, interactiveStyles } from "../../styles";
 import { trackEvent } from "../../utility/telemetry";
 import styles from "./styles.module.css";
@@ -56,6 +58,8 @@ export function Navbar({}: NavbarProps) {
   const clearRouteProgress = useClearRouteProgress();
   const clearGemProgress = useClearGemProgress();
   const clearCollapseProgress = useClearCollapseProgress();
+  const clearVoidstoneProgress = useClearVoidstoneProgress();
+  const clearChallengeProgress = useClearChallengeStepProgress();
 
   const go = (path: string) => {
     navigate(path);
@@ -137,6 +141,8 @@ export function Navbar({}: NavbarProps) {
                 clearRouteProgress();
                 clearGemProgress();
                 clearCollapseProgress();
+                clearVoidstoneProgress();
+                clearChallengeProgress();
                 setNavExpand(false);
               }}
             />
