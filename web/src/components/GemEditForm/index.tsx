@@ -1,6 +1,6 @@
 import { Data } from "../../../../common/data";
 import { RouteData } from "../../../../common/route-processing/types";
-import { gemProgressSelectorFamily } from "../../state/gem-progress";
+import { gemProgressFamily } from "../../state/gem-progress";
 import { GemEdit } from "../GemEdit";
 import { TaskList, TaskListProps } from "../TaskList";
 import { formStyles } from "../../styles";
@@ -39,7 +39,7 @@ export function GemEditForm({ requiredGems, onUpdate }: GemEditFormProps) {
   for (let i = 0; i < workingGems.length; i++) {
     const requiredGem = workingGems[i];
     taskItems.push({
-      isCompletedState: gemProgressSelectorFamily(requiredGem.id),
+      isCompletedState: gemProgressFamily(requiredGem.id),
       children: (
         <GemEdit
           onMoveTop={() => {
