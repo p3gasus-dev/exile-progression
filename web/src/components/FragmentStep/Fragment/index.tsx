@@ -300,6 +300,7 @@ export function Fragment(
     case "dir":
       return [DirectionComponent(fragment.dirIndex), null];
     case "copy":
+<<<<<<< HEAD
       return [<CopyToClipboard text={fragment.text} />, null];
     case "map_white":
       return [<span className={classNames(styles.mapWhite)}>{fragment.value}</span>, null];
@@ -311,6 +312,24 @@ export function Fragment(
       return [<span className={classNames(styles.mapGuardian)}>{fragment.value}</span>, null];
     case "map_pinnacle":
       return [<span className={classNames(styles.mapPinnacle)}>{fragment.value}</span>, null];
+=======
+      let output: [React.ReactNode | null, React.ReactNode | null] = [
+        null,
+        null,
+      ];
+
+      const node = <CopyToClipboard text={fragment.text} />;
+      switch (fragment.side) {
+        case "head":
+          output[0] = node;
+          break;
+        case "tail":
+          output[1] = node;
+          break;
+      }
+
+      return output;
+>>>>>>> upstream/main
   }
 
   return [<>{`unmapped: ${JSON.stringify(fragment)}`}</>, null];
